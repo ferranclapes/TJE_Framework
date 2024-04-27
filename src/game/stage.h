@@ -13,7 +13,7 @@
 
 
 
-class SStage{
+class Stage{
     
 public:
    
@@ -25,7 +25,7 @@ public:
     
 };
 
-class IntroStage : public SStage
+class IntroStage : public Stage
 { //per heredar
    
     
@@ -42,7 +42,7 @@ public:
 };
 
 
-class PlayStage : public SStage
+class PlayStage : public Stage
 { //per heredar
 
 public:
@@ -59,7 +59,7 @@ public:
 
 };
 
-class EndStage : public SStage
+class EndStage : public Stage
 {
     
 public:
