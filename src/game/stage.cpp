@@ -5,14 +5,14 @@
 //  Created by Alba Arcos on 27/4/24.
 //
 
-#include "stage.hpp"
+#include "stage.h"
 
-void SStage::render(Image* framebuffer, float seconse_elapsed)
+void Stage::render(Image* framebuffer, float seconse_elapsed)
 {
     
 }
 
-void SStage::update(float seconse_elapsed)
+void Stage::update(float seconse_elapsed)
 {
     
 }
