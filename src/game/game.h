@@ -8,11 +8,25 @@
 #include "framework/camera.h"
 #include "framework/utils.h"
 
+enum eStages{
+    INTRO_STAGE,
+    PLAY_STAGE,
+    END_STAGE
+};
+
 class Game
 {
 public:
 	static Game* instance;
 
+    // STAGES
+    Stage* current_stage;
+    IntroStage* intro_stage;
+    PlayStage* play_stage;
+    EndStage* end_stage;
+    
+    std::vector<Stage*> stages;
+    
 	//window
 	SDL_Window* window;
 	int window_width;
@@ -44,4 +58,8 @@ public:
 	void onGamepadButtonDown(SDL_JoyButtonEvent event);
 	void onGamepadButtonUp(SDL_JoyButtonEvent event);
 	void onResize(int width, int height);
+    
+    
+    void GoToStage(int stage_to_go);
+
 };

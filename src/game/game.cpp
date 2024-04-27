@@ -6,6 +6,10 @@
 #include "graphics/shader.h"
 #include "framework/input.h"
 
+
+// INCLUDES AFEGITS:
+#include "framework/stage.h"
+
 #include <cmath>
 
 //some globals
@@ -17,6 +21,7 @@ float mouse_speed = 100.0f;
 
 Game* Game::instance = NULL;
 
+
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
 	this->window_width = window_width;
@@ -25,6 +30,15 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	instance = this;
 	must_exit = false;
 
+    
+    // STAGES
+    intro_stage = new IntroStage();
+    play_stage = new PlayStage();
+    end_stage = new EndStage();
+    
+    GoToStage(INTRO_STAGE);
+    
+    
 	fps = 0;
 	frame = 0;
 	time = 0.0f;
@@ -51,6 +65,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// Hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
+    
+    //CRIDAR A parseScene
 }
 
 //what to do when the image has to be draw
@@ -178,4 +194,16 @@ void Game::onResize(int width, int height)
 	window_width = width;
 	window_height = height;
 }
+
+
+void Game::GoToStage(int stage_to_go) {
+    
+    if(current_stage == stage_to_go){
+        current_stage->onExit();
+    }
+    current_stage = stages[stage_to_go];
+    current_stage->onEnter();
+    
+}
+
 
