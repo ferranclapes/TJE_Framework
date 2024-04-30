@@ -4,7 +4,7 @@
 #include "graphics/material.h"
 #include "graphics/shader.h"
 
-#include <algorithm>
+/*#include <algorithm>
 
 void EntityMesh::render() {
 
@@ -36,3 +36,4 @@ void EntityMesh::update(<#float elapsed_time#>){
     
 }
 
+*/

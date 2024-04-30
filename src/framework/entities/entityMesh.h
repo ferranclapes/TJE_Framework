@@ -3,7 +3,7 @@
 #include "framework/includes.h"
 #include "framework/framework.h"
 
-class Mesh;
+/*class Mesh;
 class Camera;
 class Texture;
 class Shader;
@@ -30,3 +30,4 @@ public:
     void render();
     void update(float elapsed_time);
 };
+*/

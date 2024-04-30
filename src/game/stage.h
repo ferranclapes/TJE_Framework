@@ -5,7 +5,7 @@
 //  Created by Alba Arcos on 27/4/24.
 //
 
-#ifndef stage_hpp
+/*#ifndef stage_hpp
 #define stage_hpp
 
 #include <stdio.h>
