@@ -20,7 +20,7 @@ void EntityMesh::render() {
     }
     
     //update uniforms
-    material.shader->setUniform("u_color", material.color)
+    material.shader->setUniform("u_color", material.color);
     shader->setUniform("u_viewproj", camera->viewprojection_matrix);
     shader->setTexture("u_texture", texture );
 

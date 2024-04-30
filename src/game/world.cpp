@@ -10,5 +10,5 @@ void World::render()
 
 void World::update()
 {
-  
+    int a = 0;
 }

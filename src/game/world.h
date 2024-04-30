@@ -10,7 +10,7 @@ class World
 public:
     
    
-    // Entity* root;
+    // Entity root;
     int window_width;
     int window_height;
     
