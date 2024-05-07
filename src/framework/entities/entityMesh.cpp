@@ -40,7 +40,13 @@ void EntityMesh::render(Camera* camera) {
 
 
     // Render the mesh using the shader
-    mesh->render( GL_TRIANGLES );
+    if (!isInstanced) {
+        mesh->render(GL_TRIANGLES);
+    }
+    else {
+        mesh->renderInstanced(GL_TRIANGLES, models.data(), models.size());
+
+    }
 
     // Disable shader after finishing rendering
     material.shader->disable();

@@ -6,7 +6,7 @@
 #include "graphics/mesh.h"
 #include "framework/camera.h"
 
-//World* World::instance = NULL;
+World* World::instance = nullptr;
 
 World::World()
 {
@@ -24,6 +24,13 @@ void World::render(Camera* camera)
 void World::update()
 {
   
+}
+
+World* World::GetInstance() {
+    if (instance == nullptr) {
+        return new World();
+    }
+    return instance;
 }
 
 bool World::parseScene(const char* filename, Entity* root)
@@ -67,7 +74,7 @@ bool World::parseScene(const char* filename, Entity* root)
     // Iterate through meshes loaded and create corresponding entities
     for (auto data : meshes_to_load) {
 
-        mesh_name = "data/" + data.first;
+        mesh_name = "data/maps/" + data.first;
         sRenderData& render_data = data.second;
 
         // No transforms, nothing to do here

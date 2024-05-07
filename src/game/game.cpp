@@ -23,7 +23,7 @@ float mouse_speed = 100.0f;
 
 //EntityMesh entity;
 
-Game* Game::instance = NULL;s
+Game* Game::instance = NULL;
 
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
@@ -79,7 +79,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 void Game::render(void)
 {
 	// Set the clear color (the background color)
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(1.0, 0.0, 0.0, 1.0);
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,7 +115,7 @@ void Game::render(void)
 		shader->disable();
 	}
 	*/
-	World::instance->render(camera);
+	World::GetInstance()->render(camera);
 
 	// Draw the floor grid
 	drawGrid();

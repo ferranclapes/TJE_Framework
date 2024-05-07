@@ -12,8 +12,9 @@ class Camera;
 
 class World
 {
-public:
     static World* instance;
+public:
+    
 
     World();
    
@@ -27,6 +28,8 @@ public:
     void update();
     
     bool parseScene(const char* filename, Entity* root);
+
+    static World* GetInstance();
     
     
 };

@@ -19,8 +19,7 @@ public:
     EntityMesh(Mesh* mesh, const Material& material);
 
     // Attributes of the derived class
-    Mesh* mesh = nullptr;
-    
+    Mesh* mesh = nullptr;    
     Material material;
     
     bool isInstanced = false;
