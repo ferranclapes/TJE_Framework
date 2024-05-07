@@ -2,6 +2,8 @@
 
 #include "framework/includes.h"
 #include "framework/framework.h"
+#include "entity.h"
+#include "graphics/material.h"
 
 class Mesh;
 class Camera;
@@ -13,14 +15,15 @@ class EntityMesh : public Entity {
 
 public:
 
+    EntityMesh();
+
     // Attributes of the derived class
     Mesh* mesh = nullptr;
     
     Material material;
     
-    //
     bool isInstanced = false;
-    std::vector<Matrix44> models; //vector d emodels de qunates vegades rendaritzes i a on
+    std::vector<Matrix44> models; //vector de models de qunates vegades rendaritzes i a on
     
     Texture* texture = nullptr;
     Shader* shader = nullptr;

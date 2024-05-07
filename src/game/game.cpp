@@ -5,6 +5,7 @@
 #include "graphics/fbo.h"
 #include "graphics/shader.h"
 #include "framework/input.h"
+#include "framework/entities/entityMesh.h"
 
 
 // INCLUDES AFEGITS:
@@ -18,6 +19,8 @@ Texture* texture = NULL;
 Shader* shader = NULL;
 float angle = 0;
 float mouse_speed = 100.0f;
+
+EntityMesh entity;
 
 Game* Game::instance = NULL;
 
@@ -196,7 +199,7 @@ void Game::onResize(int width, int height)
 	window_height = height;
 }
 
-
+/*
 void Game::GoToStage(int stage_to_go) {
     
     if(current_stage == stage_to_go){
@@ -207,4 +210,4 @@ void Game::GoToStage(int stage_to_go) {
     
 }
 
-
+*/

@@ -1,10 +1,14 @@
 #include "entityMesh.h"
 #include "framework/camera.h"
 #include "graphics/mesh.h"
-#include "graphics/material.h"
 #include "graphics/shader.h"
 
 #include <algorithm>
+
+
+EntityMesh::EntityMesh() {
+
+}
 
 void EntityMesh::render() {
 
@@ -22,7 +26,7 @@ void EntityMesh::render() {
     //update uniforms
     material.shader->setUniform("u_color", material.color);
     shader->setUniform("u_viewproj", camera->viewprojection_matrix);
-    shader->setTexture("u_texture", texture );
+    shader->setTexture("u_texture", texture, 0);
 
 
     // Render the mesh using the shader
@@ -32,7 +36,6 @@ void EntityMesh::render() {
     shader->disable();
 };
 
-void EntityMesh::update(<#float elapsed_time#>){
+void EntityMesh::update(float elapsed_time){
     
 }
-

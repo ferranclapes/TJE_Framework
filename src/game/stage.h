@@ -4,7 +4,7 @@
 //
 //  Created by Alba Arcos on 27/4/24.
 //
-
+/*
 #ifndef stage_hpp
 #define stage_hpp
 
@@ -74,5 +74,6 @@ public:
     
 };
 
-#endif /* stage_hpp */
+#endif 
+*/
 

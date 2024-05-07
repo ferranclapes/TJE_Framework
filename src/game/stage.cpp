@@ -6,7 +6,7 @@
 //
 
 #include "stage.h"
-
+/*
 void Stage::render(Image* framebuffer, float seconse_elapsed)
 {
     
@@ -101,4 +101,4 @@ void EndStage::onEnter()
 {
     
 }
-
+*/
