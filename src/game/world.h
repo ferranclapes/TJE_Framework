@@ -5,24 +5,28 @@
 #pragma once
 class Entity;
 class Matrix44;
-//class Material;
+class Material;
 class EntityMesh;
 class Mesh;
+class Camera;
 
 class World
 {
 public:
-    
+    static World* instance;
+
+    World();
    
     // Entity root;
     int window_width;
     int window_height;
+
+    Entity* root;
     
-    
-    void render();
+    void render(Camera* camera);
     void update();
     
-    //bool parseScene(const char* filename, Entity* root);
+    bool parseScene(const char* filename, Entity* root);
     
     
 };

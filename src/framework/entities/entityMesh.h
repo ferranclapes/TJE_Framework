@@ -5,7 +5,7 @@
 #include "entity.h"
 #include "graphics/material.h"
 
-/*class Mesh;
+class Mesh;
 class Camera;
 class Texture;
 class Shader;
@@ -16,6 +16,7 @@ class EntityMesh : public Entity {
 public:
 
     EntityMesh();
+    EntityMesh(Mesh* mesh, const Material& material);
 
     // Attributes of the derived class
     Mesh* mesh = nullptr;
@@ -24,13 +25,9 @@ public:
     
     bool isInstanced = false;
     std::vector<Matrix44> models; //vector de models de qunates vegades rendaritzes i a on
-    
-    Texture* texture = nullptr;
-    Shader* shader = nullptr;
-    Vector4 color;
 
     // Methods overwritten from base class
-    void render();
+    void render(Camera* camera) override;
     void update(float elapsed_time);
 };
-*/
+

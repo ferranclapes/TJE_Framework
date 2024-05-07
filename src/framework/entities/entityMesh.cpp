@@ -3,41 +3,49 @@
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
 
-/*#include <algorithm>
+#include <algorithm>
 
 
 EntityMesh::EntityMesh() {
 
 }
 
-void EntityMesh::render() {
+EntityMesh::EntityMesh(Mesh* mesh, const Material& material)
+{
+    this->mesh = mesh;
+    this->material = material;
+}
+
+void EntityMesh::render(Camera* camera) {
 
     // Get the last camera that was activated
-    Camera* camera = Camera::current;
+    //Camera* camera = Camera::current;
+
+    if (!material.shader) {
+        material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/texture.fs");
+    }
 
     // Enable shader and pass uniforms
     material.shader->enable();
     if(!isInstanced){
-        
         material.shader->setUniform("u_model", getGlobalMatrix());
-
     }
     
     //update uniforms
     material.shader->setUniform("u_color", material.color);
-    shader->setUniform("u_viewproj", camera->viewprojection_matrix);
-    shader->setTexture("u_texture", texture, 0);
+    material.shader->setUniform("u_viewprojection", camera->viewprojection_matrix);
+
+    if (material.diffuse)
+        material.shader->setTexture("u_texture", material.diffuse, 0);
 
 
     // Render the mesh using the shader
     mesh->render( GL_TRIANGLES );
 
     // Disable shader after finishing rendering
-    shader->disable();
+    material.shader->disable();
 };
 
 void EntityMesh::update(float elapsed_time){
     
 }
-
-*/

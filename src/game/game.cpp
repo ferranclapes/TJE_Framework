@@ -6,6 +6,7 @@
 #include "graphics/shader.h"
 #include "framework/input.h"
 #include "framework/entities/entityMesh.h"
+#include "game/world.h"
 
 
 // INCLUDES AFEGITS:
@@ -14,15 +15,15 @@
 #include <cmath>
 
 //some globals
-Mesh* mesh = NULL;
-Texture* texture = NULL;
+//Mesh* mesh = NULL;
+//Texture* texture = NULL;
 Shader* shader = NULL;
 float angle = 0;
 float mouse_speed = 100.0f;
 
-EntityMesh entity;
+//EntityMesh entity;
 
-Game* Game::instance = NULL;
+Game* Game::instance = NULL;s
 
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
@@ -41,14 +42,6 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
     
     GoToStage(INTRO_STAGE);*/
     
-
-	/*
-    intro_stage = new IntroStage();
-    play_stage = new PlayStage();
-    end_stage = new EndStage();
-    
-    GoToStage(INTRO_STAGE);
-    */
     
 	fps = 0;
 	frame = 0;
@@ -64,13 +57,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera = new Camera();
 	camera->lookAt(Vector3(0.f,100.f, 100.f),Vector3(0.f,0.f,0.f), Vector3(0.f,1.f,0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(70.f,window_width/(float)window_height,0.1f,10000.f); //set the projection, we want to be perspective
-
+/*
 	// Load one texture using the Texture Manager
 	texture = Texture::Get("data/textures/texture.tga");
 
 	// Example of loading Mesh from Mesh Manager
     mesh = Mesh::Get("data/meshes/box.ASE");
-	
+	*/
 
 	// Example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
@@ -99,10 +92,10 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
    
-	// Create model matrix for cube
-	Matrix44 m;
-	m.rotate(angle*DEG2RAD, Vector3(0.0f, 1.0f, 0.0f));
-
+	//// Create model matrix for cube
+	//Matrix44 m;
+	//m.rotate(angle*DEG2RAD, Vector3(0.0f, 1.0f, 0.0f));
+	/*
 	if(shader)
 	{
 		// Enable shader
@@ -121,6 +114,8 @@ void Game::render(void)
 		// Disable shader
 		shader->disable();
 	}
+	*/
+	World::instance->render(camera);
 
 	// Draw the floor grid
 	drawGrid();
@@ -211,11 +206,11 @@ void Game::onResize(int width, int height)
 /*
 void Game::GoToStage(int stage_to_go) {
     
- /*   if(current_stage == stage_to_go){
+   if(current_stage == stage_to_go){
         current_stage->onExit();
     }
     current_stage = stages[stage_to_go];
-    current_stage->onEnter();*/
+    current_stage->onEnter();
     
 }
 

@@ -2,12 +2,23 @@
 #include <fstream>
 #include "framework/utils.h"
 #include "graphics/material.h"
+#include "framework/entities/entityMesh.h"
+#include "graphics/mesh.h"
+#include "framework/camera.h"
 
-//parseScene("data/myscene.scene", &root);
+//World* World::instance = NULL;
 
-void World::render()
+World::World()
 {
-    
+    root = new Entity();
+    instance = this;
+    parseScene("data/maps/myscene.scene", root);
+}
+
+void World::render(Camera* camera)
+{
+
+    root->render(camera);
 }
 
 void World::update()
@@ -15,7 +26,7 @@ void World::update()
   
 }
 
-bool parseScene(const char* filename, Entity* root)
+bool World::parseScene(const char* filename, Entity* root)
 {
     std::cout << " + Scene loading: " << filename << "..." << std::endl;
 
@@ -29,6 +40,8 @@ bool parseScene(const char* filename, Entity* root)
     std::string scene_info, mesh_name, model_data;
     file >> scene_info; file >> scene_info;
     int mesh_count = 0;
+
+    std::map<std::string, sRenderData> meshes_to_load;
 
     // Read file line by line and store mesh path and model info in separated variables
     while (file >> mesh_name >> model_data)
@@ -100,3 +113,4 @@ bool parseScene(const char* filename, Entity* root)
     std::cout << "Scene [OK]" << " Meshes added: " << mesh_count << std::endl;
     return true;
 }
+
