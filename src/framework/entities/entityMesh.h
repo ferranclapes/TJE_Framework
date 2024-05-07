@@ -5,7 +5,7 @@
 #include "entity.h"
 #include "graphics/material.h"
 
-class Mesh;
+/*class Mesh;
 class Camera;
 class Texture;
 class Shader;
@@ -33,3 +33,4 @@ public:
     void render();
     void update(float elapsed_time);
 };
+*/

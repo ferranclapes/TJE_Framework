@@ -5,8 +5,8 @@
 //  Created by Alba Arcos on 27/4/24.
 //
 
-#include "stage.h"
-/*
+/*#include "stage.h"
+
 void Stage::render(Image* framebuffer, float seconse_elapsed)
 {
     

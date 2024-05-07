@@ -20,8 +20,7 @@ public:
 	static Game* instance;
 
     // STAGES
-	/*
-    Stage* current_stage;
+  /*  Stage* current_stage;
     IntroStage* intro_stage;
     PlayStage* play_stage;
     EndStage* end_stage;

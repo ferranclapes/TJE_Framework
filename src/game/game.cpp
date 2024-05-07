@@ -35,6 +35,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
     
     // STAGES
+    /*intro_stage = new IntroStage();
+    play_stage = new PlayStage();
+    end_stage = new EndStage();
+    
+    GoToStage(INTRO_STAGE);*/
+    
+
 	/*
     intro_stage = new IntroStage();
     play_stage = new PlayStage();
@@ -62,7 +69,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	texture = Texture::Get("data/textures/texture.tga");
 
 	// Example of loading Mesh from Mesh Manager
-	mesh = Mesh::Get("data/meshes/sphere.obj");
+    mesh = Mesh::Get("data/meshes/box.ASE");
+	
 
 	// Example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
@@ -71,6 +79,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
     
     //CRIDAR A parseScene
+    
 }
 
 //what to do when the image has to be draw
@@ -202,11 +211,11 @@ void Game::onResize(int width, int height)
 /*
 void Game::GoToStage(int stage_to_go) {
     
-    if(current_stage == stage_to_go){
+ /*   if(current_stage == stage_to_go){
         current_stage->onExit();
     }
     current_stage = stages[stage_to_go];
-    current_stage->onEnter();
+    current_stage->onEnter();*/
     
 }
 

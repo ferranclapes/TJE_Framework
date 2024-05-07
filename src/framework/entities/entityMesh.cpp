@@ -3,7 +3,7 @@
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
 
-#include <algorithm>
+/*#include <algorithm>
 
 
 EntityMesh::EntityMesh() {
@@ -39,3 +39,5 @@ void EntityMesh::render() {
 void EntityMesh::update(float elapsed_time){
     
 }
+
+*/
