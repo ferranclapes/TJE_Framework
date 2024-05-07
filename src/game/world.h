@@ -3,7 +3,11 @@
 */
 
 #pragma once
-
+class Entity;
+class Matrix44;
+//class Material;
+class EntityMesh;
+class Mesh;
 
 class World
 {
@@ -18,5 +22,8 @@ public:
     void render();
     void update();
     
+    //bool parseScene(const char* filename, Entity* root);
+    
     
 };
+
