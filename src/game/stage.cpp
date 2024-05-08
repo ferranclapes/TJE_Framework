@@ -5,9 +5,15 @@
 //  Created by Alba Arcos on 27/4/24.
 //
 
-/*#include "stage.h"
+#include "stage.h"
+#include "framework/input.h"
+#include "game/World.h"
+#include "framework/entities/entity.h"
+#include "framework/entities/EntityCollider.h"
+#include "game/game.h"
+#include "graphics/mesh.h"
 
-void Stage::render(Image* framebuffer, float seconse_elapsed)
+void Stage::render(float seconse_elapsed)
 {
     
 }
@@ -22,7 +28,7 @@ IntroStage::IntroStage() {
     
 }
 
-void IntroStage::render(Image* framebuffer, float seconse_elapsed)
+void IntroStage::render(float seconse_elapsed)
 {
 
 }
@@ -52,15 +58,54 @@ PlayStage::PlayStage()
    
 }
 
-void PlayStage::render(Image* framebuffer, float time)
+void PlayStage::render(float time)
 {
    
 }
 
 void PlayStage::update(float seconds_elapsed)
 {
+    World::GetInstance()->update(); //seconds_elapsed?
     
-   
+    if(Input::isKeyPressed(SDL_SCANCODE_T))
+    {
+        //Get ray direction
+        Vector2 mouse_pos = Input::mouse_position;
+        Vector3 ray_origin = camera->eye;
+        
+        camera->getRayDirection(mouse_pos.x, mouse_pos.y, Game::instance->window_width, Game::instance->window_height);
+        
+        // Fill collision vector
+        std::vector<Vector3> collisions;
+        
+        for (Entity* e: World::GetInstance()->root->children)
+        {
+            EntityCollider* collider = dynamic_cast<EntityCollider*>(e);
+            
+            if(!collider)
+            {
+                continue;
+            }
+            
+            Vector3 col_point;
+            Vector3 col_norm;
+            
+            if(collider->mesh->testRayCollision(collider->model, ray_origin, ray_origin, col_point, col_norm)) //ray_direction
+            {
+                //si xoca amb algu fico a dins
+                collisions.push_back(col_point);
+            }
+            
+            //Generate entities
+            for(auto& col_point : collisions)
+            {
+                Mesh* mesh = Mesh::Get("data/meshes/box.ASE");
+                EntityMesh* new_entity = new EntityMesh(mesh, {});
+                new_entity->model.setTranslation(col_point);
+                //World::GetInstance()->addEntity(new_entity);
+            }
+        }
+    }
 }
 
 void PlayStage::onExit()
@@ -81,7 +126,7 @@ EndStage::EndStage()
        
 }
 
-void EndStage::render(Image* framebuffer, float seconse_elapsed)
+void EndStage::render(float seconse_elapsed)
 {
     
     
@@ -101,4 +146,4 @@ void EndStage::onEnter()
 {
     
 }
-*/
+
