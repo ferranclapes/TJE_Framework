@@ -14,19 +14,25 @@ enum eStages{
     END_STAGE
 };
 
+
+class Stage;
+class IntroStage;
+class PlayStage;
+class EndStage;
+
 class Game
 {
 public:
 	static Game* instance;
 
     // STAGES
-  /*  Stage* current_stage;
+    Stage* current_stage = nullptr;
     IntroStage* intro_stage;
     PlayStage* play_stage;
     EndStage* end_stage;
     
     std::vector<Stage*> stages;
-    */
+    
 	//window
 	SDL_Window* window;
 	int window_width;

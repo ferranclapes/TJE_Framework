@@ -58,6 +58,13 @@ Vector3 Camera::getLocalVector(const Vector3& v)
 
 void Camera::move(Vector3 delta)
 {
+	//Vector3 localDelta = getLocalVector(delta);
+	eye = eye - delta;
+	center = center - delta;
+	updateViewMatrix();
+}
+
+void Camera::zoom(Vector3 delta) {
 	Vector3 localDelta = getLocalVector(delta);
 	eye = eye - localDelta;
 	center = center - localDelta;

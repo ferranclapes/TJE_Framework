@@ -65,13 +65,16 @@ void PlayStage::render(float time)
 
 void PlayStage::update(float seconds_elapsed)
 {
-    World::GetInstance()->update(); //seconds_elapsed?
+    World::GetInstance()->update();  //seconds elapsed?
     
     if(Input::isKeyPressed(SDL_SCANCODE_T))
     {
+        Camera* camera = Camera::current;
+
         //Get ray direction
         Vector2 mouse_pos = Input::mouse_position;
         Vector3 ray_origin = camera->eye;
+        Vector3 ray_direction = camera->center;
         
         camera->getRayDirection(mouse_pos.x, mouse_pos.y, Game::instance->window_width, Game::instance->window_height);
         
@@ -99,10 +102,10 @@ void PlayStage::update(float seconds_elapsed)
             //Generate entities
             for(auto& col_point : collisions)
             {
-                Mesh* mesh = Mesh::Get("data/meshes/box.ASE");
+                Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/towerRound_roofA.obj");
                 EntityMesh* new_entity = new EntityMesh(mesh, {});
                 new_entity->model.setTranslation(col_point);
-                //World::GetInstance()->addEntity(new_entity);
+                World::GetInstance()->addEntity(new_entity);
             }
         }
     }

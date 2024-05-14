@@ -30,6 +30,7 @@ public:
     bool parseScene(const char* filename, Entity* root);
 
     static World* GetInstance();
+    void addEntity(Entity* new_entity);
     
     
 };

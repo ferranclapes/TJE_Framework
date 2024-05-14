@@ -10,7 +10,7 @@
 
 
 // INCLUDES AFEGITS:
-//#include "stage.h"
+#include "stage.h"
 
 #include <cmath>
 
@@ -19,7 +19,7 @@
 //Texture* texture = NULL;
 Shader* shader = NULL;
 float angle = 0;
-float mouse_speed = 100.0f;
+float mouse_speed = 20.0f;
 
 //EntityMesh entity;
 
@@ -34,13 +34,23 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	instance = this;
 	must_exit = false;
 
+
+	// Create our camera
+	camera = new Camera();
+	camera->lookAt(Vector3(0.f, 20.f, 20.f), Vector3(0.f, 0.f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	camera->setPerspective(70.f, window_width / (float)window_height, 0.1f, 10000.f); //set the projection, we want to be perspective
+
     
     // STAGES
-    /*intro_stage = new IntroStage();
+    intro_stage = new IntroStage();
     play_stage = new PlayStage();
     end_stage = new EndStage();
+
+	stages.emplace_back(intro_stage);
+	stages.emplace_back(play_stage);
+	stages.emplace_back(end_stage);
     
-    GoToStage(INTRO_STAGE);*/
+    GoToStage(PLAY_STAGE);
     
     
 	fps = 0;
@@ -53,10 +63,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	glEnable( GL_CULL_FACE ); //render both sides of every triangle
 	glEnable( GL_DEPTH_TEST ); //check the occlusions using the Z buffer
 
-	// Create our camera
-	camera = new Camera();
-	camera->lookAt(Vector3(0.f,100.f, 100.f),Vector3(0.f,0.f,0.f), Vector3(0.f,1.f,0.f)); //position the camera and point to 0,0,0
-	camera->setPerspective(70.f,window_width/(float)window_height,0.1f,10000.f); //set the projection, we want to be perspective
+	
 /*
 	// Load one texture using the Texture Manager
 	texture = Texture::Get("data/textures/texture.tga");
@@ -79,7 +86,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 void Game::render(void)
 {
 	// Set the clear color (the background color)
-	glClearColor(1.0, 0.0, 0.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -147,6 +154,10 @@ void Game::update(double seconds_elapsed)
 	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) camera->move(Vector3(0.0f, 0.0f,-1.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) camera->move(Vector3(-1.0f,0.0f, 0.0f) * speed);
+	if (Input::isKeyPressed(SDL_SCANCODE_Z)) camera->zoom(Vector3(0.0f, 0.0f, 1.0f) * speed);
+	if (Input::isKeyPressed(SDL_SCANCODE_X)) camera->zoom(Vector3(0.0f, 0.0f, -1.0f) * speed);
+
+	current_stage->update(seconds_elapsed);
 }
 
 //Keyboard event handler (sync input)
@@ -203,15 +214,15 @@ void Game::onResize(int width, int height)
 	window_height = height;
 }
 
-/*
+
 void Game::GoToStage(int stage_to_go) {
     
-   if(current_stage == stage_to_go){
+   /*if(current_stage == stage_to_go){
         current_stage->onExit();
-    }
+    }*/
     current_stage = stages[stage_to_go];
     current_stage->onEnter();
     
 }
 
-*/
+

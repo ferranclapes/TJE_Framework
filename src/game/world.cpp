@@ -5,6 +5,7 @@
 #include "framework/entities/entityMesh.h"
 #include "graphics/mesh.h"
 #include "framework/camera.h"
+#include "framework/entities/entityTower.h"
 
 World* World::instance = nullptr;
 
@@ -31,6 +32,10 @@ World* World::GetInstance() {
         return new World();
     }
     return instance;
+}
+
+void World::addEntity(Entity* new_entity) {
+    root->addChild(new_entity);
 }
 
 bool World::parseScene(const char* filename, Entity* root)
@@ -85,12 +90,13 @@ bool World::parseScene(const char* filename, Entity* root)
         Material mat = render_data.material;
         EntityMesh* new_entity = nullptr;
 
-        size_t tag = data.first.find("@tag");
+        size_t tag = data.first.find("clickable");
 
         if (tag != std::string::npos) {
-            Mesh* mesh = Mesh::Get("...");
+            Mesh* mesh = Mesh::Get(mesh_name.c_str());
+            //Mesh* mesh = Mesh::Get("data/maps/scene/towerRound_base.001/towerRound_base.001_clickable.obj");
             // Create a different type of entity
-            // new_entity = new ...
+            new_entity = new EntityTower(mesh, mat);
         }
         else {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());

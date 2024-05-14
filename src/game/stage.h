@@ -49,7 +49,6 @@ public:
     
     //Constructor
     PlayStage();
-    Camera* camera;
     
     void render(float seconse_elapsed) override;
     void update(float seconds_elapsed) override;

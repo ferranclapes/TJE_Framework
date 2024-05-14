@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib towerRound_base.001.mtl
-o towerRound_base.004
+o towerRound_base_clickable
 v 0.000000 -0.500000 -0.000000
 v 0.129410 -0.482963 -0.000000
 v -0.000000 -0.500000 -0.100000
