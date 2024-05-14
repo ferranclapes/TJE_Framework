@@ -12,8 +12,8 @@ class EntityCollider : public EntityMesh {
 public:
     
     EntityCollider() {};
-    EntityCollider(Mesh* mesh, const Material& material) {
-        EntityMesh(mesh, material);
+    EntityCollider(Mesh* mesh, const Material& material) : EntityMesh(mesh, material) {
+        
     }
     
     bool is_dynamic = false;

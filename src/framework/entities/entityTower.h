@@ -14,8 +14,8 @@ class EntityTower : public EntityCollider {
 public:
 
     EntityTower();
-    EntityTower(Mesh* mesh, const Material& material) {
-        EntityCollider(mesh, material);
+    EntityTower(Mesh* mesh, const Material& material) : EntityCollider(mesh, material) {
+        
     }
 
 

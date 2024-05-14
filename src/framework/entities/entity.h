@@ -9,7 +9,7 @@ class Entity {
 
 public:
 
-	Entity() {}; 			// Constructor
+	Entity() {};			// Constructor
 	virtual ~Entity() {}; 	// Destructor
 
 	std::string name;

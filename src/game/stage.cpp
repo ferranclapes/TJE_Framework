@@ -74,13 +74,12 @@ void PlayStage::update(float seconds_elapsed)
         //Get ray direction
         Vector2 mouse_pos = Input::mouse_position;
         Vector3 ray_origin = camera->eye;
-        Vector3 ray_direction = camera->center;
+        Vector3 ray_direction = camera->getRayDirection(mouse_pos.x, mouse_pos.y, Game::instance->window_width, Game::instance->window_height);
         
-        camera->getRayDirection(mouse_pos.x, mouse_pos.y, Game::instance->window_width, Game::instance->window_height);
         
         // Fill collision vector
         std::vector<Vector3> collisions;
-        
+
         for (Entity* e: World::GetInstance()->root->children)
         {
             EntityCollider* collider = dynamic_cast<EntityCollider*>(e);
@@ -93,20 +92,19 @@ void PlayStage::update(float seconds_elapsed)
             Vector3 col_point;
             Vector3 col_norm;
             
-            if(collider->mesh->testRayCollision(collider->model, ray_origin, ray_origin, col_point, col_norm)) //ray_direction
+            if(collider->mesh->testRayCollision(collider->model, ray_origin, ray_direction, col_point, col_norm)) //ray_direction
             {
                 //si xoca amb algu fico a dins
                 collisions.push_back(col_point);
             }
-            
-            //Generate entities
-            for(auto& col_point : collisions)
-            {
-                Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/towerRound_roofA.obj");
-                EntityMesh* new_entity = new EntityMesh(mesh, {});
-                new_entity->model.setTranslation(col_point);
-                World::GetInstance()->addEntity(new_entity);
-            }
+        }
+        //Generate entities
+        for (auto& col_point : collisions)
+        {
+            Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/towerRound_roofA.obj");
+            EntityMesh* new_entity = new EntityMesh(mesh, {});
+            new_entity->model.setTranslation(col_point);
+            World::GetInstance()->addEntity(new_entity);
         }
     }
 }

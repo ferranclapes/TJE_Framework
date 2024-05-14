@@ -94,7 +94,6 @@ bool World::parseScene(const char* filename, Entity* root)
 
         if (tag != std::string::npos) {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
-            //Mesh* mesh = Mesh::Get("data/maps/scene/towerRound_base.001/towerRound_base.001_clickable.obj");
             // Create a different type of entity
             new_entity = new EntityTower(mesh, mat);
         }
