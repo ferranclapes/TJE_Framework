@@ -95,7 +95,13 @@ bool World::parseScene(const char* filename, Entity* root)
         if (tag != std::string::npos) {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
             // Create a different type of entity
-            new_entity = new EntityTower(mesh, mat);
+            size_t mine = data.first.find("mine");
+            if (mine != std::string::npos) {
+                new_entity = new EntityTower(mesh, mat, true);
+            }
+            else {
+                new_entity = new EntityTower(mesh, mat, false);
+            }
         }
         else {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
@@ -121,7 +127,6 @@ bool World::parseScene(const char* filename, Entity* root)
         // Add entity to scene root
         root->addChild(new_entity);
     }
-
     std::cout << "Scene [OK]" << " Meshes added: " << mesh_count << std::endl;
     return true;
 }

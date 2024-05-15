@@ -122,7 +122,8 @@ void Game::render(void)
 		shader->disable();
 	}
 	*/
-	World::GetInstance()->render(camera);
+	current_stage->render();
+	//World::GetInstance()->render(camera);
 
 	// Draw the floor grid
 	drawGrid();
@@ -142,14 +143,14 @@ void Game::update(double seconds_elapsed)
 	angle += (float)seconds_elapsed * 10.0f;
 
 	// Mouse input to rotate the cam
-	if (Input::isMousePressed(SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
-	{
-		camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f,-1.0f,0.0f));
-		camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector( Vector3(-1.0f,0.0f,0.0f)));
-	}
+	//if (Input::isMousePressed(SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
+	//{
+	//	camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f,-1.0f,0.0f));
+	//	camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector( Vector3(-1.0f,0.0f,0.0f)));
+	//}
 
 	// Async input to move the camera around
-	if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT) ) speed *= 10; //move faster with left shift
+ 	if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT) ) speed *= 10; //move faster with left shift
 	if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) camera->move(Vector3(0.0f, 0.0f, 1.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) camera->move(Vector3(0.0f, 0.0f,-1.0f) * speed);
 	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
@@ -177,12 +178,12 @@ void Game::onKeyUp(SDL_KeyboardEvent event)
 
 void Game::onMouseButtonDown( SDL_MouseButtonEvent event )
 {
-	if (event.button == SDL_BUTTON_MIDDLE) //middle mouse
-	{
-		mouse_locked = !mouse_locked;
-		SDL_ShowCursor(!mouse_locked);
-		SDL_SetRelativeMouseMode((SDL_bool)(mouse_locked));
-	}
+	//if (event.button == SDL_BUTTON_MIDDLE) //middle mouse
+	//{
+	//	mouse_locked = !mouse_locked;
+	//	SDL_ShowCursor(!mouse_locked);
+	//	SDL_SetRelativeMouseMode((SDL_bool)(mouse_locked));
+	//}
 }
 
 void Game::onMouseButtonUp(SDL_MouseButtonEvent event)

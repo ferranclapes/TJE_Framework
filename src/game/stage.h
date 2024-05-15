@@ -13,11 +13,18 @@
 
 #include "framework/camera.h"
 
+enum TowerType {
+    EMPTY,
+    MINE,
+    BALLISTA,
+    CATAPULT
+};
+
 class Stage{
     
 public:
    
-    virtual void render(float seconse_elapsed);
+    virtual void render();
     virtual void update(float seconse_elapsed);
     
     virtual void onEnter() {};
@@ -34,13 +41,12 @@ public:
     //Constructor
     IntroStage();
     
-    void render(float seconse_elapsed) override;
+    void render() override;
     void update(float seconse_elapsed) override;
     
     virtual void onEnter() override;
     virtual void onExit() override;
 };
-
 
 class PlayStage : public Stage
 { //per heredar
@@ -50,11 +56,20 @@ public:
     //Constructor
     PlayStage();
     
-    void render(float seconse_elapsed) override;
+    void render() override;
     void update(float seconds_elapsed) override;
+
+    void PlaceTower();
     
     virtual void onEnter() override;
     virtual void onExit() override;
+
+    const char* towerType = "towerRound_sampleA.obj";
+    int typeToPlace = MINE;
+
+    bool moneyCounted = false;
+    int money = 20;
+    int numMines = 0;
    
 
 };
@@ -66,7 +81,7 @@ public:
     // Constructor
     EndStage();
     
-    void render(float seconse_elapsed) override;
+    void render() override;
     void update(float seconse_elapsed) override;
     
     virtual void onEnter() override;

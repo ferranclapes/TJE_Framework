@@ -51,7 +51,7 @@ scene/tile_straight.009/tile_straight.009.obj -0.0,0.0,-1.0,0.0,1.0,-0.0,-0.0,0.
 scene/tile.002/tile.002.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,1.0,0.0,3.0,1.0
 scene/tile_treeQuad.001/tile_treeQuad.001.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,2.0,0.1,3.0,1.0
 scene/tile_cornerLarge.005/tile_cornerLarge.005.obj -0.0,0.0,-1.0,0.0,1.0,-0.0,-0.0,0.0,-0.0,-1.0,0.0,0.0,-4.5,0.0,7.5,1.0
-scene/towerRound_base.001_clickable/towerRound_base.001_clickable.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,1.88823,0.3,6.54488,1.0
+scene/towerRound_base.001_clickable_mine/towerRound_base.001_clickable_mine.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,1.88823,0.3,6.54488,1.0
 scene/tile_straight.005/tile_straight.005.obj -0.0,0.0,-1.0,0.0,1.0,-0.0,-0.0,0.0,-0.0,-1.0,0.0,0.0,-2.0,0.0,8.0,1.0
 scene/tile_straight.001/tile_straight.001.obj -0.0,0.0,-1.0,0.0,1.0,-0.0,-0.0,0.0,-0.0,-1.0,0.0,0.0,-1.0,-0.0,8.0,1.0
 scene/tile_cornerRound.001/tile_cornerRound.001.obj -0.0,-0.0,1.0,0.0,-1.0,-0.0,-0.0,0.0,0.0,-1.0,-0.0,0.0,0.0,0.0,8.0,1.0
@@ -68,7 +68,7 @@ scene/tile.001/tile.001.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,4.0
 scene/tile.001/tile.001.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,3.0,-0.0,7.0,1.0
 scene/tile_crystal.001/tile_crystal.001.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,3.0,0.1,6.0,1.0
 scene/towerRound_base.004_clickable/towerRound_base.004_clickable.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-3.53682,0.2,6.45385,1.0
-scene/towerRound_base.003_clickable/towerRound_base.003_clickable.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-1.93479,0.2,1.24726,1.0
+scene/towerRound_base.003_clickable_mine/towerRound_base.003_clickable_mine.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-1.93479,0.2,1.24726,1.0
 scene/towerRound_base.002_clickable/towerRound_base.002_clickable.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-0.76968,0.2,3.97799,1.0
 scene/towerRound_base.005_clickable/towerRound_base.005_clickable.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,4.0182,0.2,2.9039,1.0
 scene/tile_treeDouble/tile_treeDouble.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,6.0,1.0
