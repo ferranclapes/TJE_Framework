@@ -12,6 +12,7 @@
 #include "framework/entities/entity.h"
 #include "framework/entities/EntityCollider.h"
 #include "framework/entities/entityTower.h"
+#include "framework/entities/entityEnemy.h"
 #include "game/game.h"
 #include "graphics/mesh.h"
 
@@ -49,6 +50,8 @@ void IntroStage::onEnter()
 {
     
 }
+
+
 
 
 // PLAY STAGE
@@ -95,6 +98,16 @@ void PlayStage::update(float seconds_elapsed)
         moneyCounted = false;
     }
 
+
+    if (int(Game::instance->time) == 2) {
+        Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoRed.obj");
+        EntityEnemy* new_enemy = new EntityEnemy(mesh, {});
+        new_enemy->model.setTranslation(Vector3(-5,0.3,0));
+        new_enemy->model.scale(0.7, 0.7, 0.7);
+        World::GetInstance()->addEntity(new_enemy);
+        enemies.emplace_back(new_enemy);
+    }
+
 }
 
 void PlayStage::PlaceTower() {
@@ -118,8 +131,6 @@ void PlayStage::PlaceTower() {
         {
             continue;
         }
-
-        
 
         Vector3 col_point;
         Vector3 col_norm;
@@ -177,6 +188,12 @@ void PlayStage::PlaceTower() {
     }
 }
 
+void PlayStage::RemoveEnemy(EntityEnemy* enemy) {
+    auto it = std::find(enemies.begin(), enemies.end(), enemy);
+    enemies.erase(it);
+
+}
+
 void PlayStage::onExit()
 {
     
@@ -186,6 +203,9 @@ void PlayStage::onEnter()
 {
     
 }
+
+
+
 
 // END STAGE
     

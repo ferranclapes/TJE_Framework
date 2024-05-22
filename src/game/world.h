@@ -31,6 +31,7 @@ public:
 
     static World* GetInstance();
     void addEntity(Entity* new_entity);
+    void removeEntity(Entity* e);
     
     
 };

@@ -38,6 +38,10 @@ void World::addEntity(Entity* new_entity) {
     root->addChild(new_entity);
 }
 
+void World::removeEntity(Entity* e) {
+    root->removeChild(e);
+}
+
 bool World::parseScene(const char* filename, Entity* root)
 {
     std::cout << " + Scene loading: " << filename << "..." << std::endl;

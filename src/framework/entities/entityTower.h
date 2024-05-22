@@ -9,6 +9,7 @@
 class Camera;
 class Mesh;
 class Material;
+class EntityEnemy;
 
 
 
@@ -21,8 +22,12 @@ public:
         isMine = im;
     };
 
-    bool isMine;
+    void FindEnemies(std::vector<EntityEnemy*> enemies);
+    void Shoot(EntityEnemy* enemy);
+
+    bool isMine = false;
     int towerType = EMPTY;
+    float distance = 5.0;
 
 
     // Methods overwritten from base class

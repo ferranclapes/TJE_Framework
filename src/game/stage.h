@@ -13,6 +13,9 @@
 
 #include "framework/camera.h"
 
+class EntityEnemy;
+
+
 enum TowerType {
     EMPTY,
     MINE,
@@ -70,7 +73,9 @@ public:
     bool moneyCounted = false;
     int money = 20;
     int numMines = 0;
-   
+
+    std::vector<EntityEnemy*> enemies;
+    void RemoveEnemy(EntityEnemy* enemy);
 
 };
 
