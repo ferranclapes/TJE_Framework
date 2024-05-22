@@ -11,9 +11,8 @@
 
 void EntityTower::update(float seconds_elapsed) {
 	if (towerType == BALLISTA) {
+		FindEnemies();
 		if (timeToShoot <= 0) {
-			FindEnemies();
-			timeToShoot = cooldown;
 		}
 		else {
 			timeToShoot -= seconds_elapsed;
@@ -33,7 +32,10 @@ void EntityTower::FindEnemies() {
 
 	if (closest) {
 		Aim(closest);
-		Shoot(closest);
+		if (timeToShoot <= 0) {
+			Shoot(closest);
+			timeToShoot = cooldown;
+		}
 	}
 }
 
@@ -42,5 +44,6 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 }
 
 void EntityTower::Aim(EntityEnemy* enemy) {
-
+	float angle = model.getYawRotationToAimTo(enemy->model.getTranslation());
+	model.rotate(angle, Vector3(0, 0, -1));
 }
