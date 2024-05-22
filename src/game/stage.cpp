@@ -66,8 +66,14 @@ PlayStage::PlayStage()
 void PlayStage::render()
 {
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
+    for (EntityEnemy* e : World::GetInstance()->enemies) {
+        drawText(100, 100, std::to_string(e->health), Vector3(1, 1, 1), 5);
+    }
+
     World::GetInstance()->render(Camera::current);
 }
+
+bool eny = true;
 
 void PlayStage::update(float seconds_elapsed)
 {
@@ -98,14 +104,17 @@ void PlayStage::update(float seconds_elapsed)
     }
 
 
-    if (int(Game::instance->time) == 2) {
+    if (int(Game::instance->time) == 2 && eny) {
         Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoRed.obj");
         EntityEnemy* new_enemy = new EntityEnemy(mesh, {});
         new_enemy->model.setTranslation(Vector3(-5,0.3,0));
         new_enemy->model.scale(0.7, 0.7, 0.7);
         World::GetInstance()->addEntity(new_enemy);
         World::GetInstance()->enemies.emplace_back(new_enemy);
+        eny = false;
     }
+
+    World::GetInstance()->update(seconds_elapsed);
 }
 
 void PlayStage::PlaceTower() {
@@ -181,11 +190,12 @@ void PlayStage::PlaceTower() {
         std::string meshPath = std::string("data/Kenney/Models/OBJ format/") + std::string(towerType);
         Mesh* mesh = Mesh::Get(meshPath.c_str());
         EntityMesh* new_entity = new EntityMesh(mesh, {});
-        new_entity->model.setTranslation(emesh->model.getTranslation() + Vector3(0, 0.2, 0));
-        World::GetInstance()->addEntity(new_entity);
+        new_entity->model.setTranslation(Vector3(0, 0, -0.2));
+        new_entity->model.rotate(PI / 2, Vector3(1, 0, 0));
+        //World::GetInstance()->addEntity(new_entity);
+        emesh->addChild((Entity*) new_entity);
     }
 }
-
 
 void PlayStage::onExit()
 {

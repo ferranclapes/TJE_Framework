@@ -23,9 +23,9 @@ void World::render(Camera* camera)
     root->render(camera);
 }
 
-void World::update()
+void World::update(float seconds_elapsed)
 {
-  
+    root->update(seconds_elapsed);
 }
 
 World* World::GetInstance() {
@@ -109,7 +109,6 @@ bool World::parseScene(const char* filename, Entity* root)
             size_t mine = data.first.find("mine");
             if (mine != std::string::npos) {
                 new_entity = new EntityTower(mesh, mat, true);
-                towers.emplace_back(dynamic_cast<EntityTower*>(new_entity));
             }
             else {
                 new_entity = new EntityTower(mesh, mat, false);

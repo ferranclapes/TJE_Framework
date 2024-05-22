@@ -13,7 +13,6 @@ class EntityMesh;
 class Mesh;
 class Camera;
 class EntityEnemy;
-class EntityTower;
 
 class World
 {
@@ -29,13 +28,11 @@ public:
 
     Entity* root;
 
-    std::vector<EntityTower*> towers;
-
     std::vector<EntityEnemy*> enemies;
     void RemoveEnemy(EntityEnemy* enemy);
     
     void render(Camera* camera);
-    void update();
+    void update(float seconds_elapsed);
     
     bool parseScene(const char* filename, Entity* root);
 

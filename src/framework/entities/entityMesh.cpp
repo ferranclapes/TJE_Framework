@@ -18,6 +18,11 @@ EntityMesh::EntityMesh(Mesh* mesh, const Material& material)
 
 void EntityMesh::render(Camera* camera) {
 
+    for (int i = 0; i < children.size(); ++i) {
+        children[i]->render(camera);
+    }
+
+
     // Get the last camera that was activated
     //Camera* camera = Camera::current;
 

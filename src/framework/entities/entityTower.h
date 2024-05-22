@@ -22,13 +22,18 @@ public:
         isMine = im;
     };
 
-    void FindEnemies(std::vector<EntityEnemy*> enemies);
+    void update(float seconds_elapsed) override;
+
+    void FindEnemies();
     void Shoot(EntityEnemy* enemy);
+    void Aim(EntityEnemy* enemy);
 
     bool isMine = false;
     int towerType = EMPTY;
     float distance = 5.0;
     int damage = 2;
+    float cooldown = 1.0;
+    float timeToShoot = 0.0;
 
 
     // Methods overwritten from base class
