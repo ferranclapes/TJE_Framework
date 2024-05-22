@@ -71,7 +71,6 @@ void PlayStage::render()
 
 void PlayStage::update(float seconds_elapsed)
 {
-    World::GetInstance()->update();  //seconds elapsed?
     
     if(Input::isMousePressed(SDL_BUTTON_LEFT))
     {
@@ -105,9 +104,8 @@ void PlayStage::update(float seconds_elapsed)
         new_enemy->model.setTranslation(Vector3(-5,0.3,0));
         new_enemy->model.scale(0.7, 0.7, 0.7);
         World::GetInstance()->addEntity(new_enemy);
-        enemies.emplace_back(new_enemy);
+        World::GetInstance()->enemies.emplace_back(new_enemy);
     }
-
 }
 
 void PlayStage::PlaceTower() {
@@ -188,11 +186,6 @@ void PlayStage::PlaceTower() {
     }
 }
 
-void PlayStage::RemoveEnemy(EntityEnemy* enemy) {
-    auto it = std::find(enemies.begin(), enemies.end(), enemy);
-    enemies.erase(it);
-
-}
 
 void PlayStage::onExit()
 {

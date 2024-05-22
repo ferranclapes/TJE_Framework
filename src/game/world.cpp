@@ -6,6 +6,7 @@
 #include "graphics/mesh.h"
 #include "framework/camera.h"
 #include "framework/entities/entityTower.h"
+#include "framework/entities/entityEnemy.h"
 
 World* World::instance = nullptr;
 
@@ -40,6 +41,12 @@ void World::addEntity(Entity* new_entity) {
 
 void World::removeEntity(Entity* e) {
     root->removeChild(e);
+}
+
+void World::RemoveEnemy(EntityEnemy* enemy) {
+    auto it = std::find(enemies.begin(), enemies.end(), enemy);
+    enemies.erase(it);
+
 }
 
 bool World::parseScene(const char* filename, Entity* root)
@@ -102,6 +109,7 @@ bool World::parseScene(const char* filename, Entity* root)
             size_t mine = data.first.find("mine");
             if (mine != std::string::npos) {
                 new_entity = new EntityTower(mesh, mat, true);
+                towers.emplace_back(dynamic_cast<EntityTower*>(new_entity));
             }
             else {
                 new_entity = new EntityTower(mesh, mat, false);

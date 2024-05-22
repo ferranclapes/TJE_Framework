@@ -25,9 +25,5 @@ public:
 
     float velocity = 1;
     int health = 10;
-
-    // Methods overwritten from base class
-    //void render(Camera* camera) override;
-    //void update(float elapsed_time);
 };
 

@@ -2,13 +2,18 @@
 	This class encapsulates the game, is in charge of creating the game, getting the user input, process the update and render.
 */
 
+
 #pragma once
+#include <vector>
+
 class Entity;
 class Matrix44;
 class Material;
 class EntityMesh;
 class Mesh;
 class Camera;
+class EntityEnemy;
+class EntityTower;
 
 class World
 {
@@ -23,6 +28,11 @@ public:
     int window_height;
 
     Entity* root;
+
+    std::vector<EntityTower*> towers;
+
+    std::vector<EntityEnemy*> enemies;
+    void RemoveEnemy(EntityEnemy* enemy);
     
     void render(Camera* camera);
     void update();

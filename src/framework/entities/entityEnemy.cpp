@@ -19,5 +19,6 @@ void EntityEnemy::GetDamage(int damage) {
 
 void EntityEnemy::Die() {
 	World::GetInstance()->removeEntity(this);
-
+	World::GetInstance()->RemoveEnemy(this);
+	delete this;
 }

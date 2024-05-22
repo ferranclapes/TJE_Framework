@@ -24,5 +24,5 @@ void EntityTower::FindEnemies(std::vector<EntityEnemy*> enemies) {
 }
 
 void EntityTower::Shoot(EntityEnemy* enemy) {
-
+	enemy->GetDamage(damage);
 }

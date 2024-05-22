@@ -28,6 +28,7 @@ public:
     bool isMine = false;
     int towerType = EMPTY;
     float distance = 5.0;
+    int damage = 2;
 
 
     // Methods overwritten from base class

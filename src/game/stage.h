@@ -74,8 +74,6 @@ public:
     int money = 20;
     int numMines = 0;
 
-    std::vector<EntityEnemy*> enemies;
-    void RemoveEnemy(EntityEnemy* enemy);
 
 };
 
