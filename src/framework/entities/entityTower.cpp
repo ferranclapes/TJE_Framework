@@ -1,5 +1,6 @@
 #include "entityTower.h"
 #include "entityMesh.h"
+#include "entityProjectile.h"
 #include "framework/camera.h"
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
@@ -41,6 +42,16 @@ void EntityTower::FindEnemies() {
 
 void EntityTower::Shoot(EntityEnemy* enemy) {
 	enemy->GetDamage(damage);
+
+	std::string meshPath = std::string("data/objects/arrow.obj");
+	Mesh* mesh = Mesh::Get(meshPath.c_str());
+	EntityProjectile* projectile = new EntityProjectile(mesh, {});
+	projectile->model.setTranslation(model.getTranslation());
+	float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
+	projectile->model.rotate(angle, Vector3(0, 0, -1));
+	World::GetInstance()->addEntity(projectile);
+
+
 }
 
 void EntityTower::Aim(EntityEnemy* enemy) {
