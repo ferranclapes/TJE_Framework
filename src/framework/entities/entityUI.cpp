@@ -5,7 +5,7 @@
 //  Created by Alba Arcos on 22/5/24.
 //
 
-#include "entityUI.hpp"
+#include "entityUI.h"
 
 /*EntityUI::EntityUI(){
     
