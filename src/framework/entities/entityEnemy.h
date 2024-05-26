@@ -29,6 +29,7 @@ public:
 
     float velocity = 1;
     int health = 10;
+    int waypoint_index = 0;
     
    
 };
