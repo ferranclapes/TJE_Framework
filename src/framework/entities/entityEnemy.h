@@ -6,10 +6,12 @@
 #include "graphics/material.h"
 #include "game/stage.h"
 
+
+
 class Camera;
 class Mesh;
 class Material;
-
+class World;
 
 
 class EntityEnemy : public EntityCollider {
@@ -22,8 +24,11 @@ public:
 
     void GetDamage(int damage);
     void Die();
+    void followPath(float seconds_elapsed);
 
     float velocity = 1;
     int health = 10;
+    
+   
 };
 

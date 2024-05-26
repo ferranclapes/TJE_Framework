@@ -102,6 +102,8 @@ bool World::parseScene(const char* filename, Entity* root)
         EntityMesh* new_entity = nullptr;
 
         size_t tag = data.first.find("clickable");
+        //tag per crear cami:
+        size_t wp_tag = data.first.find("waypoint");
 
         if (tag != std::string::npos) {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
@@ -113,6 +115,10 @@ bool World::parseScene(const char* filename, Entity* root)
             else {
                 new_entity = new EntityTower(mesh, mat, false);
             }
+        }
+        else if(wp_tag != std::string::npos){
+            waypoints.push_back(render_data.models[0].getTranslation());
+            
         }
         else {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
