@@ -5,6 +5,7 @@
 
 #pragma once
 #include <vector>
+#include "framework/framework.h"
 
 class Entity;
 class Matrix44;
@@ -27,7 +28,10 @@ public:
     int window_height;
 
     Entity* root;
-
+    
+    //waypoints
+    std::vector< Vector3 > waypoints;
+    
     std::vector<EntityEnemy*> enemies;
     void RemoveEnemy(EntityEnemy* enemy);
     
