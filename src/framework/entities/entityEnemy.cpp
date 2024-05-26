@@ -31,7 +31,7 @@ void EntityEnemy::Die() {
 void EntityEnemy::followPath(float seconds_elapsed){
     
     std::vector< Vector3 > points = World::GetInstance()->waypoints;
-    int waypoint_index = 1;
+    int waypoint_index = 0;
     
     if(points.size() != 0){
         
