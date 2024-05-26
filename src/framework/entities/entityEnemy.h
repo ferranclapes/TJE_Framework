@@ -22,7 +22,7 @@ public:
     EntityEnemy(Mesh* mesh, const Material& material) : EntityCollider(mesh, material) {
     };
 
-    void :update(float seconds_elapsed)
+    void update(float seconds_elapsed);
     void GetDamage(int damage);
     void Die();
     void followPath(float seconds_elapsed);

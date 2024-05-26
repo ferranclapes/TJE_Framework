@@ -10,7 +10,7 @@
 
 void EntityEnemy::update(float seconds_elapsed){
     
-    followPath(float seconds_elapsed)
+    followPath(seconds_elapsed);
 }
 
 void EntityEnemy::GetDamage(int damage) {
