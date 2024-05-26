@@ -55,6 +55,8 @@ void IntroStage::onEnter()
 
 
 // PLAY STAGE
+
+
 PlayStage::PlayStage()
 {
     //loads
@@ -62,6 +64,7 @@ PlayStage::PlayStage()
     //declarar variables com temps etc
    
 }
+
 
 void PlayStage::render()
 {

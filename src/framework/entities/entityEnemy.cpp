@@ -9,8 +9,34 @@
 #include <algorithm>
 
 void EntityEnemy::update(float seconds_elapsed){
-    
-    followPath(seconds_elapsed);
+
+    if (World::GetInstance()->waypoints.size() != 0) {
+
+
+        Vector3 origin = model.getTranslation();
+        Vector3 target = World::GetInstance()->waypoints[waypoint_index];
+
+        // Orient before translating!
+        if (last_waypoint < waypoint_index) {
+            float angle = model.getYawRotationToAimTo(target);
+            model.rotate(angle, Vector3(0, 1, 0));
+            std::cout << "Angle = " << angle << '\n';
+        }
+
+        model.translate(0, 0, seconds_elapsed);
+
+        float distance_to_target = target.distance(origin);
+        //std::cout << "Distance = " << distance_to_target << '\n';
+
+        last_waypoint = waypoint_index;
+
+        if (distance_to_target < 0.1f) {
+            waypoint_index++;
+        }
+
+
+
+    }
 }
 
 void EntityEnemy::GetDamage(int damage) {
@@ -30,32 +56,7 @@ void EntityEnemy::Die() {
 
 void EntityEnemy::followPath(float seconds_elapsed){
     
-    std::vector< Vector3 > points = World::GetInstance()->waypoints;
-    int waypoint_index = 0;
     
-    if(points.size() != 0){
-        
-        while( waypoint_index < points.size()){
-            
-            Vector3 origin = model.getTranslation();
-            Vector3 target = points[waypoint_index];
-
-            // Orient before translating!
-            float angle = model.getYawRotationToAimTo(target);
-            model.rotate(angle, Vector3(0, 0, -1));
-            
-            model.translate(0.f, 0.f, seconds_elapsed);
-            
-            float distance_to_target = (target - origin).length();
-
-            if (distance_to_target < 0.1f) {
-                waypoint_index++;
-            }
-            
-        }
-        
-
-    }
 
 
 }

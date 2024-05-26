@@ -43,7 +43,7 @@ void EntityTower::FindEnemies() {
 void EntityTower::Shoot(EntityEnemy* enemy) {
 	enemy->GetDamage(damage);
 
-	std::string meshPath = std::string("data/objects/arrow.obj");
+	std::string meshPath = std::string("data/objects/arrow2.obj");
 	Mesh* mesh = Mesh::Get(meshPath.c_str());
 	EntityProjectile* projectile = new EntityProjectile(mesh, {});
 	projectile->model.setTranslation(model.getTranslation());

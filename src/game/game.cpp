@@ -17,7 +17,7 @@
 //some globals
 //Mesh* mesh = NULL;
 //Texture* texture = NULL;
-Shader* shader = NULL;
+//Shader* shader = NULL;
 float angle = 0;
 float mouse_speed = 20.0f;
 
@@ -78,7 +78,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	*/
 
 	// Example of shader loading using the shaders manager
-	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
+	//shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
 
 	// Hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
