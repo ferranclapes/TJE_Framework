@@ -13,14 +13,19 @@ class Mesh;
 class Material;
 class World;
 
+enum EnemyType {
+    NORMAL,
+    STRONG,
+    FAST
+};
+
 
 class EntityEnemy : public EntityCollider {
 
 public:
 
     EntityEnemy() {};
-    EntityEnemy(Mesh* mesh, const Material& material) : EntityCollider(mesh, material) {
-    };
+    EntityEnemy(EnemyType type);
 
     void update(float seconds_elapsed);
     void GetDamage(int damage);

@@ -11,8 +11,8 @@
 
 
 void EntityTower::update(float seconds_elapsed) {
-	if (towerType == BALLISTA) {
-		FindEnemies();
+	if (towerType != MINE) {
+		FindEnemies(seconds_elapsed);
 		if (timeToShoot <= 0) {
 		}
 		else {
@@ -21,7 +21,7 @@ void EntityTower::update(float seconds_elapsed) {
 	}
 }
 
-void EntityTower::FindEnemies() {
+void EntityTower::FindEnemies(float sec_ela) {
 	float min_distance = distance;
 	EntityEnemy* closest = NULL;
 	for (EntityEnemy* enemy : World::GetInstance()->enemies) {
@@ -32,7 +32,7 @@ void EntityTower::FindEnemies() {
 	}
 
 	if (closest) {
-		Aim(closest);
+		Aim(closest, sec_ela);
 		if (timeToShoot <= 0) {
 			Shoot(closest);
 			timeToShoot = cooldown;
@@ -41,20 +41,31 @@ void EntityTower::FindEnemies() {
 }
 
 void EntityTower::Shoot(EntityEnemy* enemy) {
-	enemy->GetDamage(damage);
-
-	std::string meshPath = std::string("data/objects/arrow2.obj");
-	Mesh* mesh = Mesh::Get(meshPath.c_str());
-	EntityProjectile* projectile = new EntityProjectile(mesh, {});
-	projectile->model.setTranslation(model.getTranslation());
-	float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
-	projectile->model.rotate(angle, Vector3(0, 0, -1));
-	World::GetInstance()->addEntity(projectile);
-
+	
+	if (towerType == BALLISTA) {
+		std::string meshPath = std::string("data/objects/arrow3.obj");
+		Mesh* mesh = Mesh::Get(meshPath.c_str());
+		EntityProjectile* projectile = new EntityProjectile(ARROW, enemy, damage, mesh, {});
+		projectile->model.setTranslation(model.getTranslation());
+		float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
+		projectile->model.rotate(angle, Vector3(0, 1, 0));
+		projectile->model.scale(0.08, 0.08, 0.08);
+		World::GetInstance()->addEntity(projectile);
+	}
+	else if (towerType == CATAPULT) {
+		std::string meshPath = std::string("data/objects/stone.obj");
+		Mesh* mesh = Mesh::Get(meshPath.c_str());
+		EntityProjectile* projectile = new EntityProjectile(STONE, enemy, damage, mesh, {});
+		projectile->model.setTranslation(model.getTranslation());
+		float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
+		projectile->model.rotate(angle, Vector3(0, 1, 0));
+		projectile->model.scale(0.2, 0.2, 0.2);
+		World::GetInstance()->addEntity(projectile);
+	}
 
 }
 
-void EntityTower::Aim(EntityEnemy* enemy) {
+void EntityTower::Aim(EntityEnemy* enemy, float sec_ela) {
 	float angle = model.getYawRotationToAimTo(enemy->model.getTranslation());
-	model.rotate(angle, Vector3(0, 0, -1));
+	model.rotate(angle * sec_ela, Vector3(0, 0, -1));
 }

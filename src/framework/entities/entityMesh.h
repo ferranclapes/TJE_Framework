@@ -17,6 +17,11 @@ public:
 
     EntityMesh();
     EntityMesh(Mesh* mesh, const Material& material);
+    
+    void SetMesh(Mesh* mes, const Material& mat) {
+        mesh = mes;
+        material = mat;
+    }
 
     // Attributes of the derived class
     Mesh* mesh = nullptr;    

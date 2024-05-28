@@ -11,20 +11,29 @@ class Mesh;
 class Material;
 class EntityEnemy;
 
-
+enum ProjectileType {
+    ARROW,
+    STONE
+};
 
 class EntityProjectile : public EntityCollider {
 
 public:
 
     EntityProjectile() {};
-    EntityProjectile(Mesh* mesh, const Material& material) : EntityCollider(mesh, material) {
-    };
+    EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da, Mesh* mesh, const Material& material);
 
     void update(float seconds_elapsed) override;
 
-    EntityEnemy* objective;
-    float speed = 5.0;
+    EntityEnemy* objective = NULL;
+    float speed = 150.0;
+    float damage = 2;
+    int type = 0;
+
+    //Only for stones
+    Vector3 target = Vector3(0,0,0);
+    float maxHeigh = 2.0f;
+    float verticalVelocity = 0;
 
 
     // Methods overwritten from base class

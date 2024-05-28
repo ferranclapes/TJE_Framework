@@ -108,10 +108,7 @@ void PlayStage::update(float seconds_elapsed)
 
 
     if (int(Game::instance->time) == 2 && eny) {
-        Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoRed.obj");
-        EntityEnemy* new_enemy = new EntityEnemy(mesh, {});
-        new_enemy->model.setTranslation(Vector3(-5,0.3,0));
-        new_enemy->model.scale(0.7, 0.7, 0.7);
+        EntityEnemy* new_enemy = new EntityEnemy(NORMAL);
         World::GetInstance()->addEntity(new_enemy);
         World::GetInstance()->enemies.emplace_back(new_enemy);
         eny = false;

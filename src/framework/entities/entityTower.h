@@ -24,9 +24,9 @@ public:
 
     void update(float seconds_elapsed) override;
 
-    void FindEnemies();
+    void FindEnemies(float sec_ela);
     void Shoot(EntityEnemy* enemy);
-    void Aim(EntityEnemy* enemy);
+    void Aim(EntityEnemy* enemy, float sec_ela);
 
     bool isMine = false;
     int towerType = EMPTY;
