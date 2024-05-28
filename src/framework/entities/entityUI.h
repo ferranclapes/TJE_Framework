@@ -15,16 +15,19 @@
 #endif /* entityUI_hpp */
 
 
-/*#include "framework/camera.h"
+#include "framework/camera.h"
 #include "graphics/mesh.h"
 #include "graphics/shader.h"
-#include "graphics/material.h"*/
+#include "graphics/material.h"
+#include "game/game.h"
+#include "game/world.h"
 
 
-class Mesh;
-class Camera;
-class Shader;
-class Material;
+//class Mesh;
+//class Camera;
+//class Shader;
+//class Material;
+
 class EntityUI : public EntityMesh {
     
 public:
@@ -37,6 +40,8 @@ public:
     Material material;
     
     int mask;
+    bool visible;
+    Vector2 position;
     
     
     void render(Camera* camera2d);

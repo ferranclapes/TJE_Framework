@@ -23,7 +23,7 @@ EntityUI::EntityUI(Mesh* mesh, const Material& material)
 }*/
 void EntityUI::render(Camera* camera2d)
 {
-    /*
+    
      //com el render d'entity mesh pero canviant camera
      glDisable(GL_DEPTH_TEST);
      glDisable(GL_CULL_FACE);
@@ -32,12 +32,13 @@ void EntityUI::render(Camera* camera2d)
      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
      
      for (int i = 0; i < children.size(); ++i) {
-     children[i]->render(camera2d);
+         children[i]->render(camera2d);
      }
+    
      // Get the last camera that was activated
      //Camera* camera = Camera::current;
      if (!material.shader) {
-     material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/texture.fs");
+         material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/texture.fs");
      }
      // Enable shader and pass uniforms
      material.shader->enable();
@@ -49,6 +50,7 @@ void EntityUI::render(Camera* camera2d)
      material.shader->setUniform("u_color", material.color);
      material.shader->setUniform("u_viewprojection", camera2d->viewprojection_matrix);
      material.shader->setUniform("u_mask", mask); //afegit
+    
      if (material.diffuse){
      material.shader->setTexture("u_texture", material.diffuse, 0);
      }
@@ -70,7 +72,7 @@ void EntityUI::render(Camera* camera2d)
          //tornar a deixar com estven
          glDisable(GL_BLEND);
          glEnable(GL_DEPTH_TEST);
-         */
+         
 }
 
 void EntityUI::update(float seconds_elapsed)
@@ -96,24 +98,25 @@ void EntityUI::update(float seconds_elapsed)
 }
 void EntityUI::update3D(Vector3 position3d){
          
-    /*  Vector3 pos3d = position3d;
+     Vector3 pos3d = position3d;
         
     //Updarte 3dHUD
         
-    int with = Game:instance->window_with;
-    int height = Gamme::
-    World* world = World:get_instance();
-         
+    int width = Game::instance->window_width;
+    int height = Game::instance->window_height;
+    Game* game = Game::instance;
+    // ELS TENEN LA CAMERA A WORLD
+    
     visible = true;
          
-    Vector3 pos = world->camera->project(position3d, with, height); //en pixels
-         
+    Vector3 pos = game->camera->project(position3d, width, height);
+    
     if(pos.z < 0.0f || pos.z > 1.0f){ //si no esta entre 0 i 1 no es veu
         visible = false;
     }else{
         pos.y = height - pos.y;
-        psoition = Vector2(pos.x, pos.y);
-    }*/
+        position = Vector2(pos.x, pos.y);
+    }
 }
 
              
