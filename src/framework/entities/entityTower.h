@@ -18,7 +18,7 @@ class EntityTower : public EntityCollider {
 public:
 
     EntityTower() {};
-    EntityTower(Mesh* mesh, const Material& material, bool im) : EntityCollider(mesh, material) {
+    EntityTower(Mesh* mesh, const Material& material, bool im) : EntityCollider(TOWER, mesh, material) {
         isMine = im;
     };
 
@@ -26,7 +26,7 @@ public:
 
     void FindEnemies(float sec_ela);
     void Shoot(EntityEnemy* enemy);
-    void Aim(EntityEnemy* enemy, float sec_ela);
+    float Aim(EntityEnemy* enemy, float sec_ela);
 
     bool isMine = false;
     int towerType = EMPTY;

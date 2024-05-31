@@ -10,7 +10,7 @@
 #include <algorithm>
 
 
-EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da, Mesh* mesh, const Material& material) : EntityCollider(mesh, material) {
+EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da, Mesh* mesh, const Material& material) : EntityCollider(PROJECTILE, mesh, material) {
     objective = obj;
     damage = da;
     type = ty;
@@ -47,11 +47,11 @@ void EntityProjectile::update(float seconds_elapsed) {
         }
 
         float distance_to_target = model.getTranslation().distance(target);
+        std::cout << "Distance to target = " << distance_to_target << "\n";
         if (distance_to_target < 0.7f) {
             objective->GetDamage(damage);
             World::GetInstance()->removeEntity(this);
             delete this;
         }
     }
-    
 }

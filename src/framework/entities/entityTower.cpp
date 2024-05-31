@@ -11,7 +11,7 @@
 
 
 void EntityTower::update(float seconds_elapsed) {
-	if (towerType != MINE) {
+	if (towerType != MINE && towerType != EMPTY) {
 		FindEnemies(seconds_elapsed);
 		if (timeToShoot <= 0) {
 		}
@@ -32,8 +32,8 @@ void EntityTower::FindEnemies(float sec_ela) {
 	}
 
 	if (closest) {
-		Aim(closest, sec_ela);
-		if (timeToShoot <= 0) {
+		float angle = Aim(closest, sec_ela);
+		if (timeToShoot <= 0 && angle <= PI/2) {
 			Shoot(closest);
 			timeToShoot = cooldown;
 		}
@@ -65,7 +65,8 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 
 }
 
-void EntityTower::Aim(EntityEnemy* enemy, float sec_ela) {
+float EntityTower::Aim(EntityEnemy* enemy, float sec_ela) {
 	float angle = model.getYawRotationToAimTo(enemy->model.getTranslation());
 	model.rotate(angle * sec_ela, Vector3(0, 0, -1));
+	return angle;
 }

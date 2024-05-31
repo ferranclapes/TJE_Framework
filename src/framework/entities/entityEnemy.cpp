@@ -13,7 +13,7 @@
     if (type == NORMAL) {
         Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoRed.obj");
         SetMesh(mesh, {});
-        velocity = 0;
+        velocity = 3;
         health = 5;
         model.setTranslation(Vector3(-5, 0.3, 0));
         model.scale(0.7, 0.7, 0.7);

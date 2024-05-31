@@ -108,7 +108,7 @@ void PlayStage::update(float seconds_elapsed)
 
 
     if (int(Game::instance->time) == 2 && eny) {
-        EntityEnemy* new_enemy = new EntityEnemy(NORMAL);
+        EntityEnemy* new_enemy = new EntityEnemy(STRONG);
         World::GetInstance()->addEntity(new_enemy);
         World::GetInstance()->enemies.emplace_back(new_enemy);
         eny = false;
