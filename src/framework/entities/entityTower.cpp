@@ -29,11 +29,11 @@ void EntityTower::update(float seconds_elapsed) {
 }
 
 void EntityTower::FindEnemies(float sec_ela) {
-	float min_distance = distance;
+	int max_waypoint = 0;
 	EntityEnemy* closest = NULL;
 	for (EntityEnemy* enemy : World::GetInstance()->enemies) {
-		if (enemy->distance(this) < min_distance) {
-			min_distance = enemy->distance(this);
+		if (enemy->distance(this) < distance && enemy->waypoint_index > max_waypoint) {
+			max_waypoint = enemy->waypoint_index;
 			closest = enemy;
 		}
 	}
@@ -80,7 +80,7 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 
 float EntityTower::Aim(EntityEnemy* enemy, float sec_ela) {
 	float angle = model.getYawRotationToAimTo(enemy->model.getTranslation());
-	model.rotate(angle * sec_ela, Vector3(0, 0, -1));
+	model.rotate(angle * sec_ela*5, Vector3(0, 0, -1));
 	return angle;
 }
 

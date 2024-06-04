@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_straight.001.mtl
-o tile_straight.011
+o tile_straight.001
 v 0.500000 0.500000 0.000000
 v 0.500000 -0.500000 0.000000
 v -0.500000 0.500000 0.000000

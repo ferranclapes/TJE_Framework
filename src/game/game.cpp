@@ -37,7 +37,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// Create our camera
 	camera = new Camera();
-	camera->lookAt(Vector3(0.f, 20.f, 20.f), Vector3(0.f, 0.f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	camera->lookAt(Vector3(0.f, 6.f, 6.f), Vector3(0.f, 0.f, 1.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(70.f, window_width / (float)window_height, 0.1f, 10000.f); //set the projection, we want to be perspective
     
     // CREAR CAMERA 2D
@@ -133,6 +133,14 @@ void Game::render(void)
 	// Draw the floor grid
 	drawGrid();
 
+
+	//Show camera eye position on screen
+	/*Camera* cam = camera;
+	float x = cam->eye.x;
+	float y = cam->eye.y;
+	float z = cam->eye.z;
+	drawText(50, 50, "X = " + std::to_string(x) + ", Y = " + std::to_string(y) + ", Z = " + std::to_string(z), Vector3(1, 0, 0), 2);*/
+
 	// Render the FPS, Draw Calls, etc
 	drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
 
@@ -156,12 +164,42 @@ void Game::update(double seconds_elapsed)
 
 	// Async input to move the camera around
  	if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT) ) speed *= 10; //move faster with left shift
-	if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) camera->move(Vector3(0.0f, 0.0f, 1.0f) * speed);
-	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) camera->move(Vector3(0.0f, 0.0f,-1.0f) * speed);
-	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
-	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) camera->move(Vector3(-1.0f,0.0f, 0.0f) * speed);
-	if (Input::isKeyPressed(SDL_SCANCODE_Z)) camera->zoom(Vector3(0.0f, 0.0f, 1.0f) * speed);
-	if (Input::isKeyPressed(SDL_SCANCODE_X)) camera->zoom(Vector3(0.0f, 0.0f, -1.0f) * speed);
+	if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP))
+	{
+		if (camera->eye.z > 2.8) {
+			camera->move(Vector3(0.0f, 0.0f, 1.0f) * speed);
+		}
+	}
+	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) 
+	{
+		if(camera->eye.z < 13.22){
+			camera->move(Vector3(0.0f, 0.0f, -1.0f) * speed);
+		}
+	}
+	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) 
+	{
+		if (camera->eye.x > -7.4){
+			camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
+		}
+	}
+	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) 
+	{
+		if (camera->eye.x < 10.9) {
+			camera->move(Vector3(-1.0f, 0.0f, 0.0f) * speed);
+		}
+	}
+	if (Input::isKeyPressed(SDL_SCANCODE_Z)) 
+	{
+		if (camera->eye.y > 3.f) {
+			camera->zoom(Vector3(0.0f, 0.0f, 1.0f) * speed);
+		}
+	}
+	if (Input::isKeyPressed(SDL_SCANCODE_X)) 
+	{
+		if(camera->eye.y<6.f){
+			camera->zoom(Vector3(0.0f, 0.0f, -1.0f) * speed);
+		}
+	}
 
 	current_stage->update(seconds_elapsed);
 }

@@ -68,13 +68,18 @@ PlayStage::PlayStage()
 
 void PlayStage::render()
 {
+<<<<<<< Updated upstream
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
     for (EntityEnemy* e : World::GetInstance()->enemies) {
         drawText(100, 100, std::to_string(e->health), Vector3(1, 1, 1), 5);
     }
     
 
+=======
+>>>>>>> Stashed changes
     World::GetInstance()->render(Camera::current);
+    drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
+
 }
 
 

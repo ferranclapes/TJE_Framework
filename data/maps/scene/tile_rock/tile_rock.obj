@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_rock.mtl
-o tile_rock.002
+o tile_rock
 v 0.500000 0.500000 0.000000
 v 0.500000 -0.500000 0.000000
 v -0.500000 0.500000 0.000000

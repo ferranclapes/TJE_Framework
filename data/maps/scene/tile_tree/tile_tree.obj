@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_tree.mtl
-o tile_tree.002
+o tile_tree
 v 0.500000 0.500000 0.000000
 v 0.500000 -0.500000 0.000000
 v -0.500000 0.500000 0.000000

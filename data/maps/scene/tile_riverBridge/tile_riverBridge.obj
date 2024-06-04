@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_riverBridge.mtl
-o tile_riverBridge
+o tile_riverBridge.007
 v 0.500000 0.375000 -0.250000
 v 0.375000 0.375000 -0.300000
 v 0.500000 0.308125 -0.250000

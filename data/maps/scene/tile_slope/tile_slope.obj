@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_slope.mtl
-o tile_slope
+o tile_slope.528
 v -0.500000 -0.500000 0.000000
 v 0.500000 -0.500000 0.000000
 v -0.500000 -0.500000 -0.300000

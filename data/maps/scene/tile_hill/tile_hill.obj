@@ -1,7 +1,7 @@
 # Blender 4.1.1
 # www.blender.org
 mtllib tile_hill.mtl
-o tile_hill.001
+o tile_hill
 v 0.500000 0.500000 0.000000
 v 0.500000 -0.500000 0.000000
 v -0.500000 0.500000 0.000000
