@@ -27,7 +27,7 @@ void EntityMesh::render(Camera* camera) {
     //Camera* camera = Camera::current;
 
     if (!material.shader) {
-        material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/texture.fs");
+        material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/diffuse.fs");
     }
 
     // Enable shader and pass uniforms

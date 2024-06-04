@@ -15,7 +15,7 @@ EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da
     damage = da;
     type = ty;
     if (type == ARROW) {
-        speed = 150.0;
+        speed = 150;
         damage = 1;
     }
     else if (type == STONE) {
@@ -24,7 +24,7 @@ EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da
         target = Vector3(obj->model.getTranslation().x, 0, obj->model.getTranslation().z);
         float horizontalDistance = Vector3(model.getTranslation().x, 0, model.getTranslation().z).distance(target);
         float totalTime = horizontalDistance / speed;
-        verticalVelocity = maxHeigh * 2 / totalTime;
+        verticalVelocity = 10;
     }
 };
 
@@ -41,10 +41,7 @@ void EntityProjectile::update(float seconds_elapsed) {
 
     }
     else if (type == STONE) {
-        model.translate(0, verticalVelocity * seconds_elapsed, speed * seconds_elapsed);
-        if (model.getTranslation().y >= maxHeigh) {
-            verticalVelocity *= -1;
-        }
+        
 
         float distance_to_target = model.getTranslation().distance(target);
         std::cout << "Distance to target = " << distance_to_target << "\n";
