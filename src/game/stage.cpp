@@ -68,15 +68,6 @@ PlayStage::PlayStage()
 
 void PlayStage::render()
 {
-<<<<<<< Updated upstream
-    drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
-    for (EntityEnemy* e : World::GetInstance()->enemies) {
-        drawText(100, 100, std::to_string(e->health), Vector3(1, 1, 1), 5);
-    }
-    
-
-=======
->>>>>>> Stashed changes
     World::GetInstance()->render(Camera::current);
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
 
@@ -110,13 +101,6 @@ void PlayStage::update(float seconds_elapsed)
     if (int(Game::instance->time) % 2 == 1 && moneyCounted) {
         moneyCounted = false;
     }
-
-
-    if (int(Game::instance->time) == 2 && eny) {
-        EntityEnemy* new_enemy = new EntityEnemy(STRONG);
-        World::GetInstance()->addEntity(new_enemy);
-        World::GetInstance()->enemies.emplace_back(new_enemy);
-        eny = false;
 
     if (waveTimeOut <= 0 && nextWave) {
         std::getline(enemyWaves, waves);
@@ -154,7 +138,6 @@ void PlayStage::update(float seconds_elapsed)
             iter++;
         }
         timeOut -= seconds_elapsed;
->>>>>>> e85f2862255faca4a067f91a7b6dd4a588084e42
     }
 
     World::GetInstance()->update(seconds_elapsed);
