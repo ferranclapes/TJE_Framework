@@ -6,6 +6,7 @@
 #include "graphics/shader.h"
 #include "framework/entities/entityEnemy.h"
 #include "game/world.h"
+#include "game/game.h"
 
 #include <algorithm>
 
@@ -17,6 +18,12 @@ void EntityTower::update(float seconds_elapsed) {
 		}
 		else {
 			timeToShoot -= seconds_elapsed;
+		}
+	}
+	else if (towerType == MINE) {
+		ammo -= seconds_elapsed;
+		if (ammo <= 0) {
+			EliminateTower();
 		}
 	}
 }
@@ -43,6 +50,7 @@ void EntityTower::FindEnemies(float sec_ela) {
 void EntityTower::Shoot(EntityEnemy* enemy) {
 	
 	if (towerType == BALLISTA) {
+		ammo -= 1;
 		std::string meshPath = std::string("data/objects/arrow3.obj");
 		Mesh* mesh = Mesh::Get(meshPath.c_str());
 		EntityProjectile* projectile = new EntityProjectile(ARROW, enemy, damage, mesh, {});
@@ -53,6 +61,7 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 		World::GetInstance()->addEntity(projectile);
 	}
 	else if (towerType == CATAPULT) {
+		ammo -= 1;
 		std::string meshPath = std::string("data/objects/stone.obj");
 		Mesh* mesh = Mesh::Get(meshPath.c_str());
 		EntityProjectile* projectile = new EntityProjectile(STONE, enemy, damage, mesh, {});
@@ -63,10 +72,28 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 		World::GetInstance()->addEntity(projectile);
 	}
 
+	if (ammo <= 0) {
+		EliminateTower();
+	}
+
 }
 
 float EntityTower::Aim(EntityEnemy* enemy, float sec_ela) {
 	float angle = model.getYawRotationToAimTo(enemy->model.getTranslation());
 	model.rotate(angle * sec_ela, Vector3(0, 0, -1));
 	return angle;
+}
+
+
+void EntityTower::EliminateTower() {
+	for (auto child : this->children) {
+		auto it = std::find(this->children.begin(), this->children.end(), child);
+		this->children.erase(it);
+		delete child;
+		if (towerType == MINE) {
+			PlayStage* stage = dynamic_cast<PlayStage*>(Game::GetInstance()->current_stage);
+			stage->numMines -= 1;
+		}
+	}
+	towerType = EMPTY;
 }

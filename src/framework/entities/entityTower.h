@@ -27,6 +27,7 @@ public:
     void FindEnemies(float sec_ela);
     void Shoot(EntityEnemy* enemy);
     float Aim(EntityEnemy* enemy, float sec_ela);
+    void EliminateTower();
 
     bool isMine = false;
     int towerType = EMPTY;
@@ -34,6 +35,7 @@ public:
     int damage = 2;
     float cooldown = 1.0;
     float timeToShoot = 0.0;
+    float ammo = 0;
 
 
     // Methods overwritten from base class

@@ -232,3 +232,8 @@ void Game::GoToStage(int stage_to_go) {
 }
 
 
+Game* Game::GetInstance() {
+	return instance;
+}
+
+

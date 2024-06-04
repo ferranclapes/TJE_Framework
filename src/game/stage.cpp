@@ -65,7 +65,6 @@ PlayStage::PlayStage()
    
 }
 
-
 void PlayStage::render()
 {
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
@@ -150,9 +149,11 @@ void PlayStage::PlaceTower() {
                 continue;
             }
 
+
             if (typeToPlace == MINE) {
                 if (money >= 10) {
                     money -= 10;
+                    tower->ammo = 10;
                 }
                 else {
                     continue;
@@ -161,6 +162,7 @@ void PlayStage::PlaceTower() {
             else if(typeToPlace == BALLISTA) {
                 if (money >= 5) {
                     money -= 5;
+                    tower->ammo = 10;
                 }
                 else {
                     continue;
@@ -169,6 +171,7 @@ void PlayStage::PlaceTower() {
             else if (typeToPlace == CATAPULT) {
                 if (money >= 8) {
                     money -= 8;
+                    tower->ammo = 7;
                 }
                 else {
                     continue;
