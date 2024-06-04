@@ -24,6 +24,7 @@ EntityUI::EntityUI(Mesh* mesh, const Material& material)
 void EntityUI::render(Camera* camera2d)
 {
     
+     std::cout << "render entityUI" << std::endl;
      //com el render d'entity mesh pero canviant camera
      glDisable(GL_DEPTH_TEST);
      glDisable(GL_CULL_FACE);
@@ -38,7 +39,7 @@ void EntityUI::render(Camera* camera2d)
      // Get the last camera that was activated
      //Camera* camera = Camera::current;
      if (!material.shader) {
-         material.shader = Shader::Get(isInstanced ? "data/shaders/instanced.vs" : "data/shaders/basic.vs", "data/shaders/texture.fs");
+         material.shader = Shader::Get("data/shaders/helth_bar.vs" , "data/shaders/texture.fs");
      }
      // Enable shader and pass uniforms
      material.shader->enable();

@@ -15,6 +15,7 @@
 #include "framework/entities/entityEnemy.h"
 #include "game/game.h"
 #include "graphics/mesh.h"
+#include "framework/entities/entityUI.h"
 
 void Stage::render()
 {
@@ -71,6 +72,7 @@ void PlayStage::render()
     for (EntityEnemy* e : World::GetInstance()->enemies) {
         drawText(100, 100, std::to_string(e->health), Vector3(1, 1, 1), 5);
     }
+    
 
     World::GetInstance()->render(Camera::current);
 }
@@ -111,6 +113,9 @@ void PlayStage::update(float seconds_elapsed)
         World::GetInstance()->addEntity(new_enemy);
         World::GetInstance()->enemies.emplace_back(new_enemy);
         eny = false;
+       /* EntityUI* new_bar = new EntityUI();
+        World::GetInstance()->addEntity(new_bar);
+        World::GetInstance()->root->addChild(new_bar);*/
     }
 
     World::GetInstance()->update(seconds_elapsed);

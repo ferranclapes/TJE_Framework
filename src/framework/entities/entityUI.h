@@ -44,8 +44,8 @@ public:
     Vector2 position;
     
     
-    void render(Camera* camera2d);
-    void update(float seconds_elapsed);
+    void render(Camera* camera2d) override;
+    void update(float seconds_elapsed) override;
     void update3D(Vector3 position3d);
     
     

@@ -129,7 +129,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL OpenGL::GLU)
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC "${DIR_LIBS}/bass/bass.lib")
 else()
-    target_link_libraries(${PROJECT_NAME} PUBLIC -lbass)
+    target_link_libraries(${PROJECT_NAME} PUBLIC -L/usr/local/lib -lbass)
 endif()
 
 # Properties
