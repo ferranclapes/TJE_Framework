@@ -77,7 +77,6 @@ void PlayStage::render()
     World::GetInstance()->render(Camera::current);
 }
 
-bool eny = true;
 
 void PlayStage::update(float seconds_elapsed)
 {
@@ -113,9 +112,44 @@ void PlayStage::update(float seconds_elapsed)
         World::GetInstance()->addEntity(new_enemy);
         World::GetInstance()->enemies.emplace_back(new_enemy);
         eny = false;
-       /* EntityUI* new_bar = new EntityUI();
-        World::GetInstance()->addEntity(new_bar);
-        World::GetInstance()->root->addChild(new_bar);*/
+
+    if (waveTimeOut <= 0 && nextWave) {
+        std::getline(enemyWaves, waves);
+        iter = 0;
+        waveTimeOut = 2;
+        nextWave = false;
+    }
+    else if(nextWave) {
+        waveTimeOut -= seconds_elapsed;
+    }
+    if (waves != "a") {
+        if (timeOut <= 0) {
+            if (waves[iter] == 'N') {
+                EntityEnemy* new_enemy = new EntityEnemy(NORMAL);
+                World::GetInstance()->addEntity(new_enemy);
+                World::GetInstance()->enemies.emplace_back(new_enemy);
+                timeOut += 1;
+            }
+            else if (waves[iter] == 'S') {
+                EntityEnemy* new_enemy = new EntityEnemy(STRONG);
+                World::GetInstance()->addEntity(new_enemy);
+                World::GetInstance()->enemies.emplace_back(new_enemy);
+                timeOut += 2;
+            } 
+            else if (waves[iter] == 'F') {
+                EntityEnemy* new_enemy = new EntityEnemy(FAST);
+                World::GetInstance()->addEntity(new_enemy);
+                World::GetInstance()->enemies.emplace_back(new_enemy);
+                timeOut += 0.7;
+            }
+            else if (waves[iter] == '\0') {
+                waves = "a";
+                nextWave = true;
+            }
+            iter++;
+        }
+        timeOut -= seconds_elapsed;
+>>>>>>> e85f2862255faca4a067f91a7b6dd4a588084e42
     }
 
     World::GetInstance()->update(seconds_elapsed);
@@ -212,7 +246,7 @@ void PlayStage::onExit()
 
 void PlayStage::onEnter()
 {
-    
+    enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
 }
 
 
@@ -244,6 +278,5 @@ void EndStage::onExit()
 
 void EndStage::onEnter()
 {
-    
 }
 

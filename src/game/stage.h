@@ -9,6 +9,9 @@
 #define stage_hpp
 
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 
 #include "framework/camera.h"
@@ -73,6 +76,13 @@ public:
     bool moneyCounted = false;
     int money = 20;
     int numMines = 0;
+
+    std::fstream enemyWaves;
+    float waveTimeOut = 2;
+    std::string waves = "a";
+    bool nextWave = true;
+    float timeOut = 0;
+    int iter = 0;
 
 
 };
