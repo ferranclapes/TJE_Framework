@@ -26,11 +26,10 @@ void EntityUI::render(Camera* camera2d)
     
      std::cout << "render entityUI" << std::endl;
      //com el render d'entity mesh pero canviant camera
-     glDisable(GL_DEPTH_TEST);
-     glDisable(GL_CULL_FACE);
-     
-     glEnable(GL_BLEND);
-     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable( GL_DEPTH_TEST );
+    glDisable( GL_CULL_FACE );
+    glEnable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
      
      for (int i = 0; i < children.size(); ++i) {
          children[i]->render(camera2d);

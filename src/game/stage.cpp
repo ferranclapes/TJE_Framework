@@ -118,6 +118,7 @@ void PlayStage::update(float seconds_elapsed)
                 World::GetInstance()->addEntity(new_enemy);
                 World::GetInstance()->enemies.emplace_back(new_enemy);
                 timeOut += 1;
+                
             }
             else if (waves[iter] == 'S') {
                 EntityEnemy* new_enemy = new EntityEnemy(STRONG);
@@ -224,6 +225,7 @@ void PlayStage::PlaceTower() {
         new_entity->model.rotate(PI / 2, Vector3(1, 0, 0));
         //World::GetInstance()->addEntity(new_entity);
         emesh->addChild((Entity*) new_entity);
+        
     }
 }
 
