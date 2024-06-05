@@ -33,7 +33,6 @@ class EntityUI : public EntityMesh {
 public:
     
     EntityUI();
-    EntityUI(Mesh* mesh, const Material& material);
     //EntityUI(Vector2 size, conts Material& material);
     
     Mesh* mesh = nullptr;

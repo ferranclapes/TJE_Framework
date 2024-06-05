@@ -5,6 +5,7 @@
 #include "graphics/shader.h"
 #include "game/stage.h"
 #include "game/world.h"
+#include "entityUI.h"
 
 #include <algorithm>
 
@@ -34,6 +35,8 @@
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(0.7, 0.7, 0.7);
     }
+
+    EntityUI* ui = new EntityUI();
 }
 
 void EntityEnemy::update(float seconds_elapsed){

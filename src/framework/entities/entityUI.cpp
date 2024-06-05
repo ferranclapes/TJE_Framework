@@ -9,10 +9,26 @@
 
 EntityUI::EntityUI()
 {
-}
-EntityUI::EntityUI(Mesh* mesh, const Material& material)
-{
-    this->mesh = mesh;
+
+
+    Mesh* quad = new Mesh();
+    quad->vertices.push_back(Vector3(-1, 1, 0));
+    quad->uvs.push_back(Vector2(0, 1));
+    quad->vertices.push_back(Vector3(-1, -1, 0));
+    quad->uvs.push_back(Vector2(0, 0));
+    quad->vertices.push_back(Vector3(1, -1, 0));
+    quad->uvs.push_back(Vector2(1, 0));
+
+
+    quad->vertices.push_back(Vector3(1, -1, 0));
+    quad->uvs.push_back(Vector2(1, 0));
+    quad->vertices.push_back(Vector3(1, -1, 0));
+    quad->uvs.push_back(Vector2(1, 0));
+    quad->vertices.push_back(Vector3(1, 1, 0));
+    quad->uvs.push_back(Vector2(1, 1));
+
+    this->mesh = quad;
+
     this->material = material;
 }
 /*EntityUI::EntityUI(Vector2 size, conts Material& material)
@@ -38,7 +54,7 @@ void EntityUI::render(Camera* camera2d)
      // Get the last camera that was activated
      //Camera* camera = Camera::current;
      if (!material.shader) {
-         material.shader = Shader::Get("data/shaders/helth_bar.vs" , "data/shaders/texture.fs");
+         material.shader = Shader::Get("data/shaders/helth_bar.vs" , "data/shaders/helth_bar.fs");
      }
      // Enable shader and pass uniforms
      material.shader->enable();

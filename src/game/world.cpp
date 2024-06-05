@@ -8,6 +8,7 @@
 #include "framework/camera.h"
 #include "framework/entities/entityTower.h"
 #include "framework/entities/entityEnemy.h"
+#include "framework/entities/entityUI.h"
 
 World* World::instance = nullptr;
 
@@ -147,7 +148,8 @@ bool World::parseScene(const char* filename, Entity* root)
     }
     std::cout << "Scene [OK]" << " Meshes added: " << mesh_count << std::endl;
 
-
+    EntityUI* ui = new EntityUI();
+    //root->addChild(ui);
 
     return true;
 }

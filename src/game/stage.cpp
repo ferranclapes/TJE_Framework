@@ -94,11 +94,11 @@ void PlayStage::update(float seconds_elapsed)
         typeToPlace = CATAPULT;
     }
 
-    if (int(Game::instance->time) % 2 == 0 && !moneyCounted) {
-        money += 2 * numMines;
+    if (int(Game::instance->time*10) % 5 == 0 && !moneyCounted) {
+        money += 1 * numMines;
         moneyCounted = true;
     }
-    if (int(Game::instance->time) % 2 == 1 && moneyCounted) {
+    if (int(Game::instance->time*10) % 5 == 1 && moneyCounted) {
         moneyCounted = false;
     }
 
@@ -179,17 +179,17 @@ void PlayStage::PlaceTower() {
 
 
             if (typeToPlace == MINE) {
-                if (money >= 10) {
-                    money -= 10;
-                    tower->ammo = 10;
+                if (money >= 8) {
+                    money -= 8;
+                    tower->ammo = 13;
                 }
                 else {
                     continue;
                 }
             }
             else if(typeToPlace == BALLISTA) {
-                if (money >= 5) {
-                    money -= 5;
+                if (money >= 3) {
+                    money -= 3;
                     tower->ammo = 10;
                 }
                 else {
@@ -197,8 +197,8 @@ void PlayStage::PlaceTower() {
                 }
             }
             else if (typeToPlace == CATAPULT) {
-                if (money >= 8) {
-                    money -= 8;
+                if (money >= 5) {
+                    money -= 5;
                     tower->ammo = 7;
                 }
                 else {
