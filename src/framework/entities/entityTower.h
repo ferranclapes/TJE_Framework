@@ -37,7 +37,6 @@ public:
     float timeToShoot = 0.0;
     float ammo = 0;
 
-
     // Methods overwritten from base class
     //void render(Camera* camera) override;
     //void update(float elapsed_time);

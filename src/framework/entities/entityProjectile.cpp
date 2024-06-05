@@ -25,9 +25,9 @@ EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da
         model.setTranslation(newTranslation);
         damage = 20;
         target = Vector3(obj->model.getTranslation().x, 0, obj->model.getTranslation().z);
-        float horizontalDistance = model.getTranslation().distance(target);
-        speed = horizontalDistance / 0.55;
-        verticalVelocity = 1.8;
+        float dh = model.getTranslation().distance(target);
+        a = (2 / dh) - 1;
+        speed = 3;
     }
 };
 
@@ -49,9 +49,11 @@ void EntityProjectile::update(float seconds_elapsed) {
             int x = 0;
         }
         else {
-            float y = model.getTranslation().y;
 
-            model.translate(0, verticalVelocity * time + (gravity / 2) * time * time, speed*0.005);
+            float x = speed * seconds_elapsed;
+            float y = a * speed * time + 1 - model.getTranslation().y;
+
+            model.translate(0, y, x);
         }
 
         float distance_to_target = model.getTranslation().distance(target);

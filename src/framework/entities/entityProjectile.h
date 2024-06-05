@@ -32,9 +32,11 @@ public:
 
     //Only for stones
     Vector3 target = Vector3(0,0,0);
-    float verticalVelocity = 0;
-    float gravity = -9.8;
     float time = 0;
+    float maxHeigh = 1.8;
+    float a = 0;
+    float last_y = 0;
+
 
 
     // Methods overwritten from base class
