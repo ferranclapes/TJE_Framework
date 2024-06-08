@@ -6,94 +6,87 @@
 //
 
 #include "entityUI.h"
+#include "framework/input.h"
 
-EntityUI::EntityUI()
+
+EntityUI::EntityUI(float center_x, float center_y, float w, float h, const Material& material) // eButon buton_id)
 {
-
-
-    Mesh* quad = new Mesh();
-    quad->vertices.push_back(Vector3(-1, 1, 0));
-    quad->uvs.push_back(Vector2(0, 1));
-    quad->vertices.push_back(Vector3(-1, -1, 0));
-    quad->uvs.push_back(Vector2(0, 0));
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
-
-
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
-    quad->vertices.push_back(Vector3(1, 1, 0));
-    quad->uvs.push_back(Vector2(1, 1));
-
-    this->mesh = quad;
-
+    
+    this->pos_x = center_x;
+    this->pos_y = center_y;
+    this->width = w;
+    this->height = h;
     this->material = material;
+    
+    quad = new Mesh();
+    quad->createQuad(center_x, center_y, w, h, false);
+    
+    if (!this->material.shader) {
+        this->material.shader = Shader::Get("data/shaders/example.vs" , "data/shaders/boto.fs");
+    }
+    
+    
 }
-/*EntityUI::EntityUI(Vector2 size, conts Material& material)
+
+
+void EntityUI::render(Camera* camera2D)
 {
-    this->material = material;
-    //size??
+    // Clear the window and the depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     
-}*/
-void EntityUI::render(Camera* camera2d)
-{
+    // Set the camera as default
+    camera2D->enable();
     
-     std::cout << "render entityUI" << std::endl;
-     //com el render d'entity mesh pero canviant camera
-    glDisable( GL_DEPTH_TEST );
-    glDisable( GL_CULL_FACE );
-    glEnable( GL_BLEND );
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-     
-     for (int i = 0; i < children.size(); ++i) {
-         children[i]->render(camera2d);
-     }
+        // Set flags
+    glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
     
-     // Get the last camera that was activated
-     //Camera* camera = Camera::current;
-     if (!material.shader) {
-         material.shader = Shader::Get("data/shaders/helth_bar.vs" , "data/shaders/helth_bar.fs");
-     }
-     // Enable shader and pass uniforms
-     material.shader->enable();
-     if(!isInstanced){
-     material.shader->setUniform("u_model", getGlobalMatrix());
-     }
-     
-     //update uniforms
-     material.shader->setUniform("u_color", material.color);
-     material.shader->setUniform("u_viewprojection", camera2d->viewprojection_matrix);
-     material.shader->setUniform("u_mask", mask); //afegit
+    for (int i = 0; i < children.size(); ++i) {
+        children[i]->render(camera2D);
+    }
     
-     if (material.diffuse){
-     material.shader->setTexture("u_texture", material.diffuse, 0);
-     }
-     // Render the mesh using the shader
-         if (!isInstanced) {
-             mesh->render(GL_TRIANGLES);
-         }
-         else {
-             mesh->renderInstanced(GL_TRIANGLES, models.data(), models.size());
-         }
-         // Disable shader after finishing rendering
-         material.shader->disable();
-         
-         
-         
-         //World* world = World::get_instance(); ?
-         
-         
-         //tornar a deixar com estven
-         glDisable(GL_BLEND);
-         glEnable(GL_DEPTH_TEST);
-         
+    material.shader->enable();
+
+        // Upload uniforms
+    material.shader->setUniform("u_color", material.color);
+    material.shader->setUniform("u_viewprojection", camera2D->viewprojection_matrix);
+    //material.shader->setUniform("u_texture", material.diffuse, 0);
+    
+            // Do the draw call
+    quad->render( GL_TRIANGLES );
+
+            // Disable shader
+    material.shader->disable();
+    
+    
+        //tornar a deixar com estven
+    glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    
+    
+
 }
 
 void EntityUI::update(float seconds_elapsed)
 {
-   
+ 
+    Vector2 mouse_pos = Input::mouse_position;
+    
+    if(mouse_pos.x > (this->pos_x - this->width * 0.5f) &&
+       mouse_pos.x < (this->pos_x + this->width * 0.5f) &&
+       mouse_pos.y > (this->pos_y - this->height * 0.5f) &&
+       mouse_pos.y< (this->pos_y + this->height * 0.5f))
+    {
+        
+        // Si el mpouse esta dins del button
+        material.color = Vector4(1, 0, 0, 0);
+    }
+    
+    if(Input::isKeyPressed(SDL_SCANCODE_A)){
+        std::cout << "start press" << std::endl;
+    }
     /*Vector2 mouse_pos = Input::mouse_position;
     
     if(!visible){

@@ -36,7 +36,7 @@
         model.scale(0.7, 0.7, 0.7);
     }
 
-    EntityUI* ui = new EntityUI();
+    //EntityUI* ui = new EntityUI();
 }
 
 void EntityEnemy::update(float seconds_elapsed){

@@ -26,17 +26,32 @@
 //class Mesh;
 //class Camera;
 //class Shader;
-//class Material;
+class Material;
+
+enum eButon{
+    PLAY,
+    EXIT
+};
 
 class EntityUI : public EntityMesh {
     
 public:
     
-    EntityUI();
+    EntityUI(float center_x, float center_y, float w, float h, const Material& material);// eButon buton_id);
+    
+    
+    float pos_x;
+    float pos_y;
+    float width;
+    float height;
+    Material material;
     //EntityUI(Vector2 size, conts Material& material);
     
-    Mesh* mesh = nullptr;
-    Material material;
+    //Mesh* mesh = nullptr;
+   // Material material;
+    
+   
+    Mesh* quad;
     
     int mask;
     bool visible;

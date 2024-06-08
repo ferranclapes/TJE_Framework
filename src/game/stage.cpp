@@ -8,17 +8,27 @@
 
 #include "stage.h"
 #include "framework/input.h"
-#include "game/World.h"
+#include "game/world.h"
 #include "framework/entities/entity.h"
 #include "framework/entities/EntityCollider.h"
 #include "framework/entities/entityTower.h"
 #include "framework/entities/entityEnemy.h"
-#include "game/game.h"
-#include "graphics/mesh.h"
 #include "framework/entities/entityUI.h"
+#include "game/game.h"
+//#include "graphics/mesh.h"
+#include "graphics/texture.h"
+#include "graphics/shader.h"
+
+
+Shader* shader = NULL;
+Mesh* quad = NULL;
+Texture* intro = NULL;
+Material fons_m;
+Material play_m;
 
 void Stage::render()
 {
+   
     
 }
 
@@ -30,16 +40,42 @@ void Stage::update(float seconse_elapsed)
 // INTRO STAGE
 IntroStage::IntroStage() {
     
+    int width = Game::GetInstance()->window_width;
+    int height = Game::GetInstance()->window_height;
+    
+    //Material fons_m;
+    //fons_m.diffuse = Texture::Get("data/textures/verd.png");
+    fons_m.color = Vector4(0, 1, 0, 0);
+    fons = new EntityUI(0.0f, 0.0f, width, height, fons_m);
+    
+    //Material play_m;
+    play_m.color = Vector4(1, 1, 1, 1);
+    //play_m.diffuse = Texture::Get("data/textures/blanc.png");
+    play = new EntityUI(0.0f, 0.0f, 0.5f, 0.2f, play_m);
+    
+    fons->addChild(play);
 }
+    
 
 void IntroStage::render()
 {
-
+   
+    fons->render(Game::GetInstance()->camera2D);
+    drawText(180, 140, "Guardians del castell", Vector3(0, 0, 0), 4);
+    drawText(365, 290, "Start", Vector3(0, 0, 0), 3);
+    
 }
 
 void IntroStage::update(float seconse_elapsed)
 {
-    
+    Vector2 mouse_pos = Input::mouse_position;
+ 
+    if(Input::wasKeyPressed(SDL_SCANCODE_S))
+    {
+        // Si el mpouse esta dins del button
+        //play->material.color = Vector4(1, 0, 0, 0);
+        Game::GetInstance()->GoToStage(PLAY_STAGE);
+    }
 }
 
 void IntroStage::onExit()
@@ -61,9 +97,8 @@ void IntroStage::onEnter()
 PlayStage::PlayStage()
 {
     //loads
-    
+
     //declarar variables com temps etc
-   
 }
 
 void PlayStage::render()
