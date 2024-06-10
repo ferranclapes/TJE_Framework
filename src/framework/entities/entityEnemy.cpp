@@ -85,7 +85,7 @@ void EntityEnemy::update(float seconds_elapsed){
    // Vector4 pos2D = Game::GetInstance()->camera->viewprojection_matrix * Vector4(pos3D, 1.0);
 
   /*  
-    std::cout << vida->pos_x << std::endl;
+    std::cout << vida->pos_x << std::endl;s
     std::cout << vida->pos_y << std::endl;*/
     
 

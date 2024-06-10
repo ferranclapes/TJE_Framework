@@ -84,6 +84,7 @@ public:
     void update(float seconds_elapsed) override;
 
     void PlaceTower();
+    void renderminimap();
     
     virtual void onEnter() override;
     virtual void onExit() override;
