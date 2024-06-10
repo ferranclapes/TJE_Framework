@@ -31,9 +31,6 @@ EntityUI::EntityUI(float center_x, float center_y, float w, float h, const Mater
 
 void EntityUI::render(Camera* camera2D)
 {
-    // Clear the window and the depth buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     
     // Set the camera as default
     camera2D->enable();
@@ -107,18 +104,18 @@ void EntityUI::update(float seconds_elapsed)
 }
 void EntityUI::update3D(Vector3 position3d){
          
-     Vector3 pos3d = position3d;
+     //Vector3 pos3d = position3d;
         
     //Updarte 3dHUD
         
-    int width = Game::instance->window_width;
-    int height = Game::instance->window_height;
+   // int width = Game::instance->window_width;
+    //int height = Game::instance->window_height;
     Game* game = Game::instance;
-    // ELS TENEN LA CAMERA A WORLD
+    
     
     visible = true;
          
-    Vector3 pos = game->camera->project(position3d, width, height);
+    Vector3 pos = game->camera2D->project(position3d, width, height);
     
     if(pos.z < 0.0f || pos.z > 1.0f){ //si no esta entre 0 i 1 no es veu
         visible = false;
@@ -126,6 +123,7 @@ void EntityUI::update3D(Vector3 position3d){
         pos.y = height - pos.y;
         position = Vector2(pos.x, pos.y);
     }
+
 }
 
              
