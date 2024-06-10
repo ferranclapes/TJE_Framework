@@ -40,6 +40,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->lookAt(Vector3(0.f, 6.f, 6.f), Vector3(0.f, 0.f, 1.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(70.f, window_width / (float)window_height, 0.1f, 10000.f); //set the projection, we want to be perspective
     
+    camera2D = new Camera();
+    camera2D->view_matrix = Matrix44(); // Set View to identity
+    camera2D->setOrthographic(0, window_width, 0, window_height, -1, 1 );
     // CREAR CAMERA 2D
     camera2D = new Camera();
     camera2D->view_matrix.setIdentity();
@@ -55,7 +58,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	stages.emplace_back(play_stage);
 	stages.emplace_back(end_stage);
     
-    GoToStage(PLAY_STAGE);
+    //GoToStage(PLAY_STAGE);
+     GoToStage(INTRO_STAGE);
     
     
 	fps = 0;
@@ -131,7 +135,7 @@ void Game::render(void)
 	//World::GetInstance()->render(camera);
 
 	// Draw the floor grid
-	drawGrid();
+	//drawGrid();
 
 
 	//Show camera eye position on screen

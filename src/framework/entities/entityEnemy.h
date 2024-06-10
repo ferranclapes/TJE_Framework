@@ -36,6 +36,8 @@ public:
     int health = 10;
     int waypoint_index = 0;
     
+    EntityUI* vida;
+    Material vida_m;
    
 };
 

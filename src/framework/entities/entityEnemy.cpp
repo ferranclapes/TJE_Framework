@@ -6,6 +6,7 @@
 #include "game/stage.h"
 #include "game/world.h"
 #include "entityUI.h"
+#include "game/game.h"
 
 #include <algorithm>
 
@@ -18,6 +19,7 @@
         health = 5;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(0.7, 0.7, 0.7);
+       
     }
     else if (type == STRONG) {
         Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoGreen.obj");
@@ -35,8 +37,11 @@
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(0.7, 0.7, 0.7);
     }
-
-    EntityUI* ui = new EntityUI();
+     
+     vida_m.color = Vector4(0, 1, 0, 0);
+     vida = new EntityUI(0.0f, 0.0f, 0.15f, 0.04f, vida_m);
+     this->addChild(vida);
+     
 }
 
 void EntityEnemy::update(float seconds_elapsed){
@@ -62,6 +67,30 @@ void EntityEnemy::update(float seconds_elapsed){
                 waypoint_index++;
             }
         }
+    
+   
+    Vector3 pos3D = model.getTranslation();
+    
+    int width = Game::GetInstance()->window_width;
+    int height = Game::GetInstance()->window_height;
+    
+    Vector3 pos = Game::GetInstance()->camera->project(pos3D, width, height);
+  //  vida->pos_x = 0.5f;//pos.x;
+   // vida->pos_y = 0.7f;//pos.y;
+    
+   // Vector4 pos2D = Game::GetInstance()->camera->viewprojection_matrix * Vector4(pos3D, 1.0);
+
+    
+    std::cout << vida->pos_x << std::endl;
+    std::cout << vida->pos_y << std::endl;
+    
+
+    vida->model.translate(10.8f, 0.5f, 0.7f); 
+    //vida->pos_x = 0.9; //pos2D.x;
+    //vida->pos_y = 0.5;//pos2D.y;
+    //Vector2 pos2d = Vector2(position.x, position.y);
+
+    
 }
 
 void EntityEnemy::GetDamage(int damage) {

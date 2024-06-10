@@ -15,9 +15,16 @@
 
 
 #include "framework/camera.h"
+#include "graphics/mesh.h"
+#include "graphics/texture.h"
+#include "graphics/shader.h"
+#include "framework/utils.h"
+
+
 
 class EntityEnemy;
-
+class EntityUI;
+class Material;
 
 enum TowerType {
     EMPTY,
@@ -46,6 +53,17 @@ public:
     
     //Constructor
     IntroStage();
+    
+    SDL_Window* window;
+    
+    /*Mesh* mesh;
+    //Shader* shader;
+    Camera* camera;
+    Texture* texture;*/
+   
+    EntityUI* fons;
+    EntityUI* play;
+
     
     void render() override;
     void update(float seconse_elapsed) override;

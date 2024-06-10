@@ -1,7 +1,7 @@
 
 varying vec2 v_uv;
 
-uniform vec4 v_color;
+uniform vec4 u_color;
 uniform float u_mask;
 
 void main()

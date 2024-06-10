@@ -6,86 +6,84 @@
 //
 
 #include "entityUI.h"
+#include "framework/input.h"
 
-EntityUI::EntityUI()
+
+EntityUI::EntityUI(float center_x, float center_y, float w, float h, const Material& material) // eButon buton_id)
 {
-
-
-    Mesh* quad = new Mesh();
-
-    /*
-    Cal donar el valor en pixels al quad
-    */
-
-    //quad->createQuad();
-
-    this->mesh = quad;
-
+    
+    this->pos_x = center_x;
+    this->pos_y = center_y;
+    this->width = w;
+    this->height = h;
     this->material = material;
+    
+    quad = new Mesh();
+    quad->createQuad(center_x, center_y, w, h, false);
+    
+    if (!this->material.shader) {
+        this->material.shader = Shader::Get("data/shaders/example.vs" , "data/shaders/boto.fs");
+    }
+    
+    
 }
-/*EntityUI::EntityUI(Vector2 size, conts Material& material)
-{
-    this->material = material;
-    //size??
-    
-}*/
-void EntityUI::render(Camera* camera2d)
+
+
+void EntityUI::render(Camera* camera2D)
 {
     
-     std::cout << "render entityUI" << std::endl;
-     //com el render d'entity mesh pero canviant camera
-    glDisable( GL_DEPTH_TEST );
-    glDisable( GL_CULL_FACE );
-    glEnable( GL_BLEND );
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-     
-     for (int i = 0; i < children.size(); ++i) {
-         children[i]->render(camera2d);
-     }
+    // Set the camera as default
+    camera2D->enable();
     
-     // Get the last camera that was activated
-     //Camera* camera = Camera::current;
-     if (!material.shader) {
-         material.shader = Shader::Get("data/shaders/helth_bar.vs" , "data/shaders/helth_bar.fs");
-     }
-     // Enable shader and pass uniforms
-     material.shader->enable();
-     if(!isInstanced){
-     material.shader->setUniform("u_model", getGlobalMatrix());
-     }
-     
-     //update uniforms
-     material.shader->setUniform("u_color", material.color);
-     material.shader->setUniform("u_viewprojection", camera2d->viewprojection_matrix);
-     material.shader->setUniform("u_mask", mask); //afegit
+        // Set flags
+    glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
     
-     if (material.diffuse){
-     material.shader->setTexture("u_texture", material.diffuse, 0);
-     }
-     // Render the mesh using the shader
-         if (!isInstanced) {
-             mesh->render(GL_TRIANGLES);
-         }
-         else {
-             mesh->renderInstanced(GL_TRIANGLES, models.data(), models.size());
-         }
-         // Disable shader after finishing rendering
-         material.shader->disable();
-         
-         
-         
-         //World* world = World::get_instance(); ?
-         
-         
-         //tornar a deixar com estven
-         glDisable(GL_BLEND);
-         glEnable(GL_DEPTH_TEST);
-         
+    for (int i = 0; i < children.size(); ++i) {
+        children[i]->render(camera2D);
+    }
+    
+    material.shader->enable();
+
+        // Upload uniforms
+    material.shader->setUniform("u_color", material.color);
+    material.shader->setUniform("u_viewprojection", camera2D->viewprojection_matrix);
+    //material.shader->setUniform("u_texture", material.diffuse, 0);
+    
+            // Do the draw call
+    quad->render( GL_TRIANGLES );
+
+            // Disable shader
+    material.shader->disable();
+    
+    
+        //tornar a deixar com estven
+    glDisable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    
+    
+
 }
 
 void EntityUI::update(float seconds_elapsed)
 {
-   
+ 
+    Vector2 mouse_pos = Input::mouse_position;
+    
+    if(mouse_pos.x > (this->pos_x - this->width * 0.5f) &&
+       mouse_pos.x < (this->pos_x + this->width * 0.5f) &&
+       mouse_pos.y > (this->pos_y - this->height * 0.5f) &&
+       mouse_pos.y< (this->pos_y + this->height * 0.5f))
+    {
+        
+        // Si el mpouse esta dins del button
+        material.color = Vector4(1, 0, 0, 0);
+    }
+    
+    if(Input::isKeyPressed(SDL_SCANCODE_A)){
+        std::cout << "start press" << std::endl;
+    }
     /*Vector2 mouse_pos = Input::mouse_position;
     
     if(!visible){
@@ -106,18 +104,18 @@ void EntityUI::update(float seconds_elapsed)
 }
 void EntityUI::update3D(Vector3 position3d){
          
-     Vector3 pos3d = position3d;
+     //Vector3 pos3d = position3d;
         
     //Updarte 3dHUD
         
-    int width = Game::instance->window_width;
-    int height = Game::instance->window_height;
+   // int width = Game::instance->window_width;
+    //int height = Game::instance->window_height;
     Game* game = Game::instance;
-    // ELS TENEN LA CAMERA A WORLD
+    
     
     visible = true;
          
-    Vector3 pos = game->camera->project(position3d, width, height);
+    Vector3 pos = game->camera2D->project(position3d, width, height);
     
     if(pos.z < 0.0f || pos.z > 1.0f){ //si no esta entre 0 i 1 no es veu
         visible = false;
@@ -125,6 +123,7 @@ void EntityUI::update3D(Vector3 position3d){
         pos.y = height - pos.y;
         position = Vector2(pos.x, pos.y);
     }
+
 }
 
              
