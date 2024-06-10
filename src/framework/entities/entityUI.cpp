@@ -24,8 +24,6 @@ EntityUI::EntityUI(float center_x, float center_y, float w, float h, const Mater
     if (!this->material.shader) {
         this->material.shader = Shader::Get("data/shaders/example.vs" , "data/shaders/boto.fs");
     }
-    
-    
 }
 
 
@@ -36,7 +34,7 @@ void EntityUI::render(Camera* camera2D)
     camera2D->enable();
     
         // Set flags
-    glDisable(GL_BLEND);
+    glEnable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     
@@ -49,6 +47,7 @@ void EntityUI::render(Camera* camera2D)
         // Upload uniforms
     material.shader->setUniform("u_color", material.color);
     material.shader->setUniform("u_viewprojection", camera2D->viewprojection_matrix);
+    material.shader->setUniform("u_mask", mask);
     //material.shader->setUniform("u_texture", material.diffuse, 0);
     
             // Do the draw call

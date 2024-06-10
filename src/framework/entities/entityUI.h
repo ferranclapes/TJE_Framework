@@ -53,7 +53,7 @@ public:
    
     Mesh* quad;
     
-    int mask;
+    float mask;
     bool visible;
     Vector2 position;
     

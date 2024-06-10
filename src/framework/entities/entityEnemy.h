@@ -33,6 +33,7 @@ public:
     void followPath(float seconds_elapsed);
 
     float velocity = 1;
+    int maxHealth = 10;
     int health = 10;
     int waypoint_index = 0;
     

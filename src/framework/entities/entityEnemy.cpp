@@ -17,6 +17,7 @@
         SetMesh(mesh, {});
         velocity = 3;
         health = 5;
+        maxHealth = 5;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(0.7, 0.7, 0.7);
        
@@ -26,6 +27,7 @@
         SetMesh(mesh, {});
         velocity = 1.5;
         health = 10;
+        maxHealth = 10;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(1.2, 1.2, 1.2);
     }
@@ -34,11 +36,13 @@
         SetMesh(mesh, {});
         velocity = 6;
         health = 3;
+        maxHealth = 3;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
         model.scale(0.7, 0.7, 0.7);
     }
      
      vida_m.color = Vector4(0, 1, 0, 0);
+     vida_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/health-bar.fs");
      vida = new EntityUI(0.0f, 0.0f, 0.15f, 0.04f, vida_m);
      this->addChild(vida);
      
@@ -49,7 +53,7 @@ void EntityEnemy::update(float seconds_elapsed){
     std::vector< Vector3 > points = World::GetInstance()->waypoints;
    
     
-    if(points.size() != 0 & waypoint_index != points.size()){
+    if(points.size() != 0 && waypoint_index != points.size()){
         
             Vector3 origin = model.getTranslation();
             Vector3 target = points[waypoint_index];
@@ -75,17 +79,22 @@ void EntityEnemy::update(float seconds_elapsed){
     int height = Game::GetInstance()->window_height;
     
     Vector3 pos = Game::GetInstance()->camera->project(pos3D, width, height);
-  //  vida->pos_x = 0.5f;//pos.x;
+   // vida->pos_x = 0.5f;//pos.x;
    // vida->pos_y = 0.7f;//pos.y;
     
    // Vector4 pos2D = Game::GetInstance()->camera->viewprojection_matrix * Vector4(pos3D, 1.0);
 
-    
+  /*  
     std::cout << vida->pos_x << std::endl;
-    std::cout << vida->pos_y << std::endl;
+    std::cout << vida->pos_y << std::endl;*/
     
 
-    vida->model.translate(10.8f, 0.5f, 0.7f); 
+    vida->model.setTranslation(model.getTranslation());
+    Vector4 pos2D = Camera::current->viewprojection_matrix * Vector4(pos3D, 1.0);
+    vida->pos_x = pos2D.x / pos2D.w;
+    vida->pos_y = pos2D.y / pos2D.w;
+    vida->mask = float(health) / float(maxHealth);
+
     //vida->pos_x = 0.9; //pos2D.x;
     //vida->pos_y = 0.5;//pos2D.y;
     //Vector2 pos2d = Vector2(position.x, position.y);
@@ -104,15 +113,6 @@ void EntityEnemy::Die() {
 	World::GetInstance()->removeEntity(this);
 	World::GetInstance()->RemoveEnemy(this);
 	delete this;
-}
-
-
-
-void EntityEnemy::followPath(float seconds_elapsed){
-    
-    
-
-
 }
     
     
