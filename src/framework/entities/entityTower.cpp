@@ -53,7 +53,7 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 		ammo -= 1;
 		std::string meshPath = std::string("data/objects/arrow3.obj");
 		Mesh* mesh = Mesh::Get(meshPath.c_str());
-		EntityProjectile* projectile = new EntityProjectile(ARROW, enemy, damage, mesh, {});
+		EntityProjectile* projectile = new EntityProjectile(ARROW, enemy, damage, mesh, {}, model.getTranslation());
 		projectile->model.setTranslation(model.getTranslation());
 		float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
 		projectile->model.rotate(angle, Vector3(0, 1, 0));
@@ -64,7 +64,7 @@ void EntityTower::Shoot(EntityEnemy* enemy) {
 		ammo -= 1;
 		std::string meshPath = std::string("data/objects/stone.obj");
 		Mesh* mesh = Mesh::Get(meshPath.c_str());
-		EntityProjectile* projectile = new EntityProjectile(STONE, enemy, damage, mesh, {});
+		EntityProjectile* projectile = new EntityProjectile(STONE, enemy, damage, mesh, {}, model.getTranslation());
 		projectile->model.setTranslation(model.getTranslation());
 		float angle = projectile->model.getYawRotationToAimTo(enemy->model.getTranslation());
 		projectile->model.rotate(angle, Vector3(0, 1, 0));

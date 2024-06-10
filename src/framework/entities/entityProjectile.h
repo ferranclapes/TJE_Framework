@@ -21,7 +21,7 @@ class EntityProjectile : public EntityCollider {
 public:
 
     EntityProjectile() {};
-    EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da, Mesh* mesh, const Material& material);
+    EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da, Mesh* mesh, const Material& material, Vector3 towerPosition);
 
     void update(float seconds_elapsed) override;
 
@@ -33,6 +33,7 @@ public:
     //Only for stones
     Vector3 target = Vector3(0,0,0);
     Vector3 midle = Vector3();
+    float dh;
     float time = 0;
     float maxHeigh = 1.8;
     float a = 0;
