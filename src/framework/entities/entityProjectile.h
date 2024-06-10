@@ -32,6 +32,7 @@ public:
 
     //Only for stones
     Vector3 target = Vector3(0,0,0);
+    Vector3 midle = Vector3();
     float time = 0;
     float maxHeigh = 1.8;
     float a = 0;

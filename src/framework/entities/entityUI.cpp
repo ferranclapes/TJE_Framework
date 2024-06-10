@@ -12,20 +12,12 @@ EntityUI::EntityUI()
 
 
     Mesh* quad = new Mesh();
-    quad->vertices.push_back(Vector3(-1, 1, 0));
-    quad->uvs.push_back(Vector2(0, 1));
-    quad->vertices.push_back(Vector3(-1, -1, 0));
-    quad->uvs.push_back(Vector2(0, 0));
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
 
+    /*
+    Cal donar el valor en pixels al quad
+    */
 
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
-    quad->vertices.push_back(Vector3(1, -1, 0));
-    quad->uvs.push_back(Vector2(1, 0));
-    quad->vertices.push_back(Vector3(1, 1, 0));
-    quad->uvs.push_back(Vector2(1, 1));
+    //quad->createQuad();
 
     this->mesh = quad;
 

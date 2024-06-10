@@ -26,7 +26,9 @@ EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da
         damage = 20;
         target = Vector3(obj->model.getTranslation().x, 0, obj->model.getTranslation().z);
         float dh = model.getTranslation().distance(target);
-        a = (2 / dh) - 1;
+        Vector3 unit = (model.getTranslation() - target).normalize();
+        midle = model.getTranslation() + unit*(dh/2);
+        a = -3/((2/dh)*(2/dh));
         speed = 3;
     }
 };
@@ -49,11 +51,14 @@ void EntityProjectile::update(float seconds_elapsed) {
             int x = 0;
         }
         else {
+            /*
+            * Cal anar avançant en l'eix horitzontal, i amb la longitud del vector torre-posicio trobar la y utilitzant la formula
+            */
+            float z = speed * seconds_elapsed;
+            float x = midle.distance(model.getTranslation() + Vector3(0, 0, z));
+            float y = a * x*x + 3 - model.getTranslation().y;
 
-            float x = speed * seconds_elapsed;
-            float y = a * speed * time + 1 - model.getTranslation().y;
-
-            model.translate(0, y, x);
+            model.translate(0, y, z);
         }
 
         float distance_to_target = model.getTranslation().distance(target);

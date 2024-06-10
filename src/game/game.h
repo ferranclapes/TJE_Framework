@@ -47,7 +47,7 @@ public:
 
 	//some vars
 	Camera* camera; //our global camera
-	Camera* camera2d; // afegit
+	Camera* camera2D; // afegit
 	bool mouse_locked; //tells if the mouse is locked (not seen)
 
 	Game(int window_width, int window_height, SDL_Window* window);
