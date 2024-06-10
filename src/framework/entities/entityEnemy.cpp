@@ -78,20 +78,13 @@ void EntityEnemy::update(float seconds_elapsed){
     int width = Game::GetInstance()->window_width;
     int height = Game::GetInstance()->window_height;
     
-    Vector3 pos = Game::GetInstance()->camera->project(pos3D, width, height);
-   // vida->pos_x = 0.5f;//pos.x;
-   // vida->pos_y = 0.7f;//pos.y;
-    
-   // Vector4 pos2D = Game::GetInstance()->camera->viewprojection_matrix * Vector4(pos3D, 1.0);
+   // Vector3 pos = Game::GetInstance()->camera->project(pos3D, width, height);
 
-  /*  
-    std::cout << vida->pos_x << std::endl;s
-    std::cout << vida->pos_y << std::endl;*/
     
 
     vida->model.setTranslation(model.getTranslation());
     Vector4 pos2D = Camera::current->viewprojection_matrix * Vector4(pos3D, 1.0);
-    vida->pos_x = pos2D.x / pos2D.w;
+    //vida->pos_x = pos2D.x / pos2D.w;
     vida->pos_y = pos2D.y / pos2D.w;
     vida->mask = float(health) / float(maxHealth);
 
