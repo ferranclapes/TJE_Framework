@@ -69,13 +69,33 @@ void IntroStage::render()
 void IntroStage::update(float seconse_elapsed)
 {
     Vector2 mouse_pos = Input::mouse_position;
- 
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x,mouse_pos.y, 1.0, 1.0);
+    
     if(Input::wasKeyPressed(SDL_SCANCODE_S))
     {
-        // Si el mpouse esta dins del button
-        //play->material.color = Vector4(1, 0, 0, 0);
         Game::GetInstance()->GoToStage(PLAY_STAGE);
     }
+    
+    float left = play->pos_x - play->width/2;
+    float right = play->pos_x + play->width/2;
+    float top = play->pos_y - play->height/2;
+    float bottom = play->pos_y + play->height/2;
+    
+    if(mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom){
+        
+        play->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->GoToStage(PLAY_STAGE);
+        }
+
+    }else{
+        play->material.color = Vector4(1, 1, 1, 1);
+    }
+  
+  
+    
 }
 
 void IntroStage::onExit()
@@ -274,7 +294,12 @@ void PlayStage::onEnter()
     enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
 }
 
+void PlayStage::renderminimap()
+{
+    
 
+
+}
 
 
 // END STAGE
