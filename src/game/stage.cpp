@@ -126,6 +126,7 @@ PlayStage::PlayStage()
 void PlayStage::render()
 {
     World::GetInstance()->render(Camera::current);
+    renderminimap();
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
 
 }
@@ -300,6 +301,33 @@ void PlayStage::onEnter()
 void PlayStage::renderminimap()
 {
     
+    //clear depth buffer again to render UI
+    glClear(GL_DEPTH_BUFFER_BIT);
+    
+    int width = Game::GetInstance()->window_width;
+    int height = Game::GetInstance()->window_height;
+    int size = 200;
+    int margin = 40;
+    glViewport(width - margin -size,  height - size-margin, size, size);
+    
+
+
+    Camera cam;
+    cam.setPerspective(60, 1, 0.1, 100);
+    Vector3 center(0, 0, 0);
+    Vector3 eye = center + Vector3(0, 30, 0);
+    Vector3 up(0, 0, -1);
+
+    cam.lookAt(eye, center, up);
+
+    cam.enable();
+    
+    World::GetInstance()->root->render(&cam);
+
+
+    //reset view
+    glViewport(0, 0, width, height);
+
 
 
 }
