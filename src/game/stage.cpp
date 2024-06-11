@@ -15,7 +15,6 @@
 #include "framework/entities/entityEnemy.h"
 #include "framework/entities/entityUI.h"
 #include "game/game.h"
-//#include "graphics/mesh.h"
 #include "graphics/texture.h"
 #include "graphics/shader.h"
 
@@ -106,7 +105,7 @@ void IntroStage::onExit()
 
 void IntroStage::onEnter()
 {
-    //Audio::Init();
+    Audio::Init();
     channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
 }
 
@@ -126,7 +125,7 @@ PlayStage::PlayStage()
 void PlayStage::render()
 {
     World::GetInstance()->render(Camera::current);
-    renderminimap();
+    //renderminimap();
     drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
 
 }
@@ -153,6 +152,9 @@ void PlayStage::update(float seconds_elapsed)
     }
 
     if (int(Game::instance->time*10) % 5 == 0 && !moneyCounted) {
+        if (numMines < 0) {
+            numMines = 0;
+        }
         money += 1 * numMines;
         moneyCounted = true;
     }
@@ -197,6 +199,18 @@ void PlayStage::update(float seconds_elapsed)
             iter++;
         }
         timeOut -= seconds_elapsed;
+    }
+
+    for (EntityEnemy* enemy : World::GetInstance()->enemies) {
+        if (enemy->waypoint_index == World::GetInstance()->waypoints.size()) {
+            enemy->Die();
+            vides -= 1;
+            HCHANNEL screams = Audio::Play("data/sounds/screams.wav");
+        }
+    }
+
+    if (vides <= 0) {
+        Game::GetInstance()->GoToStage(END_STAGE);
     }
 
     World::GetInstance()->update(seconds_elapsed);
@@ -276,6 +290,7 @@ void PlayStage::PlaceTower() {
     //Generate entities
     for (auto& emesh : entitymeshes)
     {
+        HCHANNEL construction = Audio::Play("data/sounds/construction.wav");
         std::string meshPath = std::string("data/Kenney/Models/OBJ format/") + std::string(towerType);
         Mesh* mesh = Mesh::Get(meshPath.c_str());
         EntityMesh* new_entity = new EntityMesh(mesh, {});

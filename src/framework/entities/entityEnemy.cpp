@@ -18,7 +18,7 @@
         velocity = 3;
         health = 5;
         maxHealth = 5;
-        model.setTranslation(Vector3(-11, 0.3, 11.33));
+        model.setTranslation(Vector3(-11, 0.3, 13.33));
         model.scale(0.7, 0.7, 0.7);
        
     }
@@ -35,6 +35,7 @@
         Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoPurple.obj");
         SetMesh(mesh, {});
         velocity = 6;
+        velocity = 15;
         health = 3;
         maxHealth = 3;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
@@ -53,24 +54,24 @@ void EntityEnemy::update(float seconds_elapsed){
     std::vector< Vector3 > points = World::GetInstance()->waypoints;
    
     
-    if(points.size() != 0 && waypoint_index != points.size()){
-        
-            Vector3 origin = model.getTranslation();
-            Vector3 target = points[waypoint_index];
+    if (points.size() != 0 && waypoint_index != points.size()) {
 
-            // Orient before translating!
-            float angle = model.getYawRotationToAimTo(target);
-            model.rotate(angle*seconds_elapsed*100, Vector3(0, 1, 0));
-            
+        Vector3 origin = model.getTranslation();
+        Vector3 target = points[waypoint_index];
 
-            model.translate(0.f, 0.0f, seconds_elapsed*velocity);
-            
-            float distance_to_target = (target - origin).length();
+        // Orient before translating!
+        float angle = model.getYawRotationToAimTo(target);
+        model.rotate(angle * seconds_elapsed * 100, Vector3(0, 1, 0));
 
-            if (distance_to_target < 0.4f) {
-                waypoint_index++;
-            }
+
+        model.translate(0.f, 0.0f, seconds_elapsed * velocity);
+
+        float distance_to_target = (target - origin).length();
+
+        if (distance_to_target < 0.4f) {
+            waypoint_index++;
         }
+    }
     
    
     Vector3 pos3D = model.getTranslation();

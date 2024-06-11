@@ -102,11 +102,12 @@ public:
     int numMines = 0;
 
     std::fstream enemyWaves;
-    float waveTimeOut = 2;
+    float waveTimeOut = 1;
     std::string waves = "a";
     bool nextWave = true;
     float timeOut = 0;
     int iter = 0;
+    int vides = 3;
 
 
     HCHANNEL background_channel;
