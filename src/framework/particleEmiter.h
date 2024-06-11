@@ -4,10 +4,31 @@
 #pragma once
 #include "includes.h"
 #include "utils.h"
+#include "entities/entity.h"
+#include "entities/entityMesh.h"
 
 #include <vector>
 
-class EntityMesh;
+
+class Particle : public EntityMesh {
+public:
+	bool isdead = false;
+
+	Vector3 position;
+	Vector3 velocity;
+	float ttl;
+
+	float size;
+	Vector3 color;
+	float alpha;
+
+
+	void update(float sec_ela) override;
+	void destroy();
+
+
+};
+
 
 class ParticleEmiter : public Entity {
 	int max_particles = 300;
@@ -39,21 +60,3 @@ public:
 };
 
 
-class Particle : public EntityMesh {
-public:
-	bool isdead = false;
-
-	Vector3 position;
-	Vector3 velocity;
-	float ttl;
-
-	float size;
-	Vector3 color;
-	float alpha;
-
-
-	void update(float sec_ela) override;
-	void destroy();
-
-
-};

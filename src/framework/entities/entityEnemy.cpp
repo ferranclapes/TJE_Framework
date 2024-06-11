@@ -43,7 +43,7 @@
      
      vida_m.color = Vector4(0, 1, 0, 0);
      vida_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/health-bar.fs");
-     vida = new EntityUI(0.0f, 0.0f, 0.15f, 0.04f, vida_m);
+     vida = new EntityUI(0.5f, 0.0f, 0.15f, 0.04f, vida_m);
      this->addChild(vida);
      
 }
@@ -74,23 +74,18 @@ void EntityEnemy::update(float seconds_elapsed){
     
    
     Vector3 pos3D = model.getTranslation();
+    pos3D.y += 0.9;
     
     int width = Game::GetInstance()->window_width;
     int height = Game::GetInstance()->window_height;
-    
-   // Vector3 pos = Game::GetInstance()->camera->project(pos3D, width, height);
 
     
-
-    vida->model.setTranslation(model.getTranslation());
     Vector4 pos2D = Camera::current->viewprojection_matrix * Vector4(pos3D, 1.0);
-    //vida->pos_x = pos2D.x / pos2D.w;
+    vida->pos_x = pos2D.x / pos2D.w;
     vida->pos_y = pos2D.y / pos2D.w;
     vida->mask = float(health) / float(maxHealth);
 
-    //vida->pos_x = 0.9; //pos2D.x;
-    //vida->pos_y = 0.5;//pos2D.y;
-    //Vector2 pos2d = Vector2(position.x, position.y);
+    vida->quad->createQuad(vida->pos_x, vida->pos_y, 0.15f, 0.04f, false);
 
     
 }
