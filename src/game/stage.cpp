@@ -106,7 +106,7 @@ void IntroStage::onExit()
 
 void IntroStage::onEnter()
 {
-    Audio::Init();
+    //Audio::Init();
     channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
 }
 
@@ -301,6 +301,8 @@ void PlayStage::onEnter()
 void PlayStage::renderminimap()
 {
     
+    Camera* curr = Camera::current;
+
     //clear depth buffer again to render UI
     glClear(GL_DEPTH_BUFFER_BIT);
     
@@ -319,11 +321,14 @@ void PlayStage::renderminimap()
     Vector3 up(0, 0, -1);
 
     cam.lookAt(eye, center, up);
+    cam.renderGUI = false;
 
     cam.enable();
     
     World::GetInstance()->root->render(&cam);
 
+    
+    curr->enable();
 
     //reset view
     glViewport(0, 0, width, height);

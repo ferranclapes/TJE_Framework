@@ -16,6 +16,7 @@ public:
 	enum { PERSPECTIVE, ORTHOGRAPHIC }; //types of cameras available
 
 	char type; //camera type
+	bool renderGUI = true;
 
 	//vectors to define the orientation of the camera
 	Vector3 eye; //where is the camera

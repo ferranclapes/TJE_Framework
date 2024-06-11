@@ -29,7 +29,9 @@ EntityUI::EntityUI(float center_x, float center_y, float w, float h, const Mater
 
 void EntityUI::render(Camera* camera2D)
 {
-    
+    if (Camera::current->renderGUI == false) {
+        return;
+    }
     // Set the camera as default
     camera2D->enable();
     
