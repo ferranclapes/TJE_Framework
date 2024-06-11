@@ -102,7 +102,7 @@ public:
     int numMines = 0;
 
     std::fstream enemyWaves;
-    float waveTimeOut = 1;
+    float waveTimeOut = 10;
     std::string waves = "a";
     bool nextWave = true;
     float timeOut = 0;

@@ -35,7 +35,6 @@
         Mesh* mesh = Mesh::Get("data/Kenney/Models/OBJ format/enemy_ufoPurple.obj");
         SetMesh(mesh, {});
         velocity = 6;
-        velocity = 15;
         health = 3;
         maxHealth = 3;
         model.setTranslation(Vector3(-11, 0.3, 11.33));
