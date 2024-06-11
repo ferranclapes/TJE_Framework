@@ -44,8 +44,9 @@ IntroStage::IntroStage() {
     int height = Game::GetInstance()->window_height;
     
     //Material fons_m;
-    //fons_m.diffuse = Texture::Get("data/textures/verd.png");
-    fons_m.color = Vector4(0, 1, 0, 0);
+    //fons_m.color = Vector4(0, 1, 0, 0);
+    fons_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    fons_m.diffuse = Texture::Get("data/textures/intro.png");
     fons = new EntityUI(0.0f, 0.0f, width, height, fons_m);
     
     //Material play_m;
@@ -100,12 +101,13 @@ void IntroStage::update(float seconse_elapsed)
 
 void IntroStage::onExit()
 {
-    
+    Audio::Stop(channel_intro);
 }
 
 void IntroStage::onEnter()
 {
-    
+    Audio::Init();
+    channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
 }
 
 
@@ -286,12 +288,13 @@ void PlayStage::PlaceTower() {
 
 void PlayStage::onExit()
 {
-    
+    Audio::Stop(background_channel);
 }
 
 void PlayStage::onEnter()
 {
     enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
+    background_channel = Audio::Play("data/sounds/play_background.wav", 1, BASS_SAMPLE_LOOP);
 }
 
 void PlayStage::renderminimap()

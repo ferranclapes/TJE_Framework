@@ -19,6 +19,7 @@
 #include "graphics/texture.h"
 #include "graphics/shader.h"
 #include "framework/utils.h"
+#include "framework/audio.h"
 
 
 
@@ -70,6 +71,10 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
+
+
+
+    HCHANNEL channel_intro;
 };
 
 class PlayStage : public Stage
@@ -103,6 +108,8 @@ public:
     float timeOut = 0;
     int iter = 0;
 
+
+    HCHANNEL background_channel;
 
 };
 

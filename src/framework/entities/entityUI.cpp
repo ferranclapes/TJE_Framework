@@ -48,6 +48,7 @@ void EntityUI::render(Camera* camera2D)
     material.shader->setUniform("u_color", material.color);
     material.shader->setUniform("u_viewprojection", camera2D->viewprojection_matrix);
     material.shader->setUniform("u_mask", mask);
+    material.shader->setUniform("u_texture", material.diffuse);
     //material.shader->setUniform("u_texture", material.diffuse, 0);
     
             // Do the draw call

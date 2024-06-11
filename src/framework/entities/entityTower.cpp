@@ -7,6 +7,7 @@
 #include "framework/entities/entityEnemy.h"
 #include "game/world.h"
 #include "game/game.h"
+#include "framework/audio.h"
 
 #include <algorithm>
 
@@ -50,6 +51,8 @@ void EntityTower::FindEnemies(float sec_ela) {
 void EntityTower::Shoot(EntityEnemy* enemy) {
 	
 	if (towerType == BALLISTA) {
+		//Audio::Init();
+		HCHANNEL chanel = Audio::Play("data/sounds/arrow.wav", 0.2, BASS_SAMPLE_MONO);
 		ammo -= 1;
 		std::string meshPath = std::string("data/objects/arrow3.obj");
 		Mesh* mesh = Mesh::Get(meshPath.c_str());

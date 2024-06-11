@@ -67,6 +67,7 @@ void EntityProjectile::update(float seconds_elapsed) {
 
         float distance_to_target = model.getTranslation().distance(target);
         if (distance_to_target < 0.7f) {
+            Audio::Play("data/sounds/cannon.wav", 0.2, BASS_SAMPLE_MONO);
             for (EntityEnemy* enemy : World::GetInstance()->enemies) {
                 if (target.distance(enemy->model.getTranslation()) <= 1.75) {
                     enemy->GetDamage(damage);
