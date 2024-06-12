@@ -162,15 +162,23 @@ void PlayStage::update(float seconds_elapsed)
         moneyCounted = false;
     }
 
-    if (waveTimeOut <= 0 && nextWave) {
+   /* if (waveTimeOut <= 0 && nextWave) {
         std::getline(enemyWaves, waves);
         iter = 0;
         waveTimeOut = 2;
         nextWave = false;
     }
     else if(nextWave) {
+        
         waveTimeOut -= seconds_elapsed;
+    }*/
+    if (World::GetInstance()->enemies.size() == 0) {
+        std::getline(enemyWaves, waves);
+        iter = 0;
+        waveTimeOut = 2;
+        nextWave = false;
     }
+
     if (waves != "a") {
         if (timeOut <= 0) {
             if (waves[iter] == 'N') {
@@ -184,7 +192,7 @@ void PlayStage::update(float seconds_elapsed)
                 EntityEnemy* new_enemy = new EntityEnemy(STRONG);
                 World::GetInstance()->addEntity(new_enemy);
                 World::GetInstance()->enemies.emplace_back(new_enemy);
-                timeOut += 2;
+                timeOut += 1.2;
             } 
             else if (waves[iter] == 'F') {
                 EntityEnemy* new_enemy = new EntityEnemy(FAST);

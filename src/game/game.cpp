@@ -146,7 +146,8 @@ void Game::render(void)
 	drawText(50, 50, "X = " + std::to_string(x) + ", Y = " + std::to_string(y) + ", Z = " + std::to_string(z), Vector3(1, 0, 0), 2);*/
 
 	// Render the FPS, Draw Calls, etc
-	drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
+	//drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
+	drawText(2, 2, std::to_string(this->time), Vector3(1, 1, 1), 5);
 
 	// Swap between front buffer and back buffer
 	SDL_GL_SwapWindow(this->window);
