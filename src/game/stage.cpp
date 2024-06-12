@@ -134,15 +134,21 @@ bool IntroStage::onButton(EntityUI* button){
     
 }
 
-void IntroStage::onExit()
+void IntroStage::onExit(int stage_to_go)
 {
-    Audio::Stop(channel_intro);
+    if (stage_to_go != COMMANDS_STAGE) {
+
+        Audio::Stop(channel_intro);
+    }
 }
 
 void IntroStage::onEnter()
 {
-    Audio::Init();
-    channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
+    if (channel_intro == NULL) {
+
+        Audio::Init();
+        channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
+    }
 }
 
 
@@ -202,15 +208,14 @@ bool CommandsStage::onButton(EntityUI* button){
     
 }
     
-void CommandsStage::onExit()
+void CommandsStage::onExit(int stage_to_go)
 {
-    Audio::Stop(channel_intro);
+
 }
 
 void CommandsStage::onEnter()
 {
-    Audio::Init();
-    channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
+
 }
 
 
@@ -247,7 +252,6 @@ void PlayStage::render()
     
 
 }
-
 
 void PlayStage::update(float seconds_elapsed)
 {
@@ -428,7 +432,7 @@ void PlayStage::PlaceTower() {
     }
 }
 
-void PlayStage::onExit()
+void PlayStage::onExit(int stage_to_go)
 {
     Audio::Stop(background_channel);
 }
@@ -551,7 +555,7 @@ void EndStage::update(float seconse_elapsed)
 
 }
 
-void EndStage::onExit()
+void EndStage::onExit(int stage_to_go)
 {
     Audio::Stop(channel_intro);
 }

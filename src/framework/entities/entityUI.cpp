@@ -33,6 +33,8 @@ void EntityUI::render(Camera* camera2D)
     if (Camera::current->renderGUI == false) {
         return;
     }
+
+    Camera* curr = Camera::current;
     // Set the camera as default
     camera2D->enable();
     
@@ -66,6 +68,7 @@ void EntityUI::render(Camera* camera2D)
         //tornar a deixar com estven
     glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
+    curr->enable();
     
 }
 

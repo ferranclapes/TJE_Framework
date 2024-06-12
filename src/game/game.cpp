@@ -269,7 +269,7 @@ void Game::onResize(int width, int height)
 void Game::GoToStage(int stage_to_go) {
     
    if(current_stage != nullptr){
-        current_stage->onExit();
+        current_stage->onExit(stage_to_go);
     }
     current_stage = stages[stage_to_go];
     current_stage->onEnter();

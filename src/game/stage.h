@@ -43,7 +43,7 @@ public:
     virtual void update(float seconse_elapsed);
     
     virtual void onEnter() {};
-    virtual void onExit() {};
+    virtual void onExit(int stage_to_go) {};
     
 };
 
@@ -83,11 +83,11 @@ public:
     bool onButton(EntityUI* button);
     
     virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void onExit(int stage_to_go) override;
 
 
 
-    HCHANNEL channel_intro;
+    HCHANNEL channel_intro = NULL;
 };
 
 class CommandsStage : public Stage
@@ -107,7 +107,7 @@ public:
     bool onButton(EntityUI* button);
     
     virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void onExit(int stage_to_go) override;
     
 };
 
@@ -133,7 +133,7 @@ public:
     void renderminimap();
     
     virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void onExit(int stage_to_go) override;
 
     const char* towerType = "towerRound_sampleA.obj";
     int typeToPlace = MINE;
@@ -182,7 +182,7 @@ public:
     bool onButton(EntityUI* button);
     
     virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void onExit(int stage_to_go) override;
     
 };
 
