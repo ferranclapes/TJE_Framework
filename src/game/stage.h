@@ -20,6 +20,7 @@
 #include "graphics/shader.h"
 #include "framework/utils.h"
 #include "framework/audio.h"
+#include "graphics/material.h"
 
 
 
@@ -62,12 +63,24 @@ public:
     Camera* camera;
     Texture* texture;*/
    
+   // Mesh* fons;
     EntityUI* fons;
     EntityUI* play;
+    EntityUI* exit;
+    EntityUI* commands;
+    Material material;
+    
+    Material fons_m;
+    Material play_m;
+    Material exit_m;
+    Material commands_m;
+    
 
     
     void render() override;
     void update(float seconse_elapsed) override;
+    
+    bool onButton(EntityUI* button);
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -77,6 +90,28 @@ public:
     HCHANNEL channel_intro;
 };
 
+class CommandsStage : public Stage
+{
+    
+public:
+    // Constructor
+    CommandsStage();
+    EntityUI* menu;
+    Material menu_m;
+    
+    HCHANNEL channel_intro;
+    
+    void render() override;
+    void update(float seconse_elapsed) override;
+    
+    bool onButton(EntityUI* button);
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+};
+
+
 class PlayStage : public Stage
 { //per heredar
 
@@ -84,6 +119,12 @@ public:
     
     //Constructor
     PlayStage();
+    
+    EntityUI* estat;
+    Material estat_m;
+    
+    EntityUI* info;
+    Material info_m;
     
     void render() override;
     void update(float seconds_elapsed) override;
@@ -121,8 +162,24 @@ public:
     // Constructor
     EndStage();
     
+    EntityUI* fons;
+    Material material;
+    
+    EntityUI* init_menu;
+    Material init_menu_m;
+    
+    EntityUI* restart;
+    Material restart_m;
+    
+    EntityUI* exit;
+    Material exit_m;
+    
+    HCHANNEL channel_intro;
+    
     void render() override;
     void update(float seconse_elapsed) override;
+    
+    bool onButton(EntityUI* button);
     
     virtual void onEnter() override;
     virtual void onExit() override;
