@@ -10,6 +10,7 @@
 
 enum eStages{
     INTRO_STAGE,
+    COMMANDS_STAGE,
     PLAY_STAGE,
     END_STAGE
 };
@@ -17,6 +18,7 @@ enum eStages{
 
 class Stage;
 class IntroStage;
+class CommandsStage;
 class PlayStage;
 class EndStage;
 
@@ -28,6 +30,7 @@ public:
 	// STAGES
 	Stage* current_stage = nullptr;
 	IntroStage* intro_stage;
+    CommandsStage* commands_stage;
 	PlayStage* play_stage;
 	EndStage* end_stage;
 

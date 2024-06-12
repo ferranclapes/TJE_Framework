@@ -60,7 +60,6 @@ public:
     
     void render(Camera* camera2d) override;
     void update(float seconds_elapsed) override;
-    void update3D(Vector3 position3d);
     
     
     // EntityUI(Vector2 size, conts Material& material); //simplificiacio

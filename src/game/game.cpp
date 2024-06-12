@@ -51,16 +51,19 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
     
     // STAGES
     intro_stage = new IntroStage();
+    commands_stage = new CommandsStage();
     play_stage = new PlayStage();
     end_stage = new EndStage();
 
 	stages.emplace_back(intro_stage);
+    stages.emplace_back(commands_stage);
 	stages.emplace_back(play_stage);
 	stages.emplace_back(end_stage);
     
-    //GoToStage(PLAY_STAGE);
-     GoToStage(INTRO_STAGE);
-    
+  
+    GoToStage(INTRO_STAGE);
+    //GoToStage(END_STAGE);
+   
     
 	fps = 0;
 	frame = 0;
@@ -146,8 +149,7 @@ void Game::render(void)
 	drawText(50, 50, "X = " + std::to_string(x) + ", Y = " + std::to_string(y) + ", Z = " + std::to_string(z), Vector3(1, 0, 0), 2);*/
 
 	// Render the FPS, Draw Calls, etc
-	//drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
-	drawText(2, 2, std::to_string(this->time), Vector3(1, 1, 1), 5);
+	//drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2); // NUM DALT
 
 	// Swap between front buffer and back buffer
 	SDL_GL_SwapWindow(this->window);

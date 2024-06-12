@@ -19,12 +19,6 @@
 #include "graphics/shader.h"
 
 
-Shader* shader = NULL;
-Mesh* quad = NULL;
-Texture* intro = NULL;
-Material fons_m;
-Material play_m;
-
 void Stage::render()
 {
    
@@ -39,62 +33,104 @@ void Stage::update(float seconse_elapsed)
 // INTRO STAGE
 IntroStage::IntroStage() {
     
-    int width = Game::GetInstance()->window_width;
-    int height = Game::GetInstance()->window_height;
+   // FONS
+    material.diffuse = Texture::Get("data/textures/intro.png");
+    material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
     
-    //Material fons_m;
-    //fons_m.color = Vector4(0, 1, 0, 0);
-    fons_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
-    fons_m.diffuse = Texture::Get("data/textures/intro.png");
-    fons = new EntityUI(0.0f, 0.0f, width, height, fons_m);
-    
-    //Material play_m;
+
+    // BOTONS
+   
     play_m.color = Vector4(1, 1, 1, 1);
-    //play_m.diffuse = Texture::Get("data/textures/blanc.png");
     play = new EntityUI(0.0f, 0.0f, 0.5f, 0.2f, play_m);
     
+    exit_m.color = Vector4(1, 1, 1, 1);
+    exit = new EntityUI(0.0f, -0.3f, 0.5f, 0.2f, exit_m);
+    
+    commands_m.color = Vector4(1, 1, 1, 1);
+    commands = new EntityUI(0.0f, -0.6f, 0.5f, 0.2f, exit_m);
+
     fons->addChild(play);
+    play->addChild(exit);
+    exit->addChild(commands);
+
 }
     
 
 void IntroStage::render()
 {
-   
+    
     fons->render(Game::GetInstance()->camera2D);
+    
     drawText(180, 140, "Guardians del castell", Vector3(0, 0, 0), 4);
     drawText(365, 290, "Start", Vector3(0, 0, 0), 3);
+    drawText(370, 380, "Exit", Vector3(0, 0, 0), 3);
+    drawText(330, 470, "Commands", Vector3(0, 0, 0), 3);
     
 }
 
 void IntroStage::update(float seconse_elapsed)
 {
-    Vector2 mouse_pos = Input::mouse_position;
-    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x,mouse_pos.y, 1.0, 1.0);
-    
-    if(Input::wasKeyPressed(SDL_SCANCODE_S))
+
+    if(Input::isMousePressed(SDL_SCANCODE_S))
     {
         Game::GetInstance()->GoToStage(PLAY_STAGE);
     }
+  
+    bool dins_play = onButton(play);
+    bool dins_exit = onButton(exit);
+    bool dins_commands = onButton(commands);
     
-    float left = play->pos_x - play->width/2;
-    float right = play->pos_x + play->width/2;
-    float top = play->pos_y - play->height/2;
-    float bottom = play->pos_y + play->height/2;
-    
-    if(mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom){
-        
+    if(dins_play){
         play->material.color = Vector4(1, 0, 0, 0);
         
         if(Input::isMousePressed(SDL_BUTTON_LEFT)){
             
             Game::GetInstance()->GoToStage(PLAY_STAGE);
         }
-
+        
+    }else if(dins_exit){
+        exit->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->must_exit = true;
+      
+        }
+        
+    }else if(dins_commands){
+        commands->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->GoToStage(COMMANDS_STAGE);
+      
+        }
+        
     }else{
         play->material.color = Vector4(1, 1, 1, 1);
+        exit->material.color = Vector4(1, 1, 1, 1);
+        commands->material.color = Vector4(1, 1, 1, 1);
     }
   
   
+    
+}
+
+bool IntroStage::onButton(EntityUI* button){
+    
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x,mouse_pos.y, 1.0, 1.0);
+    
+    float left = button->pos_x - button->width/2;
+    float right = button->pos_x + button->width/2;
+    float top = button->pos_y - button->height/2;
+    float bottom = button->pos_y + button->height/2;
+    
+    if(mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom){
+        return true;
+    }
+    return false;
     
 }
 
@@ -110,6 +146,73 @@ void IntroStage::onEnter()
 }
 
 
+//COMMANDS STAGE
+CommandsStage::CommandsStage()
+{
+
+    menu_m.color = Vector4(1, 1, 1, 1);
+    menu = new EntityUI(0.0f, 0.7f, 0.5f, 0.2f, menu_m);
+}
+
+void CommandsStage::render()
+{
+    menu->render(Game::GetInstance()->camera2D);
+    
+    drawText(365, 80, "Menu", Vector3(0, 0, 0), 3);
+    drawText(150, 160, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
+    drawText(150, 220, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
+    drawText(150, 280, "Towers:", Vector3(1, 1, 1), 3);
+    drawText(180, 320, " - Mine : number 1", Vector3(1, 1, 1), 3);
+    drawText(180, 360, " - Ballista : number 2", Vector3(1, 1, 1), 3);
+    drawText(180, 400, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    
+}
+
+void CommandsStage::update(float seconse_elapsed)
+{
+    bool dins_menu = onButton(menu);
+    if(dins_menu){
+        menu->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->GoToStage(INTRO_STAGE);
+        }
+        
+    }else{
+        menu->material.color = Vector4(1, 1, 1, 1);
+        
+    }
+
+}
+bool CommandsStage::onButton(EntityUI* button){
+        
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x,mouse_pos.y, 1.0, 1.0);
+    
+    float left = button->pos_x - button->width/2;
+    float right = button->pos_x + button->width/2;
+    float top = button->pos_y - button->height/2;
+    float bottom = button->pos_y + button->height/2;
+        
+    if(mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom){
+        return true;
+    }
+    return false;
+    
+}
+    
+void CommandsStage::onExit()
+{
+    Audio::Stop(channel_intro);
+}
+
+void CommandsStage::onEnter()
+{
+    Audio::Init();
+    channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
+}
+
 
 
 // PLAY STAGE
@@ -117,16 +220,31 @@ void IntroStage::onEnter()
 
 PlayStage::PlayStage()
 {
-    //loads
+    //Estat jugador
+    estat_m.diffuse = Texture::Get("data/textures/estat.png");
+    estat_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    estat = new EntityUI(-0.6f, -0.8f, 0.5f, 0.15f, estat_m);
+    
+    //Info torrew
+    info_m.diffuse = Texture::Get("data/textures/info.png");
+    info_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    info = new EntityUI(-0.75f, 0.8f, 0.4f, 0.3f, info_m);
+    
+    estat->addChild(info);
 
-    //declarar variables com temps etc
 }
 
 void PlayStage::render()
 {
+    
     World::GetInstance()->render(Camera::current);
-    //renderminimap();
-    drawText(50, 50, std::to_string(money), Vector3(1, 0, 0), 5);
+    estat->render(Game::GetInstance()->camera2D);
+
+    renderminimap();
+    
+    drawText(210, 530, std::to_string(money), Vector3(1, 1, 1), 3);
+    drawText(110, 530, std::to_string(vides), Vector3(1, 1, 1), 3);
+    
 
 }
 
@@ -357,7 +475,6 @@ void PlayStage::renderminimap()
     glViewport(0, 0, width, height);
 
 
-
 }
 
 
@@ -365,27 +482,99 @@ void PlayStage::renderminimap()
     
 EndStage::EndStage()
 {
-
+    // FONS
+     material.diffuse = Texture::Get("data/textures/intro.png");
+     material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+     fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
+    
+    init_menu_m.color = Vector4(1, 1, 1, 1);
+    init_menu = new EntityUI(0.0f, 0.3f, 0.5f, 0.2f, init_menu_m);
+    
+    restart_m.color = Vector4(1, 1, 1, 1);
+    restart = new EntityUI(0.0f, 0.0f, 0.5f, 0.2f, restart_m);
+    
+    exit_m.color = Vector4(1, 1, 1, 1);
+    exit = new EntityUI(0.0f, -0.3f, 0.5f, 0.2f, exit_m);
+    
+    fons->addChild(init_menu);
+    init_menu->addChild(restart);
+    restart->addChild(exit);
        
 }
 
 void EndStage::render()
 {
-    
+    fons->render(Game::GetInstance()->camera2D);
+    drawText(370, 200, "Menu", Vector3(0, 0, 0), 3);
+    drawText(350, 290, "Restart", Vector3(0, 0, 0), 3);
+    drawText(370, 380, "Exit", Vector3(0, 0, 0), 3);
     
 }
 
 void EndStage::update(float seconse_elapsed)
 {
-   
+    bool dins_restart = onButton(restart);
+    bool dins_exit = onButton(exit);
+    bool dins_menu = onButton(init_menu);
+    
+    if(dins_restart){
+        restart->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->GoToStage(PLAY_STAGE);
+        }
+        
+    }else if(dins_exit){
+        
+        exit->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+    
+            Game::GetInstance()->must_exit = true;
+      
+        }
+        
+    }else if(dins_menu){
+        init_menu->material.color = Vector4(1, 0, 0, 0);
+        
+        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+            
+            Game::GetInstance()->GoToStage(INTRO_STAGE);
+        }
+    }else{
+        restart->material.color = Vector4(1, 1, 1, 1);
+        exit->material.color = Vector4(1, 1, 1, 1);
+        init_menu->material.color = Vector4(1, 1, 1, 1);
+        
+    }
+
 }
 
 void EndStage::onExit()
 {
-    
+    Audio::Stop(channel_intro);
 }
 
 void EndStage::onEnter()
 {
+    Audio::Init();
+    channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
 }
 
+bool EndStage::onButton(EntityUI* button){
+        
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x,mouse_pos.y, 1.0, 1.0);
+    
+    float left = button->pos_x - button->width/2;
+    float right = button->pos_x + button->width/2;
+    float top = button->pos_y - button->height/2;
+    float bottom = button->pos_y + button->height/2;
+        
+    if(mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom){
+        return true;
+    }
+    return false;
+    
+}
