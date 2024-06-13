@@ -152,6 +152,7 @@ public:
     void update(float seconds_elapsed) override;
 
     void PlaceTower();
+    void SellTower();
     void renderminimap();
     
     virtual void onEnter() override;

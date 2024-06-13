@@ -16,7 +16,7 @@ EntityProjectile::EntityProjectile(ProjectileType ty, EntityEnemy* obj, float da
     damage = da;
     type = ty;
     if (type == ARROW) {
-        speed = 200;
+        speed = 250;
         damage = 1;
     }
     else if (type == STONE) {

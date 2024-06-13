@@ -155,7 +155,7 @@ void IntroStage::onEnter()
     commands->material.color = Vector4(1, 1, 1, 1);
     if (channel_intro == NULL) {
 
-        //Audio::Init();
+        Audio::Init();
         channel_intro = Audio::Play("data/sounds/intro.wav", 0.7, BASS_SAMPLE_LOOP);
     }
 }
@@ -412,6 +412,9 @@ void PlayStage::update(float seconds_elapsed)
     {
         PlaceTower();
     }
+    if (Input::isMousePressed(SDL_BUTTON_RIGHT)) {
+        SellTower();
+    }
     if (Input::isKeyPressed(SDL_SCANCODE_1)) {
         towerType = "towerRound_sampleA.obj";
         typeToPlace = MINE;
@@ -425,14 +428,14 @@ void PlayStage::update(float seconds_elapsed)
         typeToPlace = CATAPULT;
     }
 
-    if (int(Game::instance->time*10) % 5 == 0 && !moneyCounted) {
+    if (int(Game::instance->time*10) % 10 == 0 && !moneyCounted) {
         if (numMines < 0) {
             numMines = 0;
         }
         money += 1 * numMines;
         moneyCounted = true;
     }
-    if (int(Game::instance->time*10) % 5 == 1 && moneyCounted) {
+    if (int(Game::instance->time*10) % 10 == 1 && moneyCounted) {
         moneyCounted = false;
     }
 
@@ -539,28 +542,33 @@ void PlayStage::PlaceTower() {
 
             if (typeToPlace == MINE) {
                 if (money >= 8) {
-                    money -= 8;
+                    money -= 7;
                     tower->ammo = 13;
                 }
                 else {
+                    Audio::Play("data/sounds/wrong.wav", 1, BASS_SAMPLE_MONO);
                     continue;
                 }
             }
             else if(typeToPlace == BALLISTA) {
                 if (money >= 3) {
                     money -= 3;
-                    tower->ammo = 10;
+                    tower->ammo = 15;
+                    tower->cooldown = 0.7;
                 }
                 else {
+                    Audio::Play("data/sounds/wrong.wav", 1, BASS_SAMPLE_MONO);
                     continue;
                 }
             }
             else if (typeToPlace == CATAPULT) {
                 if (money >= 5) {
                     money -= 5;
-                    tower->ammo = 7;
+                    tower->ammo = 4;
+                    tower->cooldown = 2;
                 }
                 else {
+                    Audio::Play("data/sounds/wrong.wav", 1, BASS_SAMPLE_MONO);
                     continue;
                 }
             }
@@ -587,6 +595,56 @@ void PlayStage::PlaceTower() {
         emesh->addChild((Entity*) new_entity);
         
     }
+}
+
+void PlayStage::SellTower() {
+    Camera* camera = Camera::current;
+
+    //Get ray direction
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector3 ray_origin = camera->eye;
+    Vector3 ray_direction = camera->getRayDirection(mouse_pos.x, mouse_pos.y, Game::instance->window_width, Game::instance->window_height);
+
+
+    // Fill collision vector
+    std::vector<Vector3> collisions;
+    std::vector<EntityMesh*> entitymeshes;
+
+    for (Entity* e : World::GetInstance()->root->children)
+    {
+        EntityCollider* collider = dynamic_cast<EntityCollider*>(e);
+
+        if (!collider)
+        {
+            continue;
+        }
+
+        Vector3 col_point;
+        Vector3 col_norm;
+
+        if (collider->mesh->testRayCollision(collider->model, ray_origin, ray_direction, col_point, col_norm)) //ray_direction
+        {
+            EntityTower* tower = dynamic_cast<EntityTower*>(collider);
+
+            if (!tower || tower->towerType == EMPTY) {
+                continue;
+            }
+            if (tower->towerType == MINE) {
+                Audio::Play("data/sounds/wrong.wav", 1, BASS_SAMPLE_MONO);
+                continue;
+            }
+
+            if (tower->towerType == BALLISTA) {
+                money += 2;
+            }
+            else if (tower->towerType == CATAPULT) {
+                money += 3;
+            }
+            Audio::Play("data/sounds/money.wav", 1, BASS_SAMPLE_MONO);
+            tower->EliminateTower();
+        }
+    }
+
 }
 
 void PlayStage::onExit(int stage_to_go)
@@ -706,7 +764,7 @@ void WinStage::update(float seconds_elapsed) {
 
 void WinStage::onEnter() {
     color = 0;
-    Audio::Play("data/sound/win.wav", 1, BASS_SAMPLE_MONO);
+    Audio::Play("data/sounds/win.wav", 2, BASS_SAMPLE_MONO);
 }
 
 void WinStage::onExit(int stage_to_go) {
