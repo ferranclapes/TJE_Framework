@@ -682,6 +682,10 @@ void PlayStage::onEnter()
     vides = 3;
     money = 20;
 
+    for (EntityEnemy* enemy : World::GetInstance()->enemies) {
+        enemy->Die();
+    }
+
     for (Entity* e : World::GetInstance()->root->children) {
         EntityTower* tower = dynamic_cast<EntityTower*>(e);
         if (!tower) {
