@@ -165,13 +165,17 @@ void CommandsStage::render()
     menu->render(Game::GetInstance()->camera2D);
     
     drawText(365, 80, "Menu", Vector3(0, 0, 0), 3);
-    drawText(150, 160, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
-    drawText(150, 220, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
-    drawText(150, 300, "Click the base to place a tower", Vector3(1, 1, 1), 3);
-    drawText(150, 340, "Towers:", Vector3(1, 1, 1), 3);
-    drawText(180, 380, " - Mine : number 1", Vector3(1, 1, 1), 3);
-    drawText(180, 420, " - Ballista : number 2", Vector3(1, 1, 1), 3);
-    drawText(180, 460, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    drawText(100, 150, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
+    drawText(100, 190, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
+    drawText(100, 230, "Click the the number of the desired ", Vector3(1, 1, 1), 3);
+    drawText(100, 270, "tower type and a base to place a tower.", Vector3(1, 1, 1), 3);
+    drawText(100, 310, "Mine towers only get money if there", Vector3(1, 1, 1), 3);
+    drawText(100, 350, "are diamonds nearby.", Vector3(1, 1, 1), 3);
+    drawText(100, 390, "Towers types:", Vector3(1, 1, 1), 3);
+    drawText(120, 430, " - Mine : number 1", Vector3(1, 1, 1), 3);
+    drawText(120, 470, " - Ballista : number 2", Vector3(1, 1, 1), 3);
+    drawText(120, 510, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    
     
 }
 
