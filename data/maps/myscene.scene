@@ -176,8 +176,8 @@ scene/tile_cornerRound.003/tile_cornerRound.003.obj -1.0,0.0,0.0,0.0,-0.0,0.0,-1
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,13.0,0.0,-5.0,1.0
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,13.0,0.0,-7.0,1.0
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,13.0,0.0,-6.0,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,11.86905,0.2,-7.73751,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,14.26319,0.2,-7.73751,1.0
+scene/towerSquare_sampleA_city.001/towerSquare_sampleA_city.001.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,11.86905,0.2,-7.73751,1.0
+scene/towerSquare_sampleA_city.005/towerSquare_sampleA_city.005.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,14.26319,0.2,-7.73751,1.0
 scene/tile/tile.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,10.0,0.0,7.0,1.0
 scene/tile/tile.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,12.0,0.0,7.0,1.0
 scene/tile/tile.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,9.0,0.0,6.0,1.0
@@ -2316,11 +2316,11 @@ scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-11.0,0.0,15.0,1.0
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-11.0,0.0,16.0,1.0
 scene/tile_straight.008/tile_straight.008.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-11.0,0.0,17.0,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,10.87986,0.2,-8.83513,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,15.25289,0.2,-8.84322,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,13.02427,0.2,-8.92414,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,11.8671,0.2,-9.90329,1.0
-scene/towerSquare_sampleA/towerSquare_sampleA.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,14.23809,0.2,-9.91138,1.0
+scene/towerSquare_sampleA_city.002/towerSquare_sampleA_city.002.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,10.87986,0.2,-8.83513,1.0
+scene/towerSquare_sampleA_city/towerSquare_sampleA_city.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,15.25289,0.2,-8.84322,1.0
+scene/towerSquare_sampleA_city.004/towerSquare_sampleA_city.004.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,13.02427,0.2,-8.92414,1.0
+scene/towerSquare_sampleA_city.003/towerSquare_sampleA_city.003.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,11.8671,0.2,-9.90329,1.0
+scene/towerSquare_sampleA_city.006/towerSquare_sampleA_city.006.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,14.23809,0.2,-9.91138,1.0
 scene/tile_riverStraight/tile_riverStraight.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-10.0,0.0,-9.0,1.0
 scene/tile_riverStraight/tile_riverStraight.obj 1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,-10.0,0.0,-10.0,1.0
 scene/tile_riverStraight/tile_riverStraight.obj -0.0,0.0,-1.0,0.0,1.0,-0.0,-0.0,0.0,-0.0,-1.0,0.0,0.0,16.0,0.0,10.0,1.0

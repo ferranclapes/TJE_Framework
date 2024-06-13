@@ -106,6 +106,8 @@ bool World::parseScene(const char* filename, Entity* root)
         size_t tag = data.first.find("clickable");
         //tag per crear cami:
         size_t wp_tag = data.first.find("waypoint");
+        //tag per la ciutat:
+        size_t city_tag = data.first.find("city");
 
         if (tag != std::string::npos) {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());
@@ -121,6 +123,10 @@ bool World::parseScene(const char* filename, Entity* root)
         else if(wp_tag != std::string::npos){
             waypoints.push_back(render_data.models[0].getTranslation());
             
+        }
+        else if (city_tag != std::string::npos) {
+            Mesh* mesh = Mesh::Get(mesh_name.c_str());
+            new_entity = new EntityCollider(CITY, mesh, mat);
         }
         else {
             Mesh* mesh = Mesh::Get(mesh_name.c_str());

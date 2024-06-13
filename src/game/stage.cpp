@@ -503,6 +503,8 @@ void PlayStage::update(float seconds_elapsed)
         Game::GetInstance()->GoToStage(LOST_STAGE);
     }
 
+    vendreVidesTimeout -= seconds_elapsed;
+
     World::GetInstance()->update(seconds_elapsed);
 }
 
@@ -531,8 +533,23 @@ void PlayStage::PlaceTower() {
         Vector3 col_point;
         Vector3 col_norm;
 
+        
+
         if (collider->mesh->testRayCollision(collider->model, ray_origin, ray_direction, col_point, col_norm)) //ray_direction
         {
+
+            if (collider->coliderType == CITY && vendreVidesTimeout <= 0) {
+                if (vides > 1) {
+                    vides -= 1;
+                    money += 30;
+                    Audio::Play("data/sounds/money.wav", 1, BASS_SAMPLE_MONO);
+                    vendreVidesTimeout = 1;
+                }
+                else {
+                    Audio::Play("data/sounds/wrong.wav", 1, BASS_SAMPLE_MONO);
+                }
+            }
+
             EntityTower* tower = dynamic_cast<EntityTower*>(collider);
 
             if (!tower || tower->towerType != EMPTY) {

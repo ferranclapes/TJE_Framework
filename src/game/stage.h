@@ -175,6 +175,7 @@ public:
     
     
     int vides = 3;
+    float vendreVidesTimeout = 0;
 
     bool minimap = true;
 

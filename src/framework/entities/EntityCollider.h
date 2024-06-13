@@ -11,7 +11,8 @@ class Material;
 enum ColliderType {
     MAP = 1,
     TOWER = 2,
-    PROJECTILE = 3
+    PROJECTILE = 3,
+    CITY = 4
 };
 
 class EntityCollider : public EntityMesh {
