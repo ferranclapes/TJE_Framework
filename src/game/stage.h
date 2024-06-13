@@ -111,7 +111,6 @@ public:
     
 };
 
-
 class PlayStage : public Stage
 { //per heredar
 
@@ -153,6 +152,36 @@ public:
 
     HCHANNEL background_channel;
 
+};
+
+class LostStage : public Stage{
+public:
+    LostStage();
+
+    EntityUI* fons;
+    Material material;
+    float color = 5;
+
+    void render() override;
+    void update(float seconds_elapsed) override;
+
+    virtual void onEnter() override;
+    virtual void onExit(int stage_to_go) override;
+};
+
+class WinStage : public Stage {
+public:
+    WinStage();
+
+    EntityUI* fons;
+    Material material;
+    float color = 0;
+
+    void render() override;
+    void update(float seconds_elapsed) override;
+
+    virtual void onEnter() override;
+    virtual void onExit(int stage_to_go) override;
 };
 
 class EndStage : public Stage

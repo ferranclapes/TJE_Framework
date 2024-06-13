@@ -53,16 +53,19 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
     intro_stage = new IntroStage();
     commands_stage = new CommandsStage();
     play_stage = new PlayStage();
+	lost_stage = new LostStage();
+	win_stage = new WinStage();
     end_stage = new EndStage();
 
 	stages.emplace_back(intro_stage);
     stages.emplace_back(commands_stage);
 	stages.emplace_back(play_stage);
+	stages.emplace_back(lost_stage);
+	stages.emplace_back(win_stage);
 	stages.emplace_back(end_stage);
     
   
     GoToStage(INTRO_STAGE);
-    //GoToStage(END_STAGE);
    
     
 	fps = 0;

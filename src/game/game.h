@@ -12,6 +12,8 @@ enum eStages{
     INTRO_STAGE,
     COMMANDS_STAGE,
     PLAY_STAGE,
+	LOST_STAGE,
+	WIN_STAGE,
     END_STAGE
 };
 
@@ -20,6 +22,8 @@ class Stage;
 class IntroStage;
 class CommandsStage;
 class PlayStage;
+class LostStage;
+class WinStage;
 class EndStage;
 
 class Game
@@ -32,6 +36,8 @@ public:
 	IntroStage* intro_stage;
     CommandsStage* commands_stage;
 	PlayStage* play_stage;
+	LostStage* lost_stage;
+	WinStage* win_stage;
 	EndStage* end_stage;
 
 	std::vector<Stage*> stages;

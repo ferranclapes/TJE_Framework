@@ -167,10 +167,11 @@ void CommandsStage::render()
     drawText(365, 80, "Menu", Vector3(0, 0, 0), 3);
     drawText(150, 160, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
     drawText(150, 220, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
-    drawText(150, 280, "Towers:", Vector3(1, 1, 1), 3);
-    drawText(180, 320, " - Mine : number 1", Vector3(1, 1, 1), 3);
-    drawText(180, 360, " - Ballista : number 2", Vector3(1, 1, 1), 3);
-    drawText(180, 400, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    drawText(150, 300, "Click the base to place a tower", Vector3(1, 1, 1), 3);
+    drawText(150, 340, "Towers:", Vector3(1, 1, 1), 3);
+    drawText(180, 380, " - Mine : number 1", Vector3(1, 1, 1), 3);
+    drawText(180, 420, " - Ballista : number 2", Vector3(1, 1, 1), 3);
+    drawText(180, 460, " - Catapult : number 3", Vector3(1, 1, 1), 3);
     
 }
 
@@ -322,6 +323,9 @@ void PlayStage::update(float seconds_elapsed)
                 World::GetInstance()->enemies.emplace_back(new_enemy);
                 timeOut += 0.7;
             }
+            else if (waves[iter] == 'E'){
+                Game::GetInstance()->GoToStage(WIN_STAGE);
+            }
             else if (waves[iter] == '\0') {
                 waves = "a";
                 nextWave = true;
@@ -340,7 +344,7 @@ void PlayStage::update(float seconds_elapsed)
     }
 
     if (vides <= 0) {
-        Game::GetInstance()->GoToStage(END_STAGE);
+        Game::GetInstance()->GoToStage(LOST_STAGE);
     }
 
     World::GetInstance()->update(seconds_elapsed);
@@ -441,6 +445,8 @@ void PlayStage::onEnter()
 {
     enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
     background_channel = Audio::Play("data/sounds/play_background.wav", 1, BASS_SAMPLE_LOOP);
+    vides = 3;
+    money = 20;
 }
 
 void PlayStage::renderminimap()
@@ -478,6 +484,70 @@ void PlayStage::renderminimap()
     //reset view
     glViewport(0, 0, width, height);
 
+
+}
+
+
+//LOST STAGE
+
+LostStage::LostStage() {
+    // FONS
+    material.color = Vector4(color, 0, 0, 1);
+    material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/flat.fs");
+    fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
+}
+
+void LostStage::render() {
+    fons->render(Game::GetInstance()->camera2D);
+    drawText(240, 260, "YOU LOST", Vector3(0, 0, 0), 7);
+}
+
+void LostStage::update(float seconds_elapsed) {
+    color = (color - seconds_elapsed);
+    material.color = Vector4(color/5, 0, 0, 1);
+    fons->material = material;
+    if (color <= -0) {
+        Game::GetInstance()->GoToStage(END_STAGE);
+    }
+}
+
+void LostStage::onEnter() {
+    color = 5;
+}
+
+void LostStage::onExit(int stage_to_go) {
+
+}
+
+
+//WIN STAGE
+
+WinStage::WinStage() {
+    // FONS
+    material.color = Vector4(color, 0, 0, 1);
+    material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/flat.fs");
+    fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
+}
+
+void WinStage::render() {
+    fons->render(Game::GetInstance()->camera2D);
+    drawText(240, 260, "YOU WIN", Vector3(0, 0, 0), 7);
+}
+
+void WinStage::update(float seconds_elapsed) {
+    color = (color + seconds_elapsed);
+    material.color = Vector4(0, color / 5, 0, 1);
+    fons->material = material;
+    if (color >= 5) {
+        Game::GetInstance()->GoToStage(END_STAGE);
+    }
+}
+
+void WinStage::onEnter() {
+    color = 0;
+}
+
+void WinStage::onExit(int stage_to_go) {
 
 }
 
