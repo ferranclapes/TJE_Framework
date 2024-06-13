@@ -8,8 +8,9 @@
 #include "framework/camera.h"
 #include "framework/utils.h"
 
-enum eStages{
-    INTRO_STAGE,
+enum eStages {
+	INTRO_STAGE,
+	SELECT_STAGE,
     COMMANDS_STAGE,
     PLAY_STAGE,
 	LOST_STAGE,
@@ -20,6 +21,7 @@ enum eStages{
 
 class Stage;
 class IntroStage;
+class SelectStage;
 class CommandsStage;
 class PlayStage;
 class LostStage;
@@ -34,6 +36,7 @@ public:
 	// STAGES
 	Stage* current_stage = nullptr;
 	IntroStage* intro_stage;
+	SelectStage* select_stage;
     CommandsStage* commands_stage;
 	PlayStage* play_stage;
 	LostStage* lost_stage;

@@ -18,6 +18,9 @@
 #include "graphics/texture.h"
 #include "graphics/shader.h"
 
+HCHANNEL channel_intro = NULL;
+
+int level;
 
 void Stage::render()
 {
@@ -30,7 +33,10 @@ void Stage::update(float seconse_elapsed)
     
 }
 
+
+
 // INTRO STAGE
+
 IntroStage::IntroStage() {
     
    // FONS
@@ -55,8 +61,7 @@ IntroStage::IntroStage() {
     exit->addChild(commands);
 
 }
-    
-
+   
 void IntroStage::render()
 {
     
@@ -65,55 +70,58 @@ void IntroStage::render()
     drawText(180, 140, "Guardians del castell", Vector3(0, 0, 0), 4);
     drawText(365, 290, "Start", Vector3(0, 0, 0), 3);
     drawText(370, 380, "Exit", Vector3(0, 0, 0), 3);
-    drawText(330, 470, "Commands", Vector3(0, 0, 0), 3);
+    drawText(340, 470, "Controls", Vector3(0, 0, 0), 3);
     
 }
 
 void IntroStage::update(float seconse_elapsed)
 {
-
-    if(Input::isMousePressed(SDL_SCANCODE_S))
-    {
-        Game::GetInstance()->GoToStage(PLAY_STAGE);
-    }
   
     bool dins_play = onButton(play);
     bool dins_exit = onButton(exit);
     bool dins_commands = onButton(commands);
     
-    if(dins_play){
-        play->material.color = Vector4(1, 0, 0, 0);
-        
-        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
-            
-            Game::GetInstance()->GoToStage(PLAY_STAGE);
+    if (timer >= 0.5){
+        if (dins_play) {
+            play->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 1, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(SELECT_STAGE);
+            }
+
         }
-        
-    }else if(dins_exit){
-        exit->material.color = Vector4(1, 0, 0, 0);
-        
-        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
-            
-            Game::GetInstance()->must_exit = true;
-      
+        else if (dins_exit) {
+            exit->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->must_exit = true;
+
+            }
+
         }
-        
-    }else if(dins_commands){
-        commands->material.color = Vector4(1, 0, 0, 0);
-        
-        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
-            
-            Game::GetInstance()->GoToStage(COMMANDS_STAGE);
-      
+        else if (dins_commands) {
+            commands->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(COMMANDS_STAGE);
+
+            }
+
         }
-        
-    }else{
-        play->material.color = Vector4(1, 1, 1, 1);
-        exit->material.color = Vector4(1, 1, 1, 1);
-        commands->material.color = Vector4(1, 1, 1, 1);
+        else {
+            play->material.color = Vector4(1, 1, 1, 1);
+            exit->material.color = Vector4(1, 1, 1, 1);
+            commands->material.color = Vector4(1, 1, 1, 1);
+        }
     }
   
-  
+    timer += seconse_elapsed;
     
 }
 
@@ -136,19 +144,144 @@ bool IntroStage::onButton(EntityUI* button){
 
 void IntroStage::onExit(int stage_to_go)
 {
-    if (stage_to_go != COMMANDS_STAGE) {
-
-        Audio::Stop(channel_intro);
-    }
+    
 }
 
 void IntroStage::onEnter()
 {
+    timer = 0;
+    play->material.color = Vector4(1, 1, 1, 1);
+    exit->material.color = Vector4(1, 1, 1, 1);
+    commands->material.color = Vector4(1, 1, 1, 1);
     if (channel_intro == NULL) {
 
-        Audio::Init();
-        channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
+        //Audio::Init();
+        channel_intro = Audio::Play("data/sounds/intro.wav", 0.7, BASS_SAMPLE_LOOP);
     }
+}
+
+
+
+//SELECT STAGE
+
+SelectStage::SelectStage() {
+    // FONS
+    material.diffuse = Texture::Get("data/textures/intro.png");
+    material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
+
+
+    // BOTONS
+    easy_m.color = Vector4(1, 1, 1, 1);
+    easy = new EntityUI(0.0f, 0.0f, 0.5f, 0.2f, easy_m);
+
+    puig_m.color = Vector4(1, 1, 1, 1);
+    puig = new EntityUI(0.0f, -0.3f, 0.65f, 0.2f, puig_m);
+
+    back_m.color = Vector4(1, 1, 1, 1);
+    back = new EntityUI(0.0f, -0.6f, 0.5f, 0.2f, back_m);
+
+    fons->addChild(easy);
+    easy->addChild(puig);
+    puig->addChild(back);
+}
+
+void SelectStage::render()
+{
+
+    fons->render(Game::GetInstance()->camera2D);
+
+    drawText(180, 140, "Select level difficulty", Vector3(0, 0, 0), 4);
+    drawText(355, 290, "Normal", Vector3(0, 0, 0), 3);
+    drawText(295, 380, "Puig Challenge", Vector3(0, 0, 0), 3);
+    drawText(368, 470, "Back", Vector3(0, 0, 0), 3);
+}
+
+void SelectStage::update(float seconse_elapsed)
+{
+
+    bool dins_easy = onButton(easy);
+    bool dins_puig = onButton(puig);
+    bool dins_back = onButton(back);
+
+    if (timer >= 0.5){
+        if (dins_easy) {
+            easy->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 1, BASS_SAMPLE_MONO);
+                level = 0;
+                Game::GetInstance()->GoToStage(PLAY_STAGE);
+            }
+
+        }
+        else if (dins_puig) {
+            puig->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                level = 1;
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(PLAY_STAGE);
+
+            }
+
+        }
+        else if (dins_back) {
+            back->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(INTRO_STAGE);
+
+            }
+
+        }
+        else {
+            easy->material.color = Vector4(1, 1, 1, 1);
+            puig->material.color = Vector4(1, 1, 1, 1);
+            back->material.color = Vector4(1, 1, 1, 1);
+        }
+    }
+
+    timer += seconse_elapsed;
+
+
+
+}
+
+bool SelectStage::onButton(EntityUI* button) {
+
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x, mouse_pos.y, 1.0, 1.0);
+
+    float left = button->pos_x - button->width / 2;
+    float right = button->pos_x + button->width / 2;
+    float top = button->pos_y - button->height / 2;
+    float bottom = button->pos_y + button->height / 2;
+
+    if (mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom) {
+        return true;
+    }
+    return false;
+
+}
+
+void SelectStage::onExit(int stage_to_go)
+{
+    if (stage_to_go != INTRO_STAGE) {
+        Audio::Stop(channel_intro);
+    }
+}
+
+void SelectStage::onEnter()
+{
+    timer = 0;
+    easy->material.color = Vector4(1, 1, 1, 1);
+    puig->material.color = Vector4(1, 1, 1, 1);
+    back->material.color = Vector4(1, 1, 1, 1);
 }
 
 
@@ -175,6 +308,7 @@ void CommandsStage::render()
     drawText(120, 430, " - Mine : number 1", Vector3(1, 1, 1), 3);
     drawText(120, 470, " - Ballista : number 2", Vector3(1, 1, 1), 3);
     drawText(120, 510, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    drawText(100, 560, "Activate/Deactivate minimap with M", Vector3(1, 1, 1), 3);
     
     
 }
@@ -186,7 +320,8 @@ void CommandsStage::update(float seconse_elapsed)
         menu->material.color = Vector4(1, 0, 0, 0);
         
         if(Input::isMousePressed(SDL_BUTTON_LEFT)){
-            
+
+            Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
             Game::GetInstance()->GoToStage(INTRO_STAGE);
         }
         
@@ -250,17 +385,29 @@ void PlayStage::render()
     World::GetInstance()->render(Camera::current);
     estat->render(Game::GetInstance()->camera2D);
 
-    renderminimap();
-    
+    if (minimap){
+        renderminimap();
+    }
+
     drawText(210, 530, std::to_string(money), Vector3(1, 1, 1), 3);
     drawText(110, 530, std::to_string(vides), Vector3(1, 1, 1), 3);
+    if (waveTextTime >= 1.5 || (waveTextTime >=0.5 && waveTextTime <= 1.0)) {
+        drawText(150, 260, "ENEMIES INCOMING", Vector3(0.7, 0, 0), 6);
+    }
     
 
 }
 
 void PlayStage::update(float seconds_elapsed)
 {
-    
+    if (Input::wasKeyPressed(SDL_SCANCODE_M)) {
+        if (minimap) {
+            minimap = false;
+        }
+        else {
+            minimap = true;
+        }
+    }
     if(Input::isMousePressed(SDL_BUTTON_LEFT))
     {
         PlaceTower();
@@ -289,21 +436,19 @@ void PlayStage::update(float seconds_elapsed)
         moneyCounted = false;
     }
 
-   /* if (waveTimeOut <= 0 && nextWave) {
-        std::getline(enemyWaves, waves);
-        iter = 0;
-        waveTimeOut = 2;
-        nextWave = false;
-    }
-    else if(nextWave) {
-        
-        waveTimeOut -= seconds_elapsed;
-    }*/
+   
     if (World::GetInstance()->enemies.size() == 0) {
-        std::getline(enemyWaves, waves);
-        iter = 0;
-        waveTimeOut = 2;
-        nextWave = false;
+        if (waveTimeOut <= 0 && nextWave) {
+            std::getline(enemyWaves, waves);
+            iter = 0;
+            waveTimeOut = 5;
+            nextWave = false;
+            waveTextTime = 2;
+        }
+        else if (nextWave) {
+
+            waveTimeOut -= seconds_elapsed;
+        }
     }
 
     if (waves != "a") {
@@ -337,6 +482,10 @@ void PlayStage::update(float seconds_elapsed)
             iter++;
         }
         timeOut -= seconds_elapsed;
+    }
+
+    if (waveTextTime >= 0) {
+        waveTextTime -= seconds_elapsed;
     }
 
     for (EntityEnemy* enemy : World::GetInstance()->enemies) {
@@ -442,12 +591,18 @@ void PlayStage::PlaceTower() {
 
 void PlayStage::onExit(int stage_to_go)
 {
+    
     Audio::Stop(background_channel);
 }
 
 void PlayStage::onEnter()
 {
-    enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
+    if (level == 0) {
+        enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
+    }
+    else if (level == 1) {
+        enemyWaves.open("data/PuigChallenge.txt", std::ios::in);
+    }
     background_channel = Audio::Play("data/sounds/play_background.wav", 1, BASS_SAMPLE_LOOP);
     vides = 3;
     money = 20;
@@ -463,8 +618,8 @@ void PlayStage::renderminimap()
     
     int width = Game::GetInstance()->window_width;
     int height = Game::GetInstance()->window_height;
-    int size = 200;
-    int margin = 40;
+    int size = 150;
+    int margin = 20;
     glViewport(width - margin -size,  height - size-margin, size, size);
     
 
@@ -517,6 +672,8 @@ void LostStage::update(float seconds_elapsed) {
 
 void LostStage::onEnter() {
     color = 5;
+
+    Audio::Play("data/sounds/lost.wav", 2, BASS_SAMPLE_MONO);
 }
 
 void LostStage::onExit(int stage_to_go) {
@@ -549,6 +706,7 @@ void WinStage::update(float seconds_elapsed) {
 
 void WinStage::onEnter() {
     color = 0;
+    Audio::Play("data/sound/win.wav", 1, BASS_SAMPLE_MONO);
 }
 
 void WinStage::onExit(int stage_to_go) {
