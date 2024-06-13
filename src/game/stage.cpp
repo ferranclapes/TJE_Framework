@@ -681,6 +681,16 @@ void PlayStage::onEnter()
     background_channel = Audio::Play("data/sounds/play_background.wav", 1, BASS_SAMPLE_LOOP);
     vides = 3;
     money = 20;
+
+    for (Entity* e : World::GetInstance()->root->children) {
+        EntityTower* tower = dynamic_cast<EntityTower*>(e);
+        if (!tower) {
+            continue;
+        }
+        if (tower->towerType != EMPTY) {
+            tower->EliminateTower();
+        }
+    }
 }
 
 void PlayStage::renderminimap()
