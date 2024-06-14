@@ -173,6 +173,9 @@ public:
     
     HCHANNEL channel_intro;
     
+    float timer = 0;
+
+    
     void render() override;
     void update(float seconse_elapsed) override;
     

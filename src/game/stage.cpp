@@ -489,25 +489,28 @@ CommandsStage::CommandsStage()
 {
 
     menu_m.color = Vector4(1, 1, 1, 1);
-    menu = new EntityUI(0.0f, 0.7f, 0.5f, 0.2f, menu_m);
+    menu = new EntityUI(0.0f, -0.85f, 0.5f, 0.2f, menu_m);
 }
 
 void CommandsStage::render()
 {
     menu->render(Game::GetInstance()->camera2D);
     
-    drawText(365, 80, "Menu", Vector3(0, 0, 0), 3);
-    drawText(100, 150, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
-    drawText(100, 190, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
-    drawText(100, 230, "Click the the number of the desired ", Vector3(1, 1, 1), 3);
-    drawText(100, 270, "tower type and a base to place a tower.", Vector3(1, 1, 1), 3);
-    drawText(100, 310, "Mine towers only get money if there", Vector3(1, 1, 1), 3);
-    drawText(100, 350, "are diamonds nearby.", Vector3(1, 1, 1), 3);
-    drawText(100, 390, "Towers types:", Vector3(1, 1, 1), 3);
-    drawText(120, 430, " - Mine : number 1", Vector3(1, 1, 1), 3);
-    drawText(120, 470, " - Ballista : number 2", Vector3(1, 1, 1), 3);
-    drawText(120, 510, " - Catapult : number 3", Vector3(1, 1, 1), 3);
-    drawText(100, 560, "Activate/Deactivate minimap with M", Vector3(1, 1, 1), 3);
+    
+    drawText(50, 10, "A / D / w / S : Move camera", Vector3(1, 1, 1), 3);
+    drawText(50, 50, "Z / X : Camera zomm", Vector3(1, 1, 1), 3);
+    drawText(50, 90, "Click the the number of the desired tower", Vector3(1, 1, 1), 3);
+    drawText(50, 130, "type and a base to place a tower.", Vector3(1, 1, 1), 3);
+    drawText(50, 170, "Mine towers only get money if there are", Vector3(1, 1, 1), 3);
+    drawText(50, 210, "diamonds nearby.", Vector3(1, 1, 1), 3);
+    drawText(50, 250, "Towers types:", Vector3(1, 1, 1), 3);
+    drawText(70, 290, " - Mine : number 1", Vector3(1, 1, 1), 3);
+    drawText(70, 330, " - Ballista : number 2", Vector3(1, 1, 1), 3);
+    drawText(70, 370, " - Catapult : number 3", Vector3(1, 1, 1), 3);
+    drawText(50, 410, "Activate/Deactivate minimap with M", Vector3(1, 1, 1), 3);
+    drawText(50, 450, "Clik towers to sell them.", Vector3(1, 1, 1), 3);
+    drawText(50, 490, "Clik castel to exchange 1 life for 30$.", Vector3(1, 1, 1), 3);
+    drawText(365, 545, "Menu", Vector3(0, 0, 0), 3);
     
     
 }
@@ -515,19 +518,23 @@ void CommandsStage::render()
 void CommandsStage::update(float seconse_elapsed)
 {
     bool dins_menu = onButton(menu);
-    if(dins_menu){
-        menu->material.color = Vector4(1, 0, 0, 0);
+    if (timer >= 0.1) {
         
-        if(Input::isMousePressed(SDL_BUTTON_LEFT)){
-
-            Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
-            Game::GetInstance()->GoToStage(INTRO_STAGE);
+        if(dins_menu){
+            menu->material.color = Vector4(1, 0, 0, 0);
+            
+            if(Input::isMousePressed(SDL_BUTTON_LEFT)){
+                
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(INTRO_STAGE);
+            }
+            
+        }else{
+            menu->material.color = Vector4(1, 1, 1, 1);
+            
         }
-        
-    }else{
-        menu->material.color = Vector4(1, 1, 1, 1);
-        
     }
+    timer += seconse_elapsed;
 
 }
 bool CommandsStage::onButton(EntityUI* button){
@@ -554,7 +561,7 @@ void CommandsStage::onExit(int stage_to_go)
 
 void CommandsStage::onEnter()
 {
-
+    timer = 0;
 }
 
 
