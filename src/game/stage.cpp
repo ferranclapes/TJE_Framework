@@ -155,7 +155,7 @@ void IntroStage::onEnter()
     commands->material.color = Vector4(1, 1, 1, 1);
     if (channel_intro == NULL) {
 
-        Audio::Init();
+        //Audio::Init();
         channel_intro = Audio::Play("data/sounds/intro.wav", 0.7, BASS_SAMPLE_LOOP);
     }
 }
@@ -400,6 +400,11 @@ void PlayStage::render()
 
 void PlayStage::update(float seconds_elapsed)
 {
+    if (Input::wasKeyPressed(SDL_SCANCODE_L)) {
+        vides--;
+    }
+
+
     if (Input::wasKeyPressed(SDL_SCANCODE_M)) {
         if (minimap) {
             minimap = false;
@@ -504,6 +509,7 @@ void PlayStage::update(float seconds_elapsed)
     }
 
     vendreVidesTimeout -= seconds_elapsed;
+
 
     World::GetInstance()->update(seconds_elapsed);
 }
@@ -666,12 +672,19 @@ void PlayStage::SellTower() {
 
 void PlayStage::onExit(int stage_to_go)
 {
-    
+    enemyWaves.close();
     Audio::Stop(background_channel);
 }
 
 void PlayStage::onEnter()
 {
+
+    float waveTimeOut = 5;
+    std::string waves = "a";
+    bool nextWave = true;
+    float timeOut = 0;
+    int iter = 0;
+    float waveTextTime = 0;
     if (level == 0) {
         enemyWaves.open("data/EnemyWaves.txt", std::ios::in);
     }
@@ -682,9 +695,14 @@ void PlayStage::onEnter()
     vides = 3;
     money = 20;
 
-    for (EntityEnemy* enemy : World::GetInstance()->enemies) {
+
+    int index = World::GetInstance()->enemies.size();
+    for (int i = 0; i < index; i++) {
+        int j = World::GetInstance()->enemies.size() - 1;
+        EntityEnemy* enemy = World::GetInstance()->enemies[j];
         enemy->Die();
     }
+
 
     for (Entity* e : World::GetInstance()->root->children) {
         EntityTower* tower = dynamic_cast<EntityTower*>(e);
@@ -878,12 +896,13 @@ void EndStage::update(float seconse_elapsed)
 
 void EndStage::onExit(int stage_to_go)
 {
-    Audio::Stop(channel_intro);
+    if (stage_to_go != INTRO_STAGE) {
+        Audio::Stop(channel_intro);
+    }
 }
 
 void EndStage::onEnter()
 {
-    Audio::Init();
     channel_intro = Audio::Play("data/sounds/intro.wav", 1, BASS_SAMPLE_LOOP);
 }
 

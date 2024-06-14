@@ -47,6 +47,9 @@
      this->addChild(vida);
      
 }
+ 
+ void EntityEnemy::render() {
+ }
 
 void EntityEnemy::update(float seconds_elapsed){
     
@@ -101,6 +104,10 @@ void EntityEnemy::Die() {
 	World::GetInstance()->removeEntity(this);
 	World::GetInstance()->RemoveEnemy(this);
 	delete this;
+}
+
+void EntityEnemy::Eliminate() {
+    World::GetInstance()->removeEntity(this);
 }
     
     

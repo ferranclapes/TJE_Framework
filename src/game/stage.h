@@ -179,6 +179,9 @@ public:
 
     bool minimap = true;
 
+    bool stopLastGameEnemy = true;
+    bool lastGameEnemyFound = false;
+
     HCHANNEL background_channel;
 
 };

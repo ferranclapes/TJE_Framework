@@ -27,10 +27,11 @@ public:
     EntityEnemy() {};
     EntityEnemy(EnemyType type);
 
+    void render();
     void update(float seconds_elapsed);
     void GetDamage(int damage);
     void Die();
-    void followPath(float seconds_elapsed);
+    void Eliminate();
 
     float velocity = 1;
     int maxHealth = 10;
