@@ -11,6 +11,7 @@
 enum eStages {
 	INTRO_STAGE,
 	SELECT_STAGE,
+	PERSONALIZED_STAGE,
     COMMANDS_STAGE,
     PLAY_STAGE,
 	LOST_STAGE,
@@ -22,6 +23,7 @@ enum eStages {
 class Stage;
 class IntroStage;
 class SelectStage;
+class PersonalizeStage;
 class CommandsStage;
 class PlayStage;
 class LostStage;
@@ -37,6 +39,7 @@ public:
 	Stage* current_stage = nullptr;
 	IntroStage* intro_stage;
 	SelectStage* select_stage;
+	PersonalizeStage* personalize_stage;
     CommandsStage* commands_stage;
 	PlayStage* play_stage;
 	LostStage* lost_stage;

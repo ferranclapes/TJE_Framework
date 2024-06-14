@@ -173,17 +173,21 @@ SelectStage::SelectStage() {
 
     // BOTONS
     easy_m.color = Vector4(1, 1, 1, 1);
-    easy = new EntityUI(0.0f, 0.0f, 0.5f, 0.2f, easy_m);
+    easy = new EntityUI(0.0f, 0.3f, 0.5f, 0.2f, easy_m);
 
     puig_m.color = Vector4(1, 1, 1, 1);
-    puig = new EntityUI(0.0f, -0.3f, 0.65f, 0.2f, puig_m);
+    puig = new EntityUI(0.0f, 0.0f, 0.65f, 0.2f, puig_m);
+
+    personalized_m.color = Vector4(1, 1, 1, 1);
+    personalized = new EntityUI(0.0f, -0.3f, 0.65f, 0.2f, personalized_m);
 
     back_m.color = Vector4(1, 1, 1, 1);
     back = new EntityUI(0.0f, -0.6f, 0.5f, 0.2f, back_m);
 
     fons->addChild(easy);
     easy->addChild(puig);
-    puig->addChild(back);
+    puig->addChild(personalized);
+    personalized->addChild(back);
 }
 
 void SelectStage::render()
@@ -191,9 +195,10 @@ void SelectStage::render()
 
     fons->render(Game::GetInstance()->camera2D);
 
-    drawText(180, 140, "Select level difficulty", Vector3(0, 0, 0), 4);
-    drawText(355, 290, "Normal", Vector3(0, 0, 0), 3);
-    drawText(295, 380, "Puig Challenge", Vector3(0, 0, 0), 3);
+    drawText(180, 110, "Select level difficulty", Vector3(0, 0, 0), 4);
+    drawText(355, 200, "Normal", Vector3(0, 0, 0), 3);
+    drawText(295, 290, "Puig Challenge", Vector3(0, 0, 0), 3);
+    drawText(310, 380, "Personalized", Vector3(0, 0, 0), 3);
     drawText(368, 470, "Back", Vector3(0, 0, 0), 3);
 }
 
@@ -202,6 +207,7 @@ void SelectStage::update(float seconse_elapsed)
 
     bool dins_easy = onButton(easy);
     bool dins_puig = onButton(puig);
+    bool dins_personalized = onButton(personalized);
     bool dins_back = onButton(back);
 
     if (timer >= 0.5){
@@ -228,6 +234,16 @@ void SelectStage::update(float seconse_elapsed)
             }
 
         }
+        else if (dins_personalized) {
+            personalized->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(PERSONALIZED_STAGE);
+
+            }
+        }
         else if (dins_back) {
             back->material.color = Vector4(1, 0, 0, 0);
 
@@ -242,6 +258,7 @@ void SelectStage::update(float seconse_elapsed)
         else {
             easy->material.color = Vector4(1, 1, 1, 1);
             puig->material.color = Vector4(1, 1, 1, 1);
+            personalized->material.color = Vector4(1, 1, 1, 1);
             back->material.color = Vector4(1, 1, 1, 1);
         }
     }
@@ -271,7 +288,7 @@ bool SelectStage::onButton(EntityUI* button) {
 
 void SelectStage::onExit(int stage_to_go)
 {
-    if (stage_to_go != INTRO_STAGE) {
+    if (stage_to_go == PLAY_STAGE) {
         Audio::Stop(channel_intro);
     }
 }
@@ -285,7 +302,189 @@ void SelectStage::onEnter()
 }
 
 
+//PERSONALIZE STAGE
+PersonalizeStage::PersonalizeStage() {
+    // FONS
+    material.diffuse = Texture::Get("data/textures/intro.png");
+    material.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    fons = new EntityUI(0.0f, 0.0f, 2.0f, 2.0f, material);
+
+
+    // BOTONS
+    normal_m.color = Vector4(1, 1, 1, 1);
+    normal = new EntityUI(-0.6f, 0.0f, 0.5f, 0.7f, normal_m);
+
+    strong_m.color = Vector4(1, 1, 1, 1);
+    strong = new EntityUI(0.0f, -0.0f, 0.5f, 0.7f, strong_m);
+
+    fast_m.color = Vector4(1, 1, 1, 1);
+    fast = new EntityUI(0.6f, -0.0f, 0.5f, 0.7f, fast_m);
+
+    wave_m.color = Vector4(1, 1, 1, 1);
+    wave = new EntityUI(-0.35f, -0.6f, 0.5f, 0.2f, wave_m);
+
+    play_m.color = Vector4(1, 1, 1, 1);
+    play = new EntityUI(0.35f, -0.6f, 0.5f, 0.2f, play_m);
+
+    back_m.color = Vector4(1, 1, 1, 1);
+    back = new EntityUI(0.0f, -0.85f, 0.5f, 0.2f, back_m);
+
+    //IMATGES
+    normal_i_m.diffuse = Texture::Get("data/textures/normal.png");
+    normal_i_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    normal_image = new EntityUI(-0.6f, 0.0f, 0.5f, 0.2f, normal_i_m);
+
+    strong_i_m.diffuse = Texture::Get("data/textures/strong.png");
+    strong_i_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    strong_image = new EntityUI(0.0f, -0.0f, 0.5f, 0.7f, strong_i_m);
+
+    fast_i_m.diffuse = Texture::Get("data/textures/fast.png");
+    fast_i_m.shader = Shader::Get("data/shaders/example.vs", "data/shaders/image.fs");
+    fast_image = new EntityUI(0.6f, -0.0f, 0.5f, 0.7f, fast_i_m);
+
+    fons->addChild(normal);
+    normal->addChild(strong);
+    strong->addChild(fast);
+    fast->addChild(wave);
+    wave->addChild(play);
+    wave->addChild(back);
+    //normal->addChild(normal_image);
+    //strong->addChild(strong_image);
+    //fast->addChild(fast_image);
+}
+
+void PersonalizeStage::render() {
+    fons->render(Game::GetInstance()->camera2D);
+
+    drawText(160, 100, "Create your own game!", Vector3(0, 0, 0), 4);
+    drawText(180, 470, "Next Wave", Vector3(0, 0, 0), 3);
+    drawText(510, 470, "Play", Vector3(0, 0, 0), 3);
+    drawText(90, 375, "Normal: " + std::to_string(numNormal), Vector3(0, 0, 0), 3);
+    drawText(320, 375, "Strong: " + std::to_string(numStrong), Vector3(0, 0, 0), 3);
+    drawText(570, 375, "Fast: " + std::to_string(numFast), Vector3(0, 0, 0), 3);
+    drawText(365, 545, "Back", Vector3(0, 0, 0), 3);
+}
+
+void PersonalizeStage::update(float seconds_elapsed) {
+    bool dins_normal = onButton(normal);
+    bool dins_strong = onButton(strong);
+    bool dins_fast = onButton(fast);
+    bool dins_wave = onButton(wave);
+    bool dins_play = onButton(play);
+    bool dins_back = onButton(back);
+
+    if (timer >= 0.1) {
+        if (dins_normal) {
+            normal->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+                timer = 0;
+                Audio::Play("data/sounds/menu.wav", 1, BASS_SAMPLE_MONO);
+                numNormal += 1;
+                personalized << "N";
+            }
+
+        }
+        else if (dins_strong) {
+            strong->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+                timer = 0;
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                numStrong++;
+                personalized << "S";
+
+            }
+
+        }
+        else if (dins_fast) {
+            fast->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+                timer = 0;
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                numFast++;
+                personalized << "F";
+            }
+
+        }
+        else if (dins_wave) {
+            wave->material.color = Vector4(1, 0, 0, 0);
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+                timer = 0;
+                numNormal = 0;
+                numStrong = 0;
+                numFast = 0;
+                personalized << "\n";
+            }
+        }
+        else if (dins_play) {
+            play->material.color = Vector4(1, 0, 0, 0);
+
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                level = 2;
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(PLAY_STAGE);
+
+            }
+        }
+        else if (dins_back) {
+            back->material.color = Vector4(1, 0, 0, 0);
+            if (Input::isMousePressed(SDL_BUTTON_LEFT)) {
+
+                Audio::Play("data/sounds/menu.wav", 2, BASS_SAMPLE_MONO);
+                Game::GetInstance()->GoToStage(SELECT_STAGE);
+
+            }
+        }
+        else {
+            normal->material.color = Vector4(1, 1, 1, 1);
+            strong->material.color = Vector4(1, 1, 1, 1);
+            fast->material.color = Vector4(1, 1, 1, 1);
+            wave->material.color = Vector4(1, 1, 1, 1);
+            play->material.color = Vector4(1, 1, 1, 1);
+            back->material.color = Vector4(1, 1, 1, 1);
+        }
+    }
+
+    timer += seconds_elapsed;
+
+
+
+}
+
+bool PersonalizeStage::onButton(EntityUI* button) {
+
+    Vector2 mouse_pos = Input::mouse_position;
+    Vector4 mous_pos_clip = Game::GetInstance()->camera2D->viewprojection_matrix * Vector4(mouse_pos.x, mouse_pos.y, 1.0, 1.0);
+
+    float left = button->pos_x - button->width / 2;
+    float right = button->pos_x + button->width / 2;
+    float top = button->pos_y - button->height / 2;
+    float bottom = button->pos_y + button->height / 2;
+
+    if (mous_pos_clip.x >= left && mous_pos_clip.x <= right && mous_pos_clip.y >= top && mous_pos_clip.y <= bottom) {
+        return true;
+    }
+    return false;
+
+}
+
+void PersonalizeStage::onExit(int stage_to_go) {
+    if (stage_to_go == PLAY_STAGE) {
+        Audio::Stop(channel_intro);
+    }
+    personalized << "\nE";
+    personalized.close();
+}
+
+void PersonalizeStage::onEnter() {
+    personalized.open("data/PersonalizedWaves.txt");
+}
+
 //COMMANDS STAGE
+
 CommandsStage::CommandsStage()
 {
 
@@ -690,6 +889,9 @@ void PlayStage::onEnter()
     }
     else if (level == 1) {
         enemyWaves.open("data/PuigChallenge.txt", std::ios::in);
+    }
+    else if (level == 2) {
+        enemyWaves.open("data/PersonalizedWaves.txt", std::ios::in);
     }
     background_channel = Audio::Play("data/sounds/play_background.wav", 1, BASS_SAMPLE_LOOP);
     vides = 3;

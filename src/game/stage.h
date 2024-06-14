@@ -93,12 +93,61 @@ public:
     EntityUI* fons;
     EntityUI* easy;
     EntityUI* puig;
+    EntityUI* personalized;
     EntityUI* back;
     Material material;
 
     Material easy_m;
     Material puig_m;
+    Material personalized_m;
     Material back_m;
+
+
+    float timer = 0;
+
+
+    void render() override;
+    void update(float seconse_elapsed) override;
+
+    bool onButton(EntityUI* button);
+
+    virtual void onEnter() override;
+    virtual void onExit(int stage_to_go) override;
+};
+
+class PersonalizeStage : public Stage{
+public:
+    PersonalizeStage();
+
+    EntityUI* fons;
+    EntityUI* normal;
+    EntityUI* strong;
+    EntityUI* fast;
+    EntityUI* wave;
+    EntityUI* play;
+    EntityUI* back;
+    Material material;
+
+    Material normal_m;
+    Material strong_m;
+    Material fast_m;
+    Material wave_m;
+    Material play_m;
+    Material back_m;
+
+
+    EntityUI* normal_image;
+    EntityUI* strong_image;
+    EntityUI* fast_image;
+    Material normal_i_m;
+    Material strong_i_m;
+    Material fast_i_m;
+
+    int numNormal = 0;
+    int numStrong = 0;
+    int numFast = 0;
+
+    std::ofstream personalized;
 
 
     float timer = 0;

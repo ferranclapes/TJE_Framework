@@ -52,6 +52,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
     // STAGES
     intro_stage = new IntroStage();
 	select_stage = new SelectStage();
+	personalize_stage = new PersonalizeStage();
     commands_stage = new CommandsStage();
     play_stage = new PlayStage();
 	lost_stage = new LostStage();
@@ -60,6 +61,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	stages.emplace_back(intro_stage);
 	stages.emplace_back(select_stage);
+	stages.emplace_back(personalize_stage);
     stages.emplace_back(commands_stage);
 	stages.emplace_back(play_stage);
 	stages.emplace_back(lost_stage);
@@ -103,7 +105,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 void Game::render(void)
 {
 	// Set the clear color (the background color)
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(1.0, 0.0, 1.0, 1.0);
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
