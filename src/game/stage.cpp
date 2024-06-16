@@ -155,7 +155,7 @@ void IntroStage::onEnter()
     commands->material.color = Vector4(1, 1, 1, 1);
     if (channel_intro == NULL) {
 
-        //Audio::Init();
+        Audio::Init();
         channel_intro = Audio::Play("data/sounds/intro.wav", 0.7, BASS_SAMPLE_LOOP);
     }
 }

@@ -105,7 +105,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 void Game::render(void)
 {
 	// Set the clear color (the background color)
-	glClearColor(1.0, 0.0, 1.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
